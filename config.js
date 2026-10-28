@@ -4,25 +4,21 @@
 // into Firebase decide who can read even the scrambled copies.
 // While the PASTE_ values are still here the app runs in demo mode (saved on one phone only).
 window.BUB_CONFIG = {
-  // Setup step 2: paste the values Firebase shows you (Project settings > Your apps > SDK setup and configuration > Config).
   firebase: {
-    apiKey: 'PASTE_API_KEY',
-    authDomain: 'PASTE_PROJECT_ID.firebaseapp.com',
-    projectId: 'PASTE_PROJECT_ID',
-    storageBucket: 'PASTE_PROJECT_ID.firebasestorage.app',
-    messagingSenderId: 'PASTE_SENDER_ID',
-    appId: 'PASTE_APP_ID'
+    apiKey: 'AIzaSyAUJozhOxzv3HAQMRCFEFxyqPgIrN1yHHw',
+    authDomain: 'bub-feed-log-2f267.firebaseapp.com',
+    projectId: 'bub-feed-log-2f267',
+    storageBucket: 'bub-feed-log-2f267.firebasestorage.app',
+    messagingSenderId: '96440128216',
+    appId: '1:96440128216:web:1dd77fc3cddff2979abdad'
   },
 
-  // Your first name. Friends see "Jas runs this copy of the app" when they sign up,
-  // and "ask Jas for a code" when starting their own log.
+  // Your first name. Friends see "Jas runs this copy of the app" when they sign up.
   hostName: 'Jas',
 
-  // Setup step 8 (strongly recommended): App Check. The reCAPTCHA Enterprise *site key* (a long string
-  // starting with 6L). It proves requests come from your app on your web address, not a script elsewhere.
-  // Leave it empty until you've done step 8; the app works without it.
+  // App Check: the reCAPTCHA Enterprise site key (starts with 6L). Empty until setup step 18.
   appCheckKey: '',
 
-  // Optional, setup step 12: Google Drive backups. A Web client ID ending in .apps.googleusercontent.com
+  // Optional: Google Drive backups. A Web client ID ending in .apps.googleusercontent.com
   googleClientId: ''
 };
