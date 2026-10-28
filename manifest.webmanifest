@@ -1,0 +1,22 @@
+{
+  "name": "Bub Feed Log",
+  "short_name": "Bub Log",
+  "description": "Feed, nappy and sleep log for two parents",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f3f2f8",
+  "theme_color": "#1b1838",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Start left feed", "short_name": "Start left", "url": "./?do=left", "icons": [{ "src": "icons/sc-left.png", "sizes": "96x96", "type": "image/png" }] },
+    { "name": "Start right feed", "short_name": "Start right", "url": "./?do=right", "icons": [{ "src": "icons/sc-right.png", "sizes": "96x96", "type": "image/png" }] },
+    { "name": "Wet nappy", "short_name": "Wet nappy", "url": "./?do=wet", "icons": [{ "src": "icons/sc-wet.png", "sizes": "96x96", "type": "image/png" }] },
+    { "name": "Bottle", "short_name": "Bottle", "url": "./?do=bottle", "icons": [{ "src": "icons/sc-bottle.png", "sizes": "96x96", "type": "image/png" }] }
+  ]
+}

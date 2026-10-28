@@ -1,0 +1,240 @@
+rules_version = '2';
+
+// Bub Feed Log security rules: many families, each private to its own members.
+// Paste this whole file into Firebase console > Firestore > Rules, replace paste_host_google_email
+// below with YOUR Google sign-in email (lower case), and press Publish.
+// Make that edit in the Firebase console, not in a copy you upload to GitHub.
+//
+// The app encrypts every family's log on the phones before saving it, so most documents hold only
+// sealed text ({k, iv, c}). These rules decide who may read or write that sealed text at all, and
+// check every document has only the fields the app writes, of the right types and sizes.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ---- who's asking ----
+    function signedIn() {
+      return request.auth != null;
+    }
+    function isGoogle() {
+      return signedIn()
+        && request.auth.token.get('email_verified', false) == true
+        && request.auth.token.get('firebase', {}).get('sign_in_provider', '') != 'anonymous';
+    }
+    // The person who runs this copy of the app. Only they can start logs without a code,
+    // change the code friends use, and read feedback.
+    function isHost() {
+      return isGoogle() && request.auth.token.get('email', '').lower() in ['paste_host_google_email'];
+    }
+
+    function famPath(fid) {
+      return /databases/$(database)/documents/families/$(fid);
+    }
+    function fam(fid) {
+      return get(famPath(fid)).data;
+    }
+    function isMember(fid) {
+      return isGoogle() && exists(famPath(fid)) && request.auth.uid in fam(fid).get('members', {});
+    }
+
+    // Babysitter links: an anonymous sign-in holding the family's current link token.
+    function sitterPath(fid) {
+      return /databases/$(database)/documents/families/$(fid)/sitters/$(request.auth.uid);
+    }
+    function isSitter(fid) {
+      return signedIn()
+        && exists(famPath(fid))
+        && exists(sitterPath(fid))
+        && fam(fid).get('sitter', {}).get('on', false) == true
+        && fam(fid).sitter.token.size() >= 16
+        && get(sitterPath(fid)).data.token == fam(fid).sitter.token;
+    }
+    function sitterCanLog(fid) {
+      return isSitter(fid) && fam(fid).get('sitter', {}).get('mode', 'log') == 'log';
+    }
+
+    // ---- shapes of stored data ----
+    // A sealed value: key version, nonce and scrambled text. Nothing in it is readable.
+    function isBox(b, maxLen) {
+      return b is map && b.keys().hasOnly(['k', 'iv', 'c']) && b.keys().hasAll(['k', 'iv', 'c'])
+        && b.k is int && b.iv is string && b.iv.size() <= 24 && b.c is string && b.c.size() <= maxLen;
+    }
+    // The family key, sealed for one phone, the recovery key or the babysitter link.
+    function isWrap(d) {
+      return d.keys().hasOnly(['epk', 's', 'iv', 'c', 'n', 'at'])
+        && d.c is string && d.c.size() <= 20000 && d.iv is string && d.s is string
+        && d.get('n', 1) is int && d.get('at', 0) is int;
+    }
+    function memberOk(m) {
+      return m is map && m.keys().hasOnly(['n', 'joined', 'via']) && isBox(m.n, 400) && m.joined is int;
+    }
+    function familyOk(d) {
+      return d.keys().hasOnly(['members', 'e', 'sitter', 'kvn', 'kc', 'rpk', 'rsk', 'createdAt', 'hostCode'])
+        && d.members is map && d.members.size() <= 12
+        && isBox(d.e, 200000)
+        && d.kvn is int
+        && isBox(d.kc, 200)
+        && d.sitter is map && d.sitter.keys().hasOnly(['on', 'token', 'mode'])
+        && d.sitter.on is bool && d.sitter.token is string && d.sitter.token.size() <= 64
+        && d.get('rpk', {}) is map && d.get('rsk', {}) is map;
+    }
+
+    function appSettings() {
+      return get(/databases/$(database)/documents/app/settings).data;
+    }
+    // A new family: the host, or a friend with the current code (when the host has turned that on).
+    function mayStartFamily() {
+      return isHost()
+        || (exists(/databases/$(database)/documents/app/settings)
+            && appSettings().get('open', false) == true
+            && request.resource.data.get('hostCode', '') == appSettings().get('code', '-'));
+    }
+
+    // ---- the host's settings ----
+    match /app/settings {
+      allow read, write: if isHost();
+    }
+
+    // ---- feedback: anyone with a log can send it, only the host can read it ----
+    match /feedback/{id} {
+      allow create: if isGoogle()
+        && exists(/databases/$(database)/documents/users/$(request.auth.uid))
+        && request.resource.data.keys().hasOnly(['uid', 'name', 'text', 'ver', 'device', 'at'])
+        && request.resource.data.uid == request.auth.uid
+        && request.resource.data.text is string && request.resource.data.text.size() > 0 && request.resource.data.text.size() <= 2000
+        && request.resource.data.name is string && request.resource.data.name.size() <= 40
+        && request.resource.data.ver is string && request.resource.data.ver.size() <= 40
+        && request.resource.data.device is string && request.resource.data.device.size() <= 60
+        && request.resource.data.at is int;
+      allow read, update, delete: if isHost();
+    }
+
+    // ---- which family each Google account belongs to ----
+    match /users/{uid} {
+      allow get, delete: if signedIn() && request.auth.uid == uid;
+      allow create, update: if isGoogle() && request.auth.uid == uid
+        && request.resource.data.keys().hasOnly(['family', 'at'])
+        && request.auth.uid in fam(request.resource.data.family).get('members', {});
+    }
+
+    // ---- invites (the family key sealed with the invite code; expire after 7 days) ----
+    match /invites/{iid} {
+      allow get: if isGoogle() && resource.data.expires > request.time.toMillis();
+      allow list: if false;
+      allow create, update: if iid.size() == 40
+        && isMember(request.resource.data.family)
+        && request.resource.data.keys().hasOnly(['family', 'expires', 'by', 'box', 'at'])
+        && request.resource.data.expires is int
+        && request.resource.data.expires <= request.time.toMillis() + 8 * 86400000
+        && request.resource.data.box is map && request.resource.data.box.c.size() <= 20000;
+      allow delete: if isMember(resource.data.family);
+    }
+
+    // ---- families ----
+    match /families/{fid} {
+      allow read: if (isGoogle() && request.auth.uid in resource.data.get('members', {})) || isSitter(fid);
+      allow create: if isGoogle()
+        && request.resource.data.members.keys().hasOnly([request.auth.uid])
+        && request.resource.data.members.size() == 1
+        && memberOk(request.resource.data.members[request.auth.uid])
+        && familyOk(request.resource.data)
+        && request.resource.data.kvn == 1
+        && mayStartFamily();
+      allow update: if (isGoogle() && request.auth.uid in resource.data.get('members', {})
+          && familyOk(request.resource.data)
+          && request.resource.data.kvn >= resource.data.kvn)
+        || joining();
+      allow delete: if isGoogle() && request.auth.uid in resource.data.get('members', {});
+
+      // Joining with an invite: you may add only yourself, and the invite must be this family's and current.
+      function joining() {
+        let via = request.resource.data.members[request.auth.uid].get('via', '');
+        let invite = /databases/$(database)/documents/invites/$(via);
+        return isGoogle()
+          && !(request.auth.uid in resource.data.get('members', {}))
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['members'])
+          && request.resource.data.members.diff(resource.data.get('members', {})).affectedKeys().hasOnly([request.auth.uid])
+          && memberOk(request.resource.data.members[request.auth.uid])
+          && via.size() == 40
+          && exists(invite)
+          && get(invite).data.family == fid
+          && get(invite).data.expires > request.time.toMillis();
+      }
+
+      match /sitters/{uid} {
+        allow create, update: if signedIn()
+          && request.auth.uid == uid
+          && fam(fid).get('sitter', {}).get('on', false) == true
+          && request.resource.data.keys().hasOnly(['token', 'at'])
+          && request.resource.data.token == fam(fid).sitter.token;
+        allow read: if isMember(fid) || (signedIn() && request.auth.uid == uid);
+        allow delete: if isMember(fid);
+      }
+
+      // one sealed document per entry; "d" is the UTC day number, so the live window can be loaded
+      match /entries/{entryId} {
+        allow read: if isMember(fid) || isSitter(fid);
+        allow create, update: if (isMember(fid) || sitterCanLog(fid))
+          && request.resource.data.keys().hasOnly(['d', 'k', 'iv', 'c'])
+          && request.resource.data.d is int
+          && request.resource.data.k is int
+          && request.resource.data.iv is string && request.resource.data.iv.size() <= 24
+          && request.resource.data.c is string && request.resource.data.c.size() <= 20000;
+        allow delete: if isMember(fid) || sitterCanLog(fid);
+      }
+
+      // the shared timers (one sealed document) and all weigh-ins (a map of sealed entries)
+      match /meta/{docId} {
+        allow read: if (docId == 'timers' || docId == 'growth') && (isMember(fid) || isSitter(fid));
+        allow create, update: if (isMember(fid) || sitterCanLog(fid))
+          && ((docId == 'timers' && request.resource.data.keys().hasOnly(['k', 'iv', 'c']) && request.resource.data.c.size() <= 20000)
+            || (docId == 'growth' && request.resource.data.size() <= 1000));
+        allow delete: if isMember(fid);
+      }
+
+      // each person's own home screen layout and colours
+      match /profiles/{pid} {
+        allow read: if isMember(fid);
+        allow write: if isMember(fid) && pid == request.auth.uid
+          && request.resource.data.keys().hasOnly(['k', 'iv', 'c'])
+          && request.resource.data.c.size() <= 50000;
+        allow delete: if isMember(fid);
+      }
+
+      // the phones that can open the log; "mac" is added by a phone that already has the key
+      match /devices/{devId} {
+        allow read: if isMember(fid);
+        allow create: if isMember(fid)
+          && request.resource.data.keys().hasOnly(['uid', 'pk', 'label', 'at'])
+          && request.resource.data.uid == request.auth.uid
+          && request.resource.data.pk is map
+          && request.resource.data.label is string && request.resource.data.label.size() <= 30;
+        allow update: if isMember(fid)
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['mac']);
+        allow delete: if isMember(fid);
+      }
+
+      // the family key, sealed separately for each phone, the recovery key and the babysitter link
+      match /keys/{kid} {
+        allow get: if (kid == 'recovery' && isMember(fid))
+          || (kid == 'sitter' && (isMember(fid) || isSitter(fid)))
+          || (isMember(fid)
+              && exists(/databases/$(database)/documents/families/$(fid)/devices/$(kid))
+              && get(/databases/$(database)/documents/families/$(fid)/devices/$(kid)).data.uid == request.auth.uid);
+        allow list: if isMember(fid);
+        allow create, update: if isMember(fid) && isWrap(request.resource.data);
+        allow delete: if isMember(fid);
+      }
+
+      match /backups/{day} {
+        allow read: if isMember(fid);
+        allow write: if isMember(fid)
+          && (request.resource == null || request.resource.data.keys().hasOnly(['made', 'byU', 'count', 'parts', 'v', 'k', 'iv']));
+        match /parts/{part} {
+          allow read: if isMember(fid);
+          allow write: if isMember(fid)
+            && (request.resource == null || (request.resource.data.keys().hasOnly(['i', 'data']) && request.resource.data.data.size() <= 400000));
+        }
+      }
+    }
+  }
+}
