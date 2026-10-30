@@ -20,5 +20,8 @@ window.BUB_CONFIG = {
   appCheckKey: 'https://recaptchaenterprise.googleapis.com/v1/projects/project-31679adc-38ee-44e0-8b3/assessments?key=API_KEY',
 
   // Optional: Google Drive backups. A Web client ID ending in .apps.googleusercontent.com
-  googleClientId: ''
+  googleClientId: '',
+
+  // Notifications: the Web Push key (Project settings > Cloud Messaging > Web Push certificates). Public.
+  pushKey: 'BCknylD7mZAcoGUR2lsi5qwvDzShKt-VozJb3IjtjkIpiKHykmMfvnlGoo8DiueERBUPW6HC9K_mrbYeNw_85Ek'
 };
