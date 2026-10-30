@@ -1,6 +1,6 @@
 // Offline support: keeps the app on the phone so it opens without signal.
 // Firebase handles offline data itself; this only caches the app's own files.
-const VERSION = '2026.10.30-a5186f';
+const VERSION = '2026.10.30-d5da16';
 const CACHE = 'bubfeed-' + VERSION;
 const SHELL = ['./', './index.html', './config.js', './manifest.webmanifest', './icons/icon-192.png', './icons/icon-512.png'];
 
