@@ -14,10 +14,20 @@ const admin = require('firebase-admin');
 
 // Must match your Firestore location (Firestore > Settings). The setup guide's command fills it in.
 const REGION = 'australia-southeast1';
+// Google's scheduler (for the every-minute reminder check) doesn't run in every region. Melbourne
+// is one it doesn't, so that one function runs in Sydney; it still reads your database fine.
+const SCHEDULE_REGION = REGION === 'australia-southeast2' ? 'australia-southeast1' : REGION;
 
-admin.initializeApp();
-setGlobalOptions({ region: REGION, maxInstances: 3, memory: '256MiB', timeoutSeconds: 60 });
-const db = admin.firestore();
+// A whole CPU so each function starts quickly (a fraction of one was too slow to start in time).
+// Only billed while a function is actually running, well inside the free amount at this size.
+setGlobalOptions({ region: REGION, maxInstances: 3, memory: '512MiB', cpu: 1, timeoutSeconds: 60 });
+
+// Firebase is set up the first time a function needs it, not while the function is starting.
+let started = false;
+function app() { if (!started) { admin.initializeApp(); started = true; } return admin; }
+let dbRef = null;
+const getDb = () => (dbRef = dbRef || app().firestore());
+const live = () => ({ db: getDb(), messaging: app().messaging() });
 
 const FAR = 9e15; // a reminder that has been sent waits here until a phone sets a new time
 const ID = /^[A-Za-z0-9_-]{8,40}$/;
@@ -27,7 +37,7 @@ const FN_BASE = PROJECT ? `https://${REGION}-${PROJECT}.cloudfunctions.net` : ''
 
 // Send one data message to each of the family's phones named in `to`; forget phones that are gone.
 async function sendTo(fid, to, data, deps) {
-  const d = deps || { db, messaging: admin.messaging() };
+  const d = deps || live();
   if (!FID.test(String(fid || ''))) return 0;
   const ids = [...new Set((Array.isArray(to) ? to : []).filter(x => typeof x === 'string' && ID.test(x)))].slice(0, 12);
   if (!ids.length) return 0;
@@ -66,7 +76,7 @@ exports.notifyOnLog = onDocumentCreated('notify/{nid}', async event => {
 // Every minute: send the reminders that are due. Each one is claimed first (its time moves far
 // ahead), so two runs can never send it twice.
 async function runReminders(now, deps) {
-  const d = deps || { db, messaging: admin.messaging() };
+  const d = deps || live();
   const due = await d.db.collection('remind').where('at', '<=', now).limit(50).get();
   let sent = 0;
   for (const doc of due.docs) {
@@ -91,14 +101,14 @@ async function runReminders(now, deps) {
   }
   return sent;
 }
-exports.sendReminders = onSchedule({ schedule: 'every 1 minutes', timeZone: 'Etc/UTC', retryCount: 0 }, async () => {
+exports.sendReminders = onSchedule({ region: SCHEDULE_REGION, schedule: 'every 1 minutes', timeZone: 'Etc/UTC', retryCount: 0 }, async () => {
   await runReminders(Date.now());
 });
 
 // Snooze, from the notification's button: needs the reminder's own secret, which only the
 // family's phones have. Moves it 15 minutes (5 to 60) later.
 async function handleSnooze(q, deps) {
-  const d = deps || { db };
+  const d = deps || { db: getDb() };
   const rid = String(q.r || ''), t = String(q.t || ''), mins = Math.min(60, Math.max(5, Math.round(+q.m || 15)));
   if (!/^[A-Za-z0-9_-]{20}_[a-z0-9-]{1,40}$/.test(rid) || t.length < 16 || t.length > 64) return 400;
   const ref = d.db.doc(`remind/${rid}`);
@@ -136,7 +146,7 @@ function overBudget(msg) {
 exports.budgetBrake = onMessagePublished({ topic: 'budget-alerts' }, async event => {
   const m = (event.data && event.data.message && event.data.message.json) || {};
   if (!overBudget(m)) return;
-  await admin.securityRules().releaseFirestoreRulesetFromSource(LOCKED_RULES);
+  await app().securityRules().releaseFirestoreRulesetFromSource(LOCKED_RULES);
   console.warn(`Budget brake: spending ${m.costAmount} passed the budget ${m.budgetAmount}. The database is locked.`);
 });
 
