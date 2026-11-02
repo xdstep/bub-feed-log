@@ -27,10 +27,20 @@ function run() {
 
 // ---------- the Google key and sign-in ----------
 function readKey(env) {
+  const raw = env ? env.GOOGLE_KEY : undefined;
+  if (raw === undefined || raw === null || raw === '') throw new Error('the GOOGLE_KEY secret is missing');
   let k = null;
-  try { k = JSON.parse(String((env && env.GOOGLE_KEY) || '')); } catch (e) { k = null; }
-  if (!k || typeof k !== 'object') throw new Error('the GOOGLE_KEY secret is missing or isn’t the key text');
-  if (!k.client_email || !k.private_key || !k.project_id) throw new Error('the GOOGLE_KEY secret is missing part of the key');
+  if (typeof raw === 'object') k = raw; // added as Cloudflare's "JSON" type
+  else {
+    // pasted as text: allow stray spaces or quotes around it
+    const t = String(raw).trim();
+    const tryParse = x => { try { return JSON.parse(x); } catch (e) { return null; } };
+    k = tryParse(t);
+    if (typeof k === 'string') k = tryParse(k); // the key written out as one quoted string
+    if (!k && /^(['"`]).*\1$/s.test(t)) k = tryParse(t.slice(1, -1).trim()); // quotes pasted around it
+  }
+  if (!k || typeof k !== 'object') throw new Error('GOOGLE_KEY is there but isn’t the key text (it should start with {"type":"service_account")');
+  if (!k.client_email || !k.private_key || !k.project_id) throw new Error('GOOGLE_KEY is missing part of the key');
   return k;
 }
 const b64url = buf => { const a = new Uint8Array(buf); let s = ''; for (let i = 0; i < a.length; i++) s += String.fromCharCode(a[i]); return btoa(s).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, ''); };
@@ -235,7 +245,7 @@ async function snooze(env, q) {
 // Open /health in a browser to check the setup. Shows no secrets.
 async function health(env) {
   let k;
-  try { k = readKey(env); } catch (e) { return 'Not ready: ' + e.message + '. Add it in the sender’s Settings › Variables and Secrets (guide part 4).'; }
+  try { k = readKey(env); } catch (e) { return 'Not ready: ' + e.message + '. In the sender’s Settings › Variables and Secrets, add or replace GOOGLE_KEY with the type set to Secret, then Deploy (guide part 4).'; }
   const c = run();
   try { await googleToken(env, c); } catch (e) { return 'Not ready: the key is there, but ' + e.message + '. Make a new key (guide step 6) and paste it again (part 4).'; }
   try { await db(env, c).query('remind', null, 1); } catch (e) { return 'Not ready: signed in, but the ' + e.message + '. Check the sender account has the Cloud Datastore User role (guide part 2).'; }

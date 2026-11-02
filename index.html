@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-5Ah6QBNKw47UCgDwHUuTJDTbudVqYHItFnE3iCUn8yQ=' https://www.gstatic.com/firebasejs/10.14.1/ https://apis.google.com https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/ https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://accounts.google.com/gsi/style; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://fcmregistrations.googleapis.com https://firestore.googleapis.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firebaseinstallations.googleapis.com https://content-firebaseappcheck.googleapis.com https://www.googleapis.com https://www.google.com/recaptcha/ https://apis.google.com https://accounts.google.com/gsi/ https://*.workers.dev; frame-src https://*.firebaseapp.com https://*.web.app https://accounts.google.com https://www.google.com/recaptcha/ https://recaptcha.google.com/recaptcha/; worker-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-IM5VvxqaI5jTy2rKRPGC3W0Ao9tdHjJKgCO+PHc916Q=' https://www.gstatic.com/firebasejs/10.14.1/ https://apis.google.com https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/ https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://accounts.google.com/gsi/style; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://fcmregistrations.googleapis.com https://firestore.googleapis.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firebaseinstallations.googleapis.com https://content-firebaseappcheck.googleapis.com https://www.googleapis.com https://www.google.com/recaptcha/ https://apis.google.com https://accounts.google.com/gsi/ https://*.workers.dev; frame-src https://*.firebaseapp.com https://*.web.app https://accounts.google.com https://www.google.com/recaptcha/ https://recaptcha.google.com/recaptcha/; worker-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title>Bub Feed Log</title>
 <meta name="theme-color" content="#1b1838">
@@ -716,7 +716,9 @@ details[open] > summary .ic { transform: rotate(90deg); }
   const KEY = 'bubfeed-test-v4', OLD_KEYS = ['bubfeed-test-v3', 'bubfeed-test-v2', 'bubfeed-test-v1'], TAB_KEY = 'bubfeed-test-tab4';
   const MIN = 60000, HOUR = 3600000, DAY = 86400000;
   const CFG = window.BUB_CONFIG || {};
-  const APP_VERSION = '2026.11.02-ad2ba7';
+  // config.js didn't load or has a mistake (a missing comma, say): say so, rather than opening in demo mode
+  const CFG_MISSING = !window.BUB_CONFIG;
+  const APP_VERSION = '2026.11.02-65b301';
   // Who logs in this family. Filled from the family's member list (cloud) or this phone's setup (demo).
   const PEOPLE_CFG = [], PEOPLE = [];
   function setPeople(list) {
@@ -2357,6 +2359,7 @@ details[open] > summary .ic { transform: rotate(90deg); }
       signin: privateGateHTML(detail),
       blocked: `<div class="gate-mark">Access turned off</div><p class="sentence">${HOST_NAME ? esc(HOST_NAME) : 'The person who runs this app'} has turned off access for ${accessUser && accessUser.email ? `<b>${esc(accessUser.email)}</b>` : 'this Google account'}. Ask them if that’s a mistake.</p><button type="button" class="btn block" data-act="signout">Sign out</button>`,
       setup: `<div class="gate-mark">Firebase isn’t ready</div><p class="sentence">Firebase answered with: <b>${esc(detail || 'an error')}</b>.</p><p class="group-foot" style="margin: 0">Usually this means the Firestore database hasn’t been created yet, or config.js has a typo. See the setup guide.</p><button type="button" class="btn primary block" data-act="reload">Try again</button>`,
+      config: `<div class="gate-mark">Settings file problem</div><p class="sentence">The app couldn’t read its settings file, <b>config.js</b>, so it can’t open your log. Your log is safe.</p><p class="group-foot" style="margin: 0">This usually means a comma or quote went missing in the last edit of config.js on GitHub. Fix it there, wait a few minutes, then tap Try again.</p><button type="button" class="btn primary block" data-act="reload">Try again</button>`,
       offline: `<div class="gate-mark">No connection</div><p class="sentence">The app needs the internet the first time it opens on a phone. After that it works offline.</p><button type="button" class="btn primary block" data-act="reload">Try again</button>`,
       'no-crypto': `<div class="gate-mark">Can’t lock the log here</div><p class="sentence">This browser can’t do the encryption that keeps your log private. Open the app in an up-to-date Chrome or Safari, using its https:// address.</p>`,
       'sitter-failed': `<div class="gate-mark">Link not working</div><p class="sentence">This link has ended, been switched off or replaced, or was already opened on another phone. Ask the parents for a new one.</p>`
@@ -6765,7 +6768,7 @@ const WHO = {wb:[0,0.3487,3.3464,0.14602,7,0.2776,3.4879,0.14483,14,0.2581,3.752
   markPersisted();
   render();
   renderSync();
-  if (CLOUD) startCloud(); else { store = localStore; afterReady(); }
+  if (CFG_MISSING) showGate('config'); else if (CLOUD) startCloud(); else { store = localStore; afterReady(); }
   window.__bubDebug = { openBox: (box, aad) => KC.dec(box, aad), get pushDocs() { return pushDocs; }, get pushId() { return myPushId(); }, syncReminders: () => syncReminders(), flushLog: () => flushLogNotify(), whoCheck: () => String(Math.round(normCdf(whoZ(whoLMS('w', 'girl', 0), 3.2322)) * 100)), checkSitterEnd: () => checkSitterEnd(), get fid() { return FID; }, get people() { return PEOPLE.slice(); }, get setup() { return setup; }, state, save, render, get hf() { return hf; }, get tab() { return tab; }, get store() { return store; }, get liveSince() { return liveSince; }, cloudBackup, fullEntries, dataVersion: () => dataVersion, sortedAll, buildDays, hfList, restoreFrom, backupPayload, phoneBackup, idb, get status() { return syncStatus; }, get setPage() { return setPage; }, removeDevice, removeMember, sitterLink, backupFileText, restoreFileText, act(name, data) { const btn = document.createElement('button'); btn.dataset.act = name; Object.assign(btn.dataset, data || {}); btn.hidden = true; document.body.appendChild(btn); btn.click(); btn.remove(); } };
 })();
 </script>
