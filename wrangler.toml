@@ -1,0 +1,15 @@
+# Cloudflare settings for the Bub Feed Log notification sender (sender.js).
+# Cloudflare reads this when it builds the sender from GitHub. Nothing here is secret: the Google key
+# is added separately as a secret in the Cloudflare dashboard.
+name = "bub-feed-log-sender"
+main = "sender.js"
+compatibility_date = "2026-06-01"
+workers_dev = true
+
+# check for due reminders every minute
+[triggers]
+crons = ["* * * * *"]
+
+# keep recent logs in the Cloudflare dashboard, for checking problems
+[observability]
+enabled = true

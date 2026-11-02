@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-3WsMb7qLHQYzfNpwgoqcwx9nHDTxkUrjwFUVkCb1/dM='; style-src 'unsafe-inline'; img-src 'none'; connect-src 'none'; form-action 'none'; base-uri 'none'">
+<meta name="referrer" content="no-referrer">
+<meta name="robots" content="noindex">
+<title>Copy the sender key</title>
+<!-- Bub Feed Log setup helper: reads the Google key file on your phone and copies a one-line version.
+     It has no way to send anything anywhere (connect-src 'none' above). -->
+<style>
+:root { --bg: #f3ecf5; --surface: #ffffff; --ink: #2a1b33; --muted: #675a6e; --line: #e2d6e6; --primary: #4b2a5e; --on-primary: #ffffff; --good: #1f6f43; --bad: #b3261e; color-scheme: light dark; }
+@media (prefers-color-scheme: dark) { :root { --bg: #120c16; --surface: #1e1624; --ink: #f1e8f4; --muted: #b3a5b9; --line: #30253a; --primary: #d7b8e6; --on-primary: #120c16; --good: #6fd39b; --bad: #ff8a80; } }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 17px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+main { max-width: 520px; margin: 0 auto; padding: 28px 16px 48px; display: flex; flex-direction: column; gap: 14px; }
+h1 { margin: 0; font-size: 28px; line-height: 1.15; }
+p { margin: 0; }
+.lead { color: var(--muted); }
+.safe { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 12px 14px; font-size: 15px; }
+.pick { display: block; font-weight: 700; margin-top: 6px; }
+input[type=file] { width: 100%; font: inherit; padding: 14px; background: var(--surface); border: 1px dashed var(--line); border-radius: 14px; color: var(--ink); }
+.msg { min-height: 1.5em; font-weight: 600; }
+.msg.good { color: var(--good); } .msg.bad { color: var(--bad); }
+#ready { display: flex; flex-direction: column; gap: 12px; }
+#ready[hidden] { display: none; }
+.btn { appearance: none; font: inherit; font-weight: 700; min-height: 52px; border-radius: 14px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); padding: 0 16px; }
+.btn.primary { background: var(--primary); color: var(--on-primary); border: 0; }
+details { background: var(--surface); border-radius: 14px; padding: 12px 14px; }
+summary { font-weight: 700; min-height: 32px; }
+details p { margin: 8px 0; font-size: 15px; }
+textarea { width: 100%; font: 13px/1.4 ui-monospace, Menlo, Consolas, monospace; border: 1px solid var(--line); border-radius: 10px; padding: 10px; background: var(--bg); color: var(--ink); }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+</style>
+</head>
+<body>
+<main>
+  <h1>Copy the sender key</h1>
+  <p class="lead">For the Bub Feed Log notification sender. Pick the key file Google downloaded, then copy it into Cloudflare.</p>
+  <p class="safe">This page can’t connect to the internet. The key stays on your phone until you paste it.</p>
+
+  <label class="pick" for="file">Choose the key file</label>
+  <input id="file" type="file" accept=".json,application/json,text/plain">
+  <p id="msg" class="msg" role="status" aria-live="polite"></p>
+
+  <div id="ready" hidden>
+    <button id="copy" type="button" class="btn primary">Copy the key</button>
+    <details>
+      <summary>Copy button not working?</summary>
+      <p>Tap in the box, then <b>Select all</b> and <b>Copy</b>.</p>
+      <label class="sr" for="out">The key, ready to paste</label>
+      <textarea id="out" readonly rows="6"></textarea>
+    </details>
+    <button id="clear" type="button" class="btn">Done: clear it from this page</button>
+  </div>
+</main>
+<script>(function () {
+  var file = document.getElementById('file'), msg = document.getElementById('msg'), ready = document.getElementById('ready');
+  var out = document.getElementById('out'), copyBtn = document.getElementById('copy'), clearBtn = document.getElementById('clear');
+  var text = '';
+  function say(t, bad) { msg.textContent = t; msg.className = 'msg' + (bad ? ' bad' : ' good'); }
+  file.addEventListener('change', function () {
+    var f = file.files && file.files[0];
+    text = ''; out.value = ''; ready.hidden = true;
+    if (!f) return;
+    if (f.size > 20000) { say('That file is too big to be the key. Choose the .json file Google downloaded.', true); return; }
+    var r = new FileReader();
+    r.onload = function () {
+      var k = null;
+      try { k = JSON.parse(String(r.result || '')); } catch (e) { k = null; }
+      if (!k || k.type !== 'service_account' || !k.private_key || !k.client_email || !k.project_id) {
+        say('That isn’t a Google service account key. Choose the .json file Google downloaded after Create new key.', true);
+        return;
+      }
+      // only what the sender needs, on one line
+      text = JSON.stringify({ type: k.type, project_id: k.project_id, client_email: k.client_email, private_key: k.private_key });
+      out.value = text;
+      ready.hidden = false;
+      say('Key found for ' + k.client_email + ' (project ' + k.project_id + '). Now tap Copy the key.', false);
+    };
+    r.onerror = function () { say('Couldn’t open that file. Try choosing it again.', true); };
+    r.readAsText(f);
+  });
+  copyBtn.addEventListener('click', function () {
+    if (!text) return;
+    var done = function () { say('Copied. Go back to Cloudflare and paste it into the Value box.', false); };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, function () { out.focus(); out.select(); say('Your phone blocked the copy button. Open “Copy button not working?” below.', true); });
+    } else { out.focus(); out.select(); say('Open “Copy button not working?” below to copy it.', true); }
+  });
+  clearBtn.addEventListener('click', function () {
+    text = ''; out.value = ''; file.value = ''; ready.hidden = true;
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(' ').catch(function () {});
+    say('Cleared. You can delete the key file from My Files › Downloads too.', false);
+  });
+})();
+</script>
+</body>
+</html>

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-809lwfQ4C4al+hpOz50vPIGEXEsM452Bj1KcD87HEik=' https://www.gstatic.com/firebasejs/10.14.1/ https://apis.google.com https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/ https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://accounts.google.com/gsi/style; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://fcmregistrations.googleapis.com https://firestore.googleapis.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firebaseinstallations.googleapis.com https://content-firebaseappcheck.googleapis.com https://www.googleapis.com https://www.google.com/recaptcha/ https://apis.google.com https://accounts.google.com/gsi/; frame-src https://*.firebaseapp.com https://*.web.app https://accounts.google.com https://www.google.com/recaptcha/ https://recaptcha.google.com/recaptcha/; worker-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-5Ah6QBNKw47UCgDwHUuTJDTbudVqYHItFnE3iCUn8yQ=' https://www.gstatic.com/firebasejs/10.14.1/ https://apis.google.com https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/ https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://accounts.google.com/gsi/style; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://fcmregistrations.googleapis.com https://firestore.googleapis.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firebaseinstallations.googleapis.com https://content-firebaseappcheck.googleapis.com https://www.googleapis.com https://www.google.com/recaptcha/ https://apis.google.com https://accounts.google.com/gsi/ https://*.workers.dev; frame-src https://*.firebaseapp.com https://*.web.app https://accounts.google.com https://www.google.com/recaptcha/ https://recaptcha.google.com/recaptcha/; worker-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title>Bub Feed Log</title>
 <meta name="theme-color" content="#1b1838">
@@ -716,7 +716,7 @@ details[open] > summary .ic { transform: rotate(90deg); }
   const KEY = 'bubfeed-test-v4', OLD_KEYS = ['bubfeed-test-v3', 'bubfeed-test-v2', 'bubfeed-test-v1'], TAB_KEY = 'bubfeed-test-tab4';
   const MIN = 60000, HOUR = 3600000, DAY = 86400000;
   const CFG = window.BUB_CONFIG || {};
-  const APP_VERSION = '2026.10.30-d5da16';
+  const APP_VERSION = '2026.11.02-ad2ba7';
   // Who logs in this family. Filled from the family's member list (cloud) or this phone's setup (demo).
   const PEOPLE_CFG = [], PEOPLE = [];
   function setPeople(list) {
@@ -1844,7 +1844,7 @@ details[open] > summary .ic { transform: rotate(90deg); }
       lastError = e || new Error('Unknown sync error');
       const code = (e && e.code) || '';
       if (/permission-denied/.test(code)) console.warn('Bub Feed Log: access ended', code, e && e.message); else console.error('Bub Feed Log sync error', e);
-      if (!isSitter && /permission-denied/.test(code)) { accessEnded(); return; }
+      if (!isSitter && /permission-denied/.test(code)) { setStatus(); accessEnded(); return; }
       if (isSitter && /permission-denied/.test(code)) { wipeSitterPhone(); return; }
       if (!gotFamily && /failed-precondition|not-found|invalid-argument/.test(code)) showGate('setup', code);
       setStatus();
@@ -2692,6 +2692,24 @@ details[open] > summary .ic { transform: rotate(90deg); }
         showGate('blocked');
         return;
       }
+      // Still let in. Only take the log off this phone if the log itself says this person was taken
+      // out (or it's gone). One refused change or listener must never wipe a parent's phone.
+      const fid = FID;
+      let fam = null;
+      try { fam = await FB.getDoc(FB.doc(DB, 'families', fid)); }
+      catch (e) {
+        if (FID !== fid) return;
+        if (/permission-denied/.test((e && e.code) || '')) { lostFamily('removed'); return; } // let in, but not in this log
+        console.warn('Bub Feed Log: couldn’t check the log', e);
+        return; // offline or unsure: keep everything
+      }
+      if (FID !== fid) return;
+      if (!fam.exists()) { lostFamily('deleted'); return; }
+      if (myUid && (fam.data().members || {})[myUid]) {
+        console.warn('Bub Feed Log: Firebase refused one change; still in the log');
+        toast('One change couldn’t be saved to the cloud.');
+        return;
+      }
       lostFamily('removed');
     } finally { endingAccess = false; }
   }
@@ -3167,6 +3185,13 @@ details[open] > summary .ic { transform: rotate(90deg); }
     return { ...d, ...p, types: { ...d.types, ...(p.types || {}) }, rem: { ...d.rem, ...(p.rem || {}) }, quiet: { ...d.quiet, ...(p.quiet || {}) } };
   }
   const pushReady = () => !!(CLOUD && CFG.pushKey && 'Notification' in window && 'serviceWorker' in navigator);
+  // The notification sender on Cloudflare (config.js pushSender). Told straight away when there's
+  // something to send; it also checks every minute, so a missed poke only delays it.
+  const SENDER = (() => { const u = String(CFG.pushSender || '').trim().replace(/\/+$/, ''); return /^https:\/\/[a-z0-9-]+(\.[a-z0-9-]+)*\.workers\.dev$/i.test(u) ? u : ''; })();
+  function pokeSender(nid) {
+    if (!SENDER || !nid) return;
+    try { fetch(`${SENDER}/poke?n=${encodeURIComponent(nid)}`, { method: 'POST', mode: 'no-cors', credentials: 'omit', keepalive: true }).catch(() => {}); } catch (e) { /* the minute check sends it */ }
+  }
   const pushAllowed = () => !isSitter || !!(state.sitter && state.sitter.notify);
   const myPushId = () => { let id = getPref(PUSH_ID_KEY, ''); if (!id) { id = randomToken(20); setPref(PUSH_ID_KEY, id); } return id; };
   const localTz = () => { try { return Intl.DateTimeFormat().resolvedOptions().timeZone || ''; } catch (e) { return ''; } };
@@ -3224,6 +3249,7 @@ details[open] > summary .ic { transform: rotate(90deg); }
     try {
       const box = await KC.enc({ t: state.me, b: body.slice(0, 240), g: 'Something new in your log', w: list[list.length - 1].start }, `${FID}/n/${nid}`);
       await FB.setDoc(FB.doc(DB, 'notify', nid), { fid: FID, to: to.slice(0, 12), at: now, box, tag: 'log' });
+      pokeSender(nid);
     } catch (e) { console.warn('Notification not sent', e && e.code); }
   }
   document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden' && logQueue.length) flushLogNotify(); });
@@ -3297,7 +3323,7 @@ details[open] > summary .ic { transform: rotate(90deg); }
     const pr = pushPrefs();
     const box = await KC.enc({ ...pr, name: state.me, tz: localTz() }, `${FID}/push/${myPushId()}`);
     await FB.setDoc(FB.doc(DB, 'families', FID, 'push', myPushId()), { uid: myUid, token, p: box, at: Date.now(), kind: isSitter ? 'sitter' : 'member' });
-    try { await KC.localPut({ id: 'push-prefs', details: pr.details !== false, fid: FID }); } catch (e) { /* the lock screen shows details */ }
+    try { await KC.localPut({ id: 'push-prefs', details: pr.details !== false, fid: FID, sender: SENDER }); } catch (e) { /* the lock screen shows details */ }
   }
   async function pushToken() {
     const M = await loadMessaging();
@@ -3347,6 +3373,8 @@ details[open] > summary .ic { transform: rotate(90deg); }
     try {
       const token = await pushToken();
       if (token && (token !== getPref('bubfeed-push-token', '') || !pushDocs[myPushId()])) { setPref('bubfeed-push-token', token); await writePushDoc(token); }
+      // the notification handler reads these when the app is closed: lock-screen choice, and where Snooze goes
+      else await KC.localPut({ id: 'push-prefs', details: pr.details !== false, fid: FID, sender: SENDER });
     } catch (e) { console.warn('Notification address not refreshed', e && e.code); }
   }
   async function testPush() {
@@ -3355,6 +3383,7 @@ details[open] > summary .ic { transform: rotate(90deg); }
     try {
       const box = await KC.enc({ t: 'Bub Feed Log', b: 'Notifications are working on this phone.', g: 'Notifications are working on this phone.' }, `${FID}/n/${nid}`);
       await FB.setDoc(FB.doc(DB, 'notify', nid), { fid: FID, to: [myPushId()], at: Date.now(), box, tag: 'test' });
+      pokeSender(nid);
       toast('Test sent. It should arrive within a few seconds, even with the app closed.');
     } catch (e) { toast('Couldn’t send a test. Check your connection.'); }
   }

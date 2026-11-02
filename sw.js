@@ -1,6 +1,6 @@
 // Offline support: keeps the app on the phone so it opens without signal.
 // Firebase handles offline data itself; this only caches the app's own files.
-const VERSION = '2026.10.30-d5da16';
+const VERSION = '2026.11.02-ad2ba7';
 const CACHE = 'bubfeed-' + VERSION;
 const SHELL = ['./', './index.html', './config.js', './manifest.webmanifest', './icons/icon-192.png', './icons/icon-512.png'];
 
@@ -91,15 +91,15 @@ async function showPush(d) {
   const actions = tag === 'feed' && d.snz ? [{ action: 'snooze', title: 'Snooze 15 min' }] : /^timer-/.test(tag) ? [{ action: 'stop', title: 'Stop it' }] : [];
   return self.registration.showNotification(title, {
     body, tag: tag === 'log' ? 'log-' + (d.nid || '') : tag, renotify: true,
-    icon: 'icons/icon-192.png', badge: 'icons/icon-192.png',
-    data: { tag, rid: d.rid || '', snz: d.snz || '', fn: d.fn || '' }, actions
+    icon: 'icons/icon-192.png', badge: 'icons/badge-96.png', // badge: white shape on clear, or Android shows a white box
+    data: { tag, rid: d.rid || '', snz: d.snz || '', fn: d.fn || (prefs && prefs.sender) || '' }, actions // Snooze goes to the sender the app saved
   });
 }
 self.addEventListener('push', event => {
   let m = {};
   try { m = event.data ? event.data.json() : {}; } catch (e) { m = {}; }
   const d = m.data || m;
-  event.waitUntil(showPush(d).catch(() => self.registration.showNotification('Bub Feed Log', { body: 'Something new in your log', icon: 'icons/icon-192.png' })));
+  event.waitUntil(showPush(d).catch(() => self.registration.showNotification('Bub Feed Log', { body: 'Something new in your log', icon: 'icons/icon-192.png', badge: 'icons/badge-96.png' })));
 });
 self.addEventListener('notificationclick', event => {
   const n = event.notification, d = n.data || {};
