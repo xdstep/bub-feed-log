@@ -23,7 +23,7 @@ window.BUB_CONFIG = {
   googleClientId: '',
 
   // Notifications: the Web Push key (Project settings > Cloud Messaging > Web Push certificates). Public.
-  pushKey: 'BCknylD7mZAcoGUR2lsi5qwvDzShKt-VozJb3IjtjkIpiKHykmMfvnlGoo8DiueERBUPW6HC9K_mrbYeNw_85Ek'
-  
+  pushKey: 'BCknylD7mZAcoGUR2lsi5qwvDzShKt-VozJb3IjtjkIpiKHykmMfvnlGoo8DiueERBUPW6HC9K_mrbYeNw_85Ek',
+
   pushSender: 'https://bub-feed-log-sender.jaskaran2nv.workers.dev',
 };
