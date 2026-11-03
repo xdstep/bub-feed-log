@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-QO2McUqllZscoWv+0yawM/3ItwssfoYdP7EIE6+sOoU=' https://www.gstatic.com/firebasejs/10.14.1/ https://apis.google.com https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/ https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://accounts.google.com/gsi/style; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://fcmregistrations.googleapis.com https://firestore.googleapis.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firebaseinstallations.googleapis.com https://content-firebaseappcheck.googleapis.com https://www.googleapis.com https://www.google.com/recaptcha/ https://apis.google.com https://accounts.google.com/gsi/ https://*.workers.dev; frame-src https://*.firebaseapp.com https://*.web.app https://accounts.google.com https://www.google.com/recaptcha/ https://recaptcha.google.com/recaptcha/; worker-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-FGr+M7pxi6FE4zJmuUPXrfEdUpY+dHSwbj/YWJxwIVU=' https://www.gstatic.com/firebasejs/10.14.1/ https://apis.google.com https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/ https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://accounts.google.com/gsi/style; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://fcmregistrations.googleapis.com https://firestore.googleapis.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firebaseinstallations.googleapis.com https://content-firebaseappcheck.googleapis.com https://www.googleapis.com https://www.google.com/recaptcha/ https://apis.google.com https://accounts.google.com/gsi/ https://*.workers.dev; frame-src https://*.firebaseapp.com https://*.web.app https://accounts.google.com https://www.google.com/recaptcha/ https://recaptcha.google.com/recaptcha/; worker-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title>Bub Feed Log</title>
 <meta name="theme-color" content="#f3ecf5">
@@ -697,6 +697,13 @@ textarea.input { min-height: 90px; padding: 10px 12px; resize: vertical; }
 .wn-title { margin: 0; font-family: var(--font-display); font-variation-settings: "SOFT" 100; font-size: 25px; font-weight: 650; line-height: 1.15; text-wrap: balance; }
 .wn-text { margin: 0; font-size: 15px; line-height: 1.45; color: var(--muted); }
 .wn-pick { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.wn-pick.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.wn-pick.three .wn-opt { flex-direction: column; gap: 4px; min-height: 60px; font-size: 14px; }
+.a-list { position: absolute; inset: 16px 14px; display: flex; flex-direction: column; gap: 6px; }
+.a-lrow { background: var(--bg); border-radius: 10px; height: 26px; display: flex; align-items: center; gap: 8px; padding: 0 8px; }
+.a-ldot { width: 14px; height: 14px; border-radius: 7px; flex: none; }
+.a-lrow .a-lines { flex: 1; }
+.a-ltime { width: 22px; height: 6px; border-radius: 3px; background: var(--fill); flex: none; }
 .wn-opt { appearance: none; border: 0; min-height: 52px; border-radius: 14px; background: var(--fill); font-size: 15px; font-weight: 800; display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
 .wn-opt .ic { width: 18px; height: 18px; }
 .wn-opt[aria-pressed="true"] { background: var(--primary); color: var(--on-primary); }
@@ -980,7 +987,7 @@ details[open] > summary .ic { transform: rotate(90deg); }
   const CFG = window.BUB_CONFIG || {};
   // config.js didn't load or has a mistake (a missing comma, say): say so, rather than opening in demo mode
   const CFG_MISSING = !window.BUB_CONFIG;
-  const APP_VERSION = '2026.11.03-1ad9cb';
+  const APP_VERSION = '2026.11.03-1bbbc8';
   // Who logs in this family. Filled from the family's member list (cloud) or this phone's setup (demo).
   const PEOPLE_CFG = [], PEOPLE = [];
   function setPeople(list) {
@@ -1083,6 +1090,7 @@ details[open] > summary .ic { transform: rotate(90deg); }
     out: '<path d="M12 4v2M12 18v2M4 12h2M18 12h2M6.3 6.3l1.4 1.4M16.3 16.3l1.4 1.4M6.3 17.7l1.4-1.4M16.3 7.7l1.4-1.4M9 12a3 3 0 1 0 6 0a3 3 0 1 0-6 0"/>',
     milk: '<path d="M9 3h6M9.8 3v3L7.5 9.5v9.7A1.8 1.8 0 0 0 9.3 21h5.4a1.8 1.8 0 0 0 1.8-1.8V9.5L14.2 6V3M7.5 12.5h9M10 16h4"/>',
     timeline: '<path d="M8 3.5v17M8 7h8.5M8 12h11.5M8 17h6"/>',
+    list: '<path d="M9 6h11M9 12h11M9 18h11M4.5 6h.01M4.5 12h.01M4.5 18h.01"/>',
     cards: '<path d="M4.5 4.5h15v6.5h-15zM4.5 14h15v5.5h-15z"/>',
     chevl: '<path d="M14.5 6l-6 6 6 6"/>',
     chevd: '<path d="M6 9.5l6 6 6-6"/>',
@@ -5480,9 +5488,12 @@ const WHO = {wb:[0,0.3487,3.3464,0.14602,7,0.2776,3.4879,0.14483,14,0.2581,3.752
   }
   // people who logged but aren't in the family: the babysitter or a named helper
   const otherLoggers = () => memo('others', () => { const seen = new Set(PEOPLE); const out = []; state.entries.forEach(e => { if (e.who && !seen.has(e.who)) { seen.add(e.who); out.push(e.who); } }); return out.slice(0, 4); });
-  // how History looks on this phone: a timeline (the default) or feed-to-feed cards
+  // how History looks on this phone: a timeline (the default), a list (one row each, newest first) or
+  // feed-to-feed cards
   const HVIEW_KEY = 'bubfeed-hview';
-  const histView = () => getPref(HVIEW_KEY, 'timeline') === 'cards' ? 'cards' : 'timeline';
+  const HVIEWS = [['timeline', 'Timeline', 'The day as a picture along the hours. Switch to 3 days or a week to compare days.'], ['list', 'List', 'Everything, newest first, one row each. Quickest to scan.'], ['cards', 'Cards', 'Each feed, with what happened before the next one.']];
+  const histView = () => { const v = getPref(HVIEW_KEY, 'timeline'); return HVIEWS.some(x => x[0] === v) ? v : 'timeline'; };
+  const hviewWords = v => v === 'cards' ? 'cards' : v === 'list' ? 'a list' : 'a timeline';
   let histToNow = true;
   // day 0 is today, -1 yesterday; range is 1, 3 or 7 days
   let hist = { day: 0, range: 1, folded: new Set(), cardDays: 3, force: '' };
@@ -5498,8 +5509,8 @@ const WHO = {wb:[0,0.3487,3.3464,0.14602,7,0.2776,3.4879,0.14483,14,0.2581,3.752
   function historyPageHTML() {
     const v = histView();
     return pageTop('History', 'Only changes this phone.') + `<section><h2 class="group-head">Show history as</h2>
-      <div class="hv-pick" role="group" aria-label="Show history as">${[['timeline', 'Timeline', 'The day as a picture: feeds, sleep and everything else along the hours. Switch to 3 days or a week to compare days.'], ['cards', 'Cards', 'Each feed, with what happened before the next one.']].map(([k, l, help]) => `<button type="button" class="hv-opt" data-act="hview" data-v="${k}" aria-pressed="${v === k}"><span class="menu-ic">${icon(k)}</span><span class="row-text"><b>${l}</b><br><span class="row-help">${help}</span></span></button>`).join('')}</div>
-      <p class="group-foot">Search and filters work the same in both.</p></section>`;
+      <div class="hv-pick" role="group" aria-label="Show history as">${HVIEWS.map(([k, l, help]) => `<button type="button" class="hv-opt" data-act="hview" data-v="${k}" aria-pressed="${v === k}"><span class="menu-ic">${icon(k)}</span><span class="row-text"><b>${l}</b><br><span class="row-help">${help}</span></span></button>`).join('')}</div>
+      <p class="group-foot">Search and the Feeds, Nappies and Sleep buttons work the same in all three.</p></section>`;
   }
   // initials instead of names (two letters when two people share a first letter)
   function whoIni(n) {
@@ -5687,7 +5698,7 @@ const WHO = {wb:[0,0.3487,3.3464,0.14602,7,0.2776,3.4879,0.14483,14,0.2581,3.752
     byDay.forEach((items, k) => {
       const f = items.filter(isFeed), dml = f.filter(e => e.type === 'bottle').reduce((a, e) => a + e.ml, 0), dn = items.filter(isNappy).length;
       const sum = [f.length ? plural(f.length, 'feed', 'feeds') : '', dml ? `${dml} ml` : '', dn ? plural(dn, 'nappy', 'nappies') : ''].filter(Boolean).join(' · ');
-      html += `<section class="hist-day"><div class="day-head"><h2>${dayName(k)}</h2><span>${sum}</span></div><div class="card">`;
+      html += `<section class="hist-day"><div class="day-head"><h2>${dayName(k)}</h2><span>${sum}</span></div>${!n && isToday(k) ? dayStripHTML(sortedAll().filter(e => isToday(e.start))) : ''}<div class="card">`;
       let prevFeed = null;
       items.forEach(e => {
         if (showGaps && isFeed(e) && prevFeed) html += `<div class="gap-row" aria-hidden="true"><i></i><span>${hm((prevFeed.start - e.start) / MIN)} between feeds</span><i></i></div>`;
@@ -5718,6 +5729,7 @@ const WHO = {wb:[0,0.3487,3.3464,0.14602,7,0.2776,3.4879,0.14483,14,0.2581,3.752
   function renderHistory() {
     const view = hist.force || histView();
     if (hf.q || hf.cats.includes('shop')) return listHTML();
+    if (view === 'list') return listHTML();
     if (view === 'cards') return !hf.who && (!hf.cats.length || hf.cats.includes('feed')) ? cardsHTML() : listHTML();
     return hist.range > 1 ? tlMultiHTML() : tlDayHTML();
   }
@@ -5744,8 +5756,8 @@ const WHO = {wb:[0,0.3487,3.3464,0.14602,7,0.2776,3.4879,0.14483,14,0.2581,3.752
         <div class="a-lane">${[[6, 'var(--right)'], [30, 'var(--left)'], [52, 'var(--bottle)'], [78, 'var(--right)']].map(([tp, c], k) => `<i class="a-chip grow" style="top: ${tp}%; background: color-mix(in srgb, ${c} 30%, var(--surface)); animation-delay: ${0.25 + k * 0.35}s"></i>`).join('')}</div>
         <div class="a-lane">${[[12, 20], [40, 14], [60, 18]].map(([tp, h], k) => `<i class="a-blk grow" style="top: ${tp}%; height: ${h}%; animation-delay: ${0.45 + k * 0.4}s"></i>`).join('')}</div>
         <div class="a-lane">${[10, 26, 45, 66, 84].map((tp, k) => `<i class="a-pill grow" style="top: ${tp}%; animation-delay: ${0.35 + k * 0.3}s"></i>`).join('')}</div></div><i class="a-now"></i>`;
-      const cards = `<div class="a-cards">${['var(--p-blue)', 'var(--p-amber)', 'var(--p-blue)'].map((c, k) => `<div class="a-card rise${k === 0 ? ' now' : ''}" style="animation-delay: ${0.3 + k * 0.4}s"><span class="a-dot" style="background: ${c}"></span><span class="a-lines"><i style="width: ${70 - k * 10}%"></i><i style="width: ${45 + k * 8}%"></i></span></div>`).join('')}</div>`;
-      return `<div class="a-split"><div><span class="a-tag">Timeline</span><div style="position: absolute; inset: 18px 0 0">${tl}</div></div><div><span class="a-tag">Cards</span><div style="position: absolute; inset: 18px 0 0">${cards}</div></div></div>`;
+      const list = `<div class="a-list">${['var(--p-teal)', 'var(--p-blue)', 'var(--p-indigo)', 'var(--p-teal)', 'var(--p-amber)'].map((c, k) => `<div class="a-lrow rise" style="animation-delay: ${0.3 + k * 0.25}s"><span class="a-ldot" style="background: ${c}"></span><span class="a-lines"><i style="width: ${78 - k * 7}%"></i></span><span class="a-ltime"></span></div>`).join('')}</div>`;
+      return `<div class="a-split"><div><span class="a-tag">Timeline</span><div style="position: absolute; inset: 18px 0 0">${tl}</div></div><div><span class="a-tag">List</span><div style="position: absolute; inset: 18px 0 0">${list}</div></div></div>`;
     }
     if (i === 1) return `<div class="a-milk"><div class="a-mcard rise" style="animation-delay: 0.2s"><span class="a-mrow"><span>Made-up bottle · 120 ml</span><span style="color: var(--t-amber)">20 min</span></span><span class="a-bar"><i class="fill"></i></span></div>
       <div class="a-shelf"><span class="a-spot">${icon('pump')}Pumped</span><span class="a-spot">${icon('fridge')}Fridge</span><span class="a-spot">${icon('freezer')}Freezer</span><span class="a-bottle move">C</span></div></div>`;
@@ -5756,7 +5768,7 @@ const WHO = {wb:[0,0.3487,3.3464,0.14602,7,0.2776,3.4879,0.14483,14,0.2581,3.752
     const hv = wn.pick.hview || histView(), mc = wn.pick.milk || 'on';
     const pages = [
       ['A clearer History', 'Quick buttons for feeds, nappies and sleep, a search, and a choice of how it looks on this phone. Change it any time in Settings › History.',
-        `<div class="wn-pick" role="group" aria-label="Show history as">${[['timeline', 'Timeline'], ['cards', 'Cards']].map(([k, l]) => `<button type="button" class="wn-opt" data-act="wn-pick" data-k="hview" data-v="${k}" aria-pressed="${hv === k}">${icon(k)}${l}</button>`).join('')}</div>`],
+        `<div class="wn-pick three" role="group" aria-label="Show history as">${HVIEWS.map(([k, l]) => `<button type="button" class="wn-opt" data-act="wn-pick" data-k="hview" data-v="${k}" aria-pressed="${hv === k}">${icon(k)}${l}</button>`).join('')}</div>`],
       ['Made-up bottles and stored milk', 'Count down a made-up bottle, and keep track of labelled milk left out, in the fridge and in the freezer, oldest first. Pumping asks where the milk is going.',
         `<div class="wn-pick" role="group" aria-label="Milk card on Home">${[['on', 'Add it to Home'], ['off', 'Not now']].map(([k, l]) => `<button type="button" class="wn-opt" data-act="wn-pick" data-k="milk" data-v="${k}" aria-pressed="${mc === k}">${l}</button>`).join('')}</div>`],
       ['Also in this update', '', `<ul class="wn-list">${['Pump both sides at once, and enter the amount as a total or for each side', 'Stored milk can’t share a label with another bottle', 'Pick your icons (pastel, classic or lines) and any text size, in Look and feel', 'Dusk purple, with a purple night mode'].map(t => `<li><span>${icon('check')}</span>${t}</li>`).join('')}</ul>`]
@@ -5803,7 +5815,7 @@ const WHO = {wb:[0,0.3487,3.3464,0.14602,7,0.2776,3.4879,0.14483,14,0.2581,3.752
     return `<div class="title-row"><h1>Settings</h1></div>
       <button type="button" class="baby-card" data-act="set-page" data-v="baby"><span class="avatar big">${initial(state.baby.name || 'Bub')}</span><span class="row-text"><b>${esc(state.baby.name || 'Bub')}</b><br><span class="row-help">${babyAge() ? esc(babyAge()) + ' · ' : ''}name, birthday, weigh-ins</span></span>${icon('chev')}</button>
       <section><h2 class="group-head">Shared with your family</h2><div class="card">${menuRow('people', 'people', CLOUD ? 'People and sharing' : 'People and demo mode', peopleSub, pend ? `<span class="count-pill">${pend} waiting</span>` : '')}${menuRow('feeding', 'bottle', 'Feeding', feedSub)}${menuRow('milk', 'milk', 'Milk', (() => { const t = milkTimes(); return `Fridge ${milkSpan(t.fridge)} · freezer ${milkSpan(t.freezer)}`; })())}${menuRow('shopping', 'low', 'Shopping list', state.low.length ? `${plural(state.low.length, 'thing', 'things')} to buy` : 'Items, running-low warnings, store links')}</div><p class="group-foot">Changes here show on everyone’s phone.</p></section>
-      <section><h2 class="group-head">Just this phone</h2><div class="card">${menuRow('look', 'palette', 'Look and feel', lookSub)}${menuRow('edithome', 'grid', 'Home screen', homeSub)}${menuRow('history', 'history', 'History', histView() === 'cards' ? 'Shown as cards' : 'Shown as a timeline')}${CLOUD ? menuRow('notify', 'bell', 'Notifications', pushPrefs().on && 'Notification' in window && Notification.permission === 'granted' ? 'On' : 'Off') : ''}</div></section>
+      <section><h2 class="group-head">Just this phone</h2><div class="card">${menuRow('look', 'palette', 'Look and feel', lookSub)}${menuRow('edithome', 'grid', 'Home screen', homeSub)}${menuRow('history', 'history', 'History', `Shown as ${hviewWords(histView())}`)}${CLOUD ? menuRow('notify', 'bell', 'Notifications', pushPrefs().on && 'Notification' in window && Notification.permission === 'granted' ? 'On' : 'Off') : ''}</div></section>
       <section><h2 class="group-head">Your data</h2><div class="card">${menuRow('data', 'cloud', 'Backups and export', dataSub)}</div></section>
       <section><h2 class="group-head">Account and help</h2><div class="card">${menuRow('account', 'person', 'Account', CLOUD ? `${esc(state.me)} · signed in with Google` : 'Demo mode, saved on this phone')}${menuRow('help', 'help', 'Help and about', updateReady ? '<b>A new version is ready</b>' : 'Install, sync, privacy, feedback')}${amHost() ? menuRow('inbox', 'note', 'Feedback from friends', inbox ? plural(inbox.length, 'message', 'messages') : 'Only you see this') : ''}</div></section>
       <p class="group-foot" style="text-align: center">No ads, no tracking, nothing sold.</p>`;
@@ -7126,8 +7138,8 @@ const WHO = {wb:[0,0.3487,3.3464,0.14602,7,0.2776,3.4879,0.14483,14,0.2581,3.752
       case 'wn-next': wn.page = Math.min(2, wn.page + 1); renderSheet(); { const f = $('sheet').querySelector('[data-autofocus]'); if (f) f.focus(); } break;
       case 'wn-back': wn.page = Math.max(0, wn.page - 1); renderSheet(); break;
       case 'wn-skip': closeSheet(); break;
-      case 'wn-done': { wnSave(); closeSheet(); render(); const mc = (wn.pick.milk || 'on') === 'on'; toast(`Saved: History as ${histView() === 'cards' ? 'cards' : 'a timeline'}${isSitter ? '' : `, Milk card ${mc ? 'on Home' : 'off'}`}. Change these in Settings.`); break; }
-      case 'hview': setPref(HVIEW_KEY, d.v === 'cards' ? 'cards' : 'timeline'); histToNow = true; render(); toast(`History will show as ${d.v === 'cards' ? 'cards' : 'a timeline'}`); break;
+      case 'wn-done': { wnSave(); closeSheet(); render(); const mc = (wn.pick.milk || 'on') === 'on'; toast(`Saved: History as ${hviewWords(histView())}${isSitter ? '' : `, Milk card ${mc ? 'on Home' : 'off'}`}. Change these in Settings.`); break; }
+      case 'hview': { const v = HVIEWS.some(x => x[0] === d.v) ? d.v : 'timeline'; setPref(HVIEW_KEY, v); histToNow = true; historyLimit = 120; render(); toast(`History will show as ${hviewWords(v)}`); break; }
       case 'go-milk': closeSheet(); if (tab === 'home') markHandoverSeen(); milkAllFreezer = false; tab = 'milk'; window.scrollTo(0, 0); render(); break;
       case 'milk-move': moveMilk(d.id, d.v); break;
       case 'milk-use': if (d.v === 'tossed') arm(a, 'Tap again to throw out', () => useMilk(d.id, 'tossed')); else useMilk(d.id, 'fed'); break;
