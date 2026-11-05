@@ -91,18 +91,18 @@ You're the host, so your Google account is the key to the Firebase console.
 
 1. <https://console.cloud.google.com/apis/credentials> › **Browser key (auto created by Firebase)**.
 2. **Application restrictions:** **Websites**, add `https://YOURNAME.github.io/*` and `https://PROJECT_ID.firebaseapp.com/*`.
-3. **API restrictions:** **Restrict key**, tick only **Identity Toolkit API**, **Token Service API**, **Cloud Firestore API**, **Firebase Installations API**, **Firebase App Check API** and **reCAPTCHA Enterprise API**.
-4. **Save**, wait 5 minutes, then check the app still signs in and syncs.
+3. **API restrictions:** leave Firebase's own list as it is. It includes **FCM Registration API**, which notifications need.
+4. **Save** (Google may warn about usage from other APIs: that's bots trying the key, so type **UPDATE**), wait 5 minutes, then check the app still signs in and syncs.
 </details>
 
 <details><summary><b>App Check</b> (10 minutes, then a day of normal use)</summary>
 
 Makes Firebase refuse requests that don't come from your app at your address.
 
-1. <https://console.cloud.google.com/security/recaptcha> › **Create key** › name `Bub Feed Log`, platform **Website**, domain `YOURNAME.github.io`, checkbox challenge unticked › copy the key (starts with `6L`).
-2. Firebase console › **App Check** › **Apps** › your web app › **reCAPTCHA Enterprise**: paste the key, **Token time to live** **1 day**, save.
+1. <https://console.cloud.google.com/security/recaptcha> with your **Firebase project** selected at the top (a key in any other project won't work) › **Create key** › name `Bub Feed Log`, type **Web**, domain `YOURNAME.github.io`, everything under Additional settings off › copy the key: 40 characters starting with `6L`, not the web address on the page after.
+2. Firebase console › **App Check** › **Apps** › your web app › **Fraud Defense** (formerly reCAPTCHA Enterprise): paste the key, **Token time to live** **1 day**, save.
 3. In `config.js` on GitHub, paste the key into `appCheckKey: '...'` and commit.
-4. After a day of normal use, **App Check** › **APIs** › **Cloud Firestore**: if almost all requests show **Verified**, click **Enforce**.
+4. After a day of normal use, **App Check** › **APIs** › **Cloud Firestore**: if almost all requests show **Verified**, click **Enforce**. Leave **Authentication** on monitoring: it's still a preview.
 
 If the pill ever says **Sync problem** after this, turn **Enforce** off again.
 </details>
