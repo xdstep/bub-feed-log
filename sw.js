@@ -1,6 +1,6 @@
 // Offline support: keeps the app on the phone so it opens without signal.
 // Firebase handles offline data itself; this only caches the app's own files.
-const VERSION = '2026.11.03-1bbbc8';
+const VERSION = '2026.11.05-a69982';
 const CACHE = 'bubfeed-' + VERSION;
 const SHELL = ['./', './index.html', './config.js', './manifest.webmanifest', './icons/icon-192.png', './icons/icon-512.png'];
 
@@ -28,14 +28,17 @@ self.addEventListener('fetch', event => {
   if (sameOrigin && url.pathname.endsWith('/version.json')) return;
   const library = /www\.gstatic\.com\/firebasejs\/|fonts\.googleapis\.com|fonts\.gstatic\.com/.test(url.href);
 
-  if (sameOrigin && (req.mode === 'navigate' || /\/(index\.html)?$/.test(url.pathname) || url.pathname.endsWith('config.js'))) {
+  // the app's icon and its manifest: always asked for fresh, so a new icon reaches phones that already
+  // have the app (the phone checks these against what it installed, and a cached copy hides a change)
+  const appLook = sameOrigin && (url.pathname.endsWith('manifest.webmanifest') || /\/icons\/[^/]+\.png$/.test(url.pathname));
+  if (sameOrigin && (req.mode === 'navigate' || /\/(index\.html)?$/.test(url.pathname) || url.pathname.endsWith('config.js') || appLook)) {
     // Network first, so app updates arrive; the cached copy is used offline. config.js is always checked
     // with GitHub, so a fixed copy is picked up straight away rather than after the browser's 10 minutes.
-    const live = url.pathname.endsWith('config.js') && req.mode !== 'navigate' ? new Request(req, { cache: 'no-cache' }) : req;
+    const live = (url.pathname.endsWith('config.js') || appLook) && req.mode !== 'navigate' ? new Request(req, { cache: 'no-cache' }) : req;
     event.respondWith(
       fetch(live)
         .then(res => { if (res.ok) { const copy = res.clone(); caches.open(CACHE).then(c => c.put(req, copy)); } return res; })
-        .catch(() => caches.match(req).then(hit => hit || caches.match('./index.html')))
+        .catch(() => caches.match(req).then(hit => hit || (appLook ? Response.error() : caches.match('./index.html'))))
     );
     return;
   }

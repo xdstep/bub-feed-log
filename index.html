@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-FGr+M7pxi6FE4zJmuUPXrfEdUpY+dHSwbj/YWJxwIVU=' https://www.gstatic.com/firebasejs/10.14.1/ https://apis.google.com https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/ https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://accounts.google.com/gsi/style; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://fcmregistrations.googleapis.com https://firestore.googleapis.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firebaseinstallations.googleapis.com https://content-firebaseappcheck.googleapis.com https://www.googleapis.com https://www.google.com/recaptcha/ https://apis.google.com https://accounts.google.com/gsi/ https://*.workers.dev; frame-src https://*.firebaseapp.com https://*.web.app https://accounts.google.com https://www.google.com/recaptcha/ https://recaptcha.google.com/recaptcha/; worker-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-oKJx5Sxgict08obY6eXRVHwumvn4RWOemhkFvtOE/ms=' https://www.gstatic.com/firebasejs/10.14.1/ https://apis.google.com https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/ https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://accounts.google.com/gsi/style; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://fcmregistrations.googleapis.com https://firestore.googleapis.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firebaseinstallations.googleapis.com https://content-firebaseappcheck.googleapis.com https://www.googleapis.com https://www.google.com/recaptcha/ https://apis.google.com https://accounts.google.com/gsi/ https://*.workers.dev; frame-src https://*.firebaseapp.com https://*.web.app https://accounts.google.com https://www.google.com/recaptcha/ https://recaptcha.google.com/recaptcha/; worker-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title>Bub Feed Log</title>
 <meta name="theme-color" content="#f3ecf5">
@@ -948,6 +948,112 @@ details[open] > summary .ic { transform: rotate(90deg); }
 .toast .toast-x { text-decoration: none; width: 40px; padding: 0; display: grid; place-items: center; opacity: 0.75; flex: none; }
 .toast .toast-x .ic { width: 20px; height: 20px; }
 @media (prefers-reduced-motion: reduce) { .toast { transition: none; } }
+/* ---------- 1.4: the baby's tab, appointments, vaccinations ---------- */
+.tab span { max-width: 78px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.baby-top { cursor: default; }
+.baby-top b { font-family: var(--font-display); font-variation-settings: "SOFT" 100; font-size: 24px; font-weight: 650; }
+.bb-head { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; padding: 6px 4px 0; }
+.bb-head .group-head { margin: 0; padding: 0; }
+.bb-head .btn { margin-left: auto; }
+.sub-head { margin: 4px 4px -2px; font-size: 13px; font-weight: 700; color: var(--muted); }
+.hub { display: flex; flex-direction: column; gap: 10px; }
+.hubrow, .cu-open { appearance: none; border: 0; width: 100%; text-align: left; background: var(--surface); border-radius: var(--r); padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; }
+.cu-open { background: transparent; padding: 0; border-radius: 0; }
+.hubline { display: flex; align-items: center; justify-content: space-between; gap: 10px; font-size: 15px; }
+.hubline + .hubline { border-top: 1px solid var(--line); padding-top: 9px; }
+.hubline > span:first-child { font-weight: 700; min-width: 0; }
+.hubline > span:last-child { color: var(--muted); font-size: 14px; text-align: right; flex: none; max-width: 52%; }
+.hubline.warn > span:first-child, .hubline.accent > span:first-child { color: var(--primary); }
+.hubline .left-tag { font-size: 14px; }
+.cu-card { background: var(--surface); border-radius: var(--r); padding: 14px 16px; display: flex; flex-direction: column; gap: 12px; }
+.cu-row { display: flex; align-items: center; gap: 12px; }
+.cu-row + .cu-row { border-top: 1px solid var(--line); padding-top: 10px; }
+.cu-row .row-text { flex: 1; }
+.checkin { background: color-mix(in srgb, var(--primary) 9%, var(--surface)); border-radius: 16px; padding: 12px; display: flex; flex-direction: column; gap: 10px; }
+.checkin .ap-date { background: var(--surface); }
+.ck-head { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase; color: var(--primary); }
+.ck-head .ic { width: 16px; height: 16px; }
+.ap-date { width: 48px; flex: none; border-radius: 12px; background: var(--fill); display: flex; flex-direction: column; align-items: center; padding: 6px 0 5px; line-height: 1.05; }
+.ap-date small { font-size: 11px; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase; color: var(--primary); }
+.ap-date small.m { color: var(--muted); }
+.ap-date b { font-size: 19px; font-weight: 800; font-variant-numeric: tabular-nums; }
+.ap-date.open { background: transparent; border: 1.5px dashed var(--line); }
+.ap-row { appearance: none; border: 0; background: transparent; width: 100%; text-align: left; position: relative; display: flex; align-items: center; gap: 12px; padding: 12px 16px; min-height: 72px; }
+.ap-row + .ap-row::before { content: ""; position: absolute; top: 0; left: 16px; right: 16px; height: 1px; background: var(--line); }
+.ap-row .row-text { flex: 1; }
+.ap-row .row-text b { font-size: 16px; }
+.ap-flags { display: flex; flex-wrap: wrap; gap: 2px 10px; margin-top: 3px; font-size: 13px; color: var(--muted); }
+.ap-flags span { display: inline-flex; align-items: center; gap: 4px; }
+.ap-flags .ic { width: 14px; height: 14px; }
+.ap-flag { color: var(--primary); font-weight: 800; }
+.ap-meta { display: flex; flex-direction: column; align-items: flex-end; gap: 5px; flex: none; }
+.ap-who { display: flex; gap: 3px; }
+.ap-who i { font-style: normal; width: 24px; height: 24px; border-radius: 12px; background: var(--fill); color: var(--primary); font-size: 11.5px; font-weight: 800; display: inline-flex; align-items: center; justify-content: center; }
+.mc-ic.big { width: 48px; height: 48px; border-radius: 14px; }
+.mc-ic.big .ic { width: 26px; height: 26px; }
+.setup-ban { box-shadow: inset 0 0 0 2px var(--primary); }
+.past-btn { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; align-self: flex-start; font-weight: 800; }
+.past-btn .ic { width: 18px; height: 18px; }
+.danger-link { color: var(--due); align-self: center; min-height: 44px; }
+.pill { display: inline-flex; align-items: center; gap: 4px; border-radius: 999px; padding: 3px 10px; font-size: 12.5px; font-weight: 800; white-space: nowrap; }
+.pill .ic { width: 14px; height: 14px; }
+.pill.given { background: color-mix(in srgb, var(--good) 14%, var(--surface)); color: var(--good); }
+.pill.due { background: var(--primary); color: var(--on-primary); }
+.pill.later { background: var(--fill); color: var(--muted); }
+.vgroup { appearance: none; border: 0; width: 100%; text-align: left; background: var(--surface); border-radius: var(--r); padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; }
+.vgroup.next { box-shadow: inset 0 0 0 2px var(--primary); }
+.vgroup.done .vitems { opacity: 0.72; }
+.vhead { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.vhead b { font-size: 17px; font-weight: 800; }
+.vitems { display: flex; flex-direction: column; gap: 6px; }
+.vitem { display: flex; gap: 10px; font-size: 15px; line-height: 1.35; align-items: flex-start; }
+.vitem > i { width: 8px; height: 8px; border-radius: 4px; background: var(--t-violet); flex: none; margin-top: 7px; }
+.vitem > .ic { width: 18px; height: 18px; flex: none; color: var(--muted); }
+.vitem.given > .ic { color: var(--good); }
+.vitem small { display: block; color: var(--muted); font-size: 13px; }
+.two-col { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 10px; }
+.fchip.small { min-height: 36px; font-size: 14px; padding: 0 12px; }
+.slist { display: flex; flex-direction: column; gap: 10px; }
+.srow { background: var(--surface); border-radius: 16px; padding: 12px; display: flex; flex-direction: column; gap: 10px; }
+.srow.skipped .row-text, .srow.skipped .two-col { opacity: 0.5; }
+.srow-top { display: flex; align-items: flex-start; gap: 10px; }
+.srow-top .row-text, .srow-top .input { flex: 1; min-width: 0; }
+.cal-prev { display: flex; gap: 10px; align-items: flex-start; border: 1.5px solid var(--line); }
+.cal-sw { width: 14px; height: 14px; border-radius: 4px; background: var(--t-violet); margin-top: 4px; flex: none; }
+.steps { margin: 0; padding-left: 22px; font-size: 15px; line-height: 1.5; display: grid; gap: 4px; }
+a.btn { display: flex; align-items: center; justify-content: center; text-decoration: none; color: inherit; }
+a.btn.primary { color: var(--on-primary); }
+.group-foot .ic { width: 15px; height: 15px; vertical-align: -2px; }
+/* What's new 1.4 pictures */
+.a14 { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: space-between; padding: 14px 14px 0; }
+.a14-sec { display: flex; flex-direction: column; gap: 6px; }
+.a14-row { display: flex; align-items: center; gap: 8px; background: var(--bg); border-radius: 10px; padding: 5px 8px; font-size: 12px; }
+.a14-row b { font-weight: 800; flex: none; }
+.a14-row i { flex: 1; height: 6px; border-radius: 3px; background: var(--fill); }
+.a14-ic { width: 22px; height: 22px; border-radius: 7px; display: grid; place-items: center; background: var(--tp); color: var(--tc); flex: none; }
+.a14-ic .ic { width: 14px; height: 14px; }
+.a14-bar { display: grid; grid-template-columns: repeat(5, 1fr); align-items: center; border-top: 1px solid var(--line); padding: 6px 0 8px; margin: 0 -14px; }
+.a14-bar span { display: flex; flex-direction: column; align-items: center; gap: 2px; color: var(--muted); }
+.a14-bar span .ic { width: 18px; height: 18px; }
+.a14-bar small { font-size: 9.5px; font-weight: 800; max-width: 56px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.a14-bar span.on { color: var(--primary); }
+.a14-add { width: 30px; height: 30px; border-radius: 10px; background: var(--primary); justify-self: center; }
+.a14-cal { justify-content: center; gap: 8px; padding-bottom: 14px; }
+.a14-card { background: var(--bg); border-radius: 14px; padding: 8px 10px; display: flex; flex-direction: column; gap: 6px; }
+.a14-ck { font-size: 10px; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase; color: var(--primary); display: inline-flex; align-items: center; gap: 4px; }
+.a14-ck .ic { width: 12px; height: 12px; }
+.a14-line { display: flex; align-items: center; gap: 10px; font-size: 13px; }
+.a14-line > span:last-child { display: flex; flex-direction: column; gap: 4px; flex: 1; }
+.a14-line i { height: 6px; width: 60%; border-radius: 3px; background: var(--fill); }
+.a14-line .ap-date { width: 38px; padding: 4px 0; }
+.a14-line .ap-date b { font-size: 15px; }
+.a14-gcal { align-self: flex-start; display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 800; background: var(--p-violet); color: var(--t-violet); border-radius: 999px; padding: 4px 10px; }
+.a14-gcal .ic { width: 14px; height: 14px; }
+.a14-pour { flex: 1; display: flex; align-items: center; justify-content: center; gap: 18px; }
+.a14-arrow .ic { width: 28px; height: 28px; color: var(--muted); }
+.a14-cup { display: flex; flex-direction: column; align-items: center; gap: 4px; color: var(--t-amber); }
+.a14-cup .ic { width: 52px; height: 52px; }
+.a14-cup small { font-size: 13px; font-weight: 800; color: var(--ink); }
 </style>
 </head>
 <body>
@@ -987,7 +1093,7 @@ details[open] > summary .ic { transform: rotate(90deg); }
   const CFG = window.BUB_CONFIG || {};
   // config.js didn't load or has a mistake (a missing comma, say): say so, rather than opening in demo mode
   const CFG_MISSING = !window.BUB_CONFIG;
-  const APP_VERSION = '2026.11.03-1bbbc8';
+  const APP_VERSION = '2026.11.05-a69982';
   // Who logs in this family. Filled from the family's member list (cloud) or this phone's setup (demo).
   const PEOPLE_CFG = [], PEOPLE = [];
   function setPeople(list) {
@@ -1095,7 +1201,13 @@ details[open] > summary .ic { transform: rotate(90deg); }
     chevl: '<path d="M14.5 6l-6 6 6 6"/>',
     chevd: '<path d="M6 9.5l6 6 6-6"/>',
     chevu: '<path d="M6 14.5l6-6 6 6"/>',
-    drag: '<path d="M9 6h.01M15 6h.01M9 12h.01M15 12h.01M9 18h.01M15 18h.01"/>'
+    drag: '<path d="M9 6h.01M15 6h.01M9 12h.01M15 12h.01M9 18h.01M15 18h.01"/>',
+    baby: '<path d="M12 4.5a3 3 0 1 0 0 6a3 3 0 1 0 0-6M6.5 20v-2.5a5.5 5.5 0 0 1 11 0V20M9 14.5c1.6 1 4.4 1 6 0"/>',
+    cal: '<path d="M4.5 6.5h15v13h-15zM4.5 10.5h15M8.5 4v4M15.5 4v4"/>',
+    syringe: '<path d="M15 3l6 6M18 6l-9.5 9.5-3-3L15 3M8.5 15.5 6 18M3 21l3-3M10 11l3 3"/>',
+    mch: '<path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/>',
+    gp: '<path d="M9 4h6v5h5v6h-5v5H9v-5H4V9h5z"/>',
+    spec: '<path d="M4.5 12a7.5 7.5 0 1 0 15 0a7.5 7.5 0 1 0-15 0M12 8v4l2.5 1.5"/>'
   };
   const icon = n => `<svg class="ic" viewBox="0 0 24 24" aria-hidden="true">${ICONS[n] || ''}</svg>`;
 
@@ -1641,14 +1753,15 @@ details[open] > summary .ic { transform: rotate(90deg); }
     sleepb: { name: 'Sleep', help: 'Asleep now, the last sleep and last night' },
     growthb: { name: 'Weight and length', help: 'The latest, with a button to add more' },
     milkb: { name: 'Milk', help: 'A made-up bottle’s countdown and stored milk, when there is some' },
+    appts: { name: 'Coming up', help: 'Appointments and vaccinations, and a check after each one' },
     low: { name: 'Running low', help: 'The shared shopping list' },
     stretch: { name: 'Longest gap between feeds', help: 'Last night, from one feed starting to the next', insight: true },
     week: { name: 'This week', help: 'Feeds per day chart', insight: true },
     balance: { name: 'Left and right', help: 'Breastfeeding balance', insight: true },
     mch: { name: 'For the MCH nurse', help: 'Daily averages this week', insight: true }
   };
-  const BLOCK_GROUPS = [['Essentials', ['handover', 'last', 'tiles', 'quick']], ['Quick looks', ['milkb', 'nappyb', 'bathb', 'medb', 'sleepb', 'growthb', 'low']], ['Charts and summaries', ['today', 'stretch', 'week', 'balance', 'mch']]];
-  const DEFAULT_HOME = ['handover', 'last', 'milkb', 'tiles', 'growthb'];
+  const BLOCK_GROUPS = [['Essentials', ['handover', 'last', 'tiles', 'quick']], ['Quick looks', ['appts', 'milkb', 'nappyb', 'bathb', 'medb', 'sleepb', 'growthb', 'low']], ['Charts and summaries', ['today', 'stretch', 'week', 'balance', 'mch']]];
+  const DEFAULT_HOME = ['handover', 'last', 'appts', 'milkb', 'tiles', 'growthb'];
   const INSIGHTS = {
     week: 'This week', stretch: 'Longest gap between feeds', balance: 'Left and right', growth: 'Growth', sleep: 'Sleep', pump: 'Pumping',
     unsettled: 'Unsettled spells', mch: 'For the MCH nurse', share: 'Share with family'
@@ -1665,7 +1778,7 @@ details[open] > summary .ic { transform: rotate(90deg); }
   const DATA_DOTS = { light: ['#2a78d6', '#d55181', '#b97a00'], dark: ['#3987e5', '#d55181', '#c98500'], night: ['#5b8fd6', '#d0628a', '#b5802a'] };
 
   function newProfile(feeding, lastSeenAgo) {
-    return { home: DEFAULT_HOME.slice(), tiles: DEFAULT_TILES[feeding] ? DEFAULT_TILES[feeding].slice() : DEFAULT_TILES.both.slice(), presets: [], insights: DEFAULT_INSIGHTS.slice(), calm: false, iconStyle: 'pastel', v13: true, lastSeen: Date.now() - lastSeenAgo, notifyDue: true, notifyOther: false };
+    return { home: DEFAULT_HOME.slice(), tiles: DEFAULT_TILES[feeding] ? DEFAULT_TILES[feeding].slice() : DEFAULT_TILES.both.slice(), presets: [], insights: DEFAULT_INSIGHTS.slice(), calm: false, iconStyle: 'pastel', v13: true, v14: true, lastSeen: Date.now() - lastSeenAgo, notifyDue: true, notifyOther: false };
   }
 
   // ---------- storage and sync ----------
@@ -1674,7 +1787,7 @@ details[open] > summary .ic { transform: rotate(90deg); }
   // older ones load on demand. save() works out what changed and sends only that.
   const WINDOW_DAYS = 8;
   const CLOUD_CACHE_KEY = 'bubfeed-cloud-v1';
-  const FAMILY_KEYS = ['shop', 'feeding', 'baby', 'settings', 'low', 'lowCustom', 'medNames', 'sitter', 'welcomed', 'backup', 'wipedAt', 'invite', 'rpkFp', 'medGaps', 'lowBy'];
+  const FAMILY_KEYS = ['shop', 'feeding', 'baby', 'settings', 'low', 'lowCustom', 'medNames', 'sitter', 'welcomed', 'backup', 'wipedAt', 'invite', 'rpkFp', 'medGaps', 'lowBy', 'sched'];
   // members live in the family doc too, but are only ever written on their own (join, remove, leave)
   function membersToPeople(m) { return Object.values(m || {}).filter(x => x && x.name).sort((a, b) => (a.joined || 0) - (b.joined || 0)).map(x => ({ name: x.name, aliases: [] })); }
   const CLOUD_BACKUP_EVERY = 7; // days between full copies in Firebase
@@ -1686,7 +1799,7 @@ details[open] > summary .ic { transform: rotate(90deg); }
       entries: withSample ? sampleData() : [], timers: { breast: null, sleep: null, unsettled: null, pump: null, made: null }, me: PEOPLE[0] || PLACEHOLDER_ME, feeding: 'both', profiles, people: [], members: {},
       baby: { name: '', birth: '' },
       settings: { dueMin: 180, milk: 'expressed', night: 'auto', nightOffUntil: 0 },
-      low: [], lowCustom: [], shop: {}, medNames: [], sitter: { on: false, token: '', secret: '', mode: 'log' }, welcomed: false, backup: {}, wipedAt: 0, invite: null, rpkFp: '', medGaps: {}, lowBy: {}
+      low: [], lowCustom: [], shop: {}, medNames: [], sitter: { on: false, token: '', secret: '', mode: 'log' }, welcomed: false, backup: {}, wipedAt: 0, invite: null, rpkFp: '', medGaps: {}, lowBy: {}, sched: { skip: {} }
     };
   }
   function load() {
@@ -1712,7 +1825,7 @@ details[open] > summary .ic { transform: rotate(90deg); }
   }
 
   // What's new (1.3): once on each phone that had the app before this version; new phones skip it
-  const WN_VER = '1.3';
+  const WN_VER = '1.4';
   if (!getPref('bubfeed-wn', '')) { let had = false; try { had = !!localStorage.getItem(CLOUD ? CLOUD_CACHE_KEY : KEY); } catch (e) { /* none */ } if (!had) setPref('bubfeed-wn', WN_VER); }
   const state = load();
   // demo mode keeps its people on this phone; older saves only had profiles
@@ -1728,6 +1841,7 @@ details[open] > summary .ic { transform: rotate(90deg); }
   if (!state.sitter || typeof state.sitter !== 'object') state.sitter = { on: false, token: '', secret: '', mode: 'log' };
   if (!state.medGaps || typeof state.medGaps !== 'object') state.medGaps = {};
   if (!state.lowBy || typeof state.lowBy !== 'object') state.lowBy = {};
+  if (!state.sched || typeof state.sched !== 'object') state.sched = { skip: {} };
   if (!state.backup || typeof state.backup !== 'object') state.backup = {};
   if (!Array.isArray(state.medNames)) state.medNames = [];
   function ensureProfile(n) {
@@ -1739,6 +1853,8 @@ details[open] > summary .ic { transform: rotate(90deg); }
     if (!pr.v12) { if (Array.isArray(pr.home) && !pr.home.includes('growthb')) { const i = pr.home.indexOf('tiles'); pr.home.splice(i >= 0 ? i + 1 : pr.home.length, 0, 'growthb'); } pr.v12 = true; }
     // version 1.3: icon styles (people who had the app keep the classic icons) and any text size
     if (!pr.v13) { if (!pr.iconStyle) pr.iconStyle = 'current'; if (!pr.textScale && pr.textSize === 'l') pr.textScale = 112; if (!pr.textScale && pr.textSize === 'xl') pr.textScale = 125; pr.v13 = true; }
+    // version 1.4: the Coming up card (appointments) on Home, under the milk or last-feed card
+    if (!pr.v14) { if (Array.isArray(pr.home) && !pr.home.includes('appts')) { const i = Math.max(pr.home.indexOf('milkb'), pr.home.indexOf('last'), pr.home.indexOf('handover')); pr.home.splice(i >= 0 ? i + 1 : 0, 0, 'appts'); } pr.v14 = true; }
     if (!pr.v1) { pr.insights = (Array.isArray(pr.insights) ? pr.insights : DEFAULT_INSIGHTS.slice()).filter(id => INSIGHTS[id] && id !== 'lastTimes'); if (!pr.insights.includes('share')) pr.insights.push('share'); pr.v1 = true; }
     return pr;
   }
@@ -1750,7 +1866,7 @@ details[open] > summary .ic { transform: rotate(90deg); }
 
   // Stored milk that hasn't been used yet lives with weight and length in one always-loaded document,
   // so milk frozen months ago is on every phone; once it's fed or thrown out it becomes an ordinary entry.
-  const keptEntry = e => !!e && (e.type === 'growth' || (e.type === 'milk' && !e.done));
+  const keptEntry = e => !!e && (e.type === 'growth' || e.type === 'appt' || e.type === 'vax' || (e.type === 'milk' && !e.done));
   // what the store already has, so save() can send only changes
   const persisted = { entries: new Map(), family: '', timers: '', profiles: {} };
   function familyObj() { const o = {}; FAMILY_KEYS.forEach(k => { if (state[k] !== undefined) o[k] = state[k]; }); return o; }
@@ -1836,7 +1952,8 @@ details[open] > summary .ic { transform: rotate(90deg); }
     Object.keys(state.profiles).forEach(n => { const j = JSON.stringify(state.profiles[n]); if (j !== persisted.profiles[n]) { persisted.profiles[n] = j; profs.push([n, state.profiles[n]]); } });
     if (put.some(e => e.type === 'nappy' || (e.type === 'bottle' && e.milk === 'formula'))) setTimeout(checkStock, 0);
     if (fresh.length) queueLogNotify(fresh);
-    if (put.some(e => isFeed(e) || e.type === 'med' || e.type === 'milk') || del.length || timChanged || famChanged) scheduleReminders();
+    if (put.some(e => isFeed(e) || e.type === 'med' || e.type === 'milk' || e.type === 'appt' || e.type === 'vax') || del.length || timChanged || famChanged) scheduleReminders();
+    if (put.some(e => e.type === 'appt') || del.length) scheduleCal();
     if (put.length || del.length || famChanged || timChanged || profs.length) store.commit({ put, del, oldDel, moved, family: famChanged ? familyObj() : null, timers: timChanged ? state.timers : null, profiles: profs });
   }
 
@@ -1900,6 +2017,7 @@ details[open] > summary .ic { transform: rotate(90deg); }
     if (!state.backup || typeof state.backup !== 'object') state.backup = {};
     if (!state.medGaps || typeof state.medGaps !== 'object') state.medGaps = {};
     if (!state.lowBy || typeof state.lowBy !== 'object') state.lowBy = {};
+    if (!state.sched || typeof state.sched !== 'object') state.sched = { skip: {} };
     sitterMode = state.sitter.mode === 'view' ? 'view' : 'log';
     persisted.family = JSON.stringify(familyObj());
   }
@@ -3479,9 +3597,9 @@ details[open] > summary .ic { transform: rotate(90deg); }
   // naming the phones to tell, with the text sealed; reminders (remind/…) are kept up to date by the
   // phones too. The server only sees "send this sealed text to these phones at this time".
   const PUSH_ID_KEY = 'bubfeed-pushid';
-  const PUSH_CATS = [['feed', 'Feeds'], ['nappy', 'Nappies'], ['sleep', 'Sleep'], ['med', 'Medicine'], ['pump', 'Pumping'], ['shop', 'Shopping list'], ['other', 'Everything else']];
-  const PUSH_REMS = [['due', 'Feed due', 'At the time the next feed is due'], ['timer', 'A timer left running', 'A feed or pumping timer still going after an hour'], ['med', 'Medicine OK to give again', 'When the gap you set has passed'], ['milk', 'Milk running out of time', 'A made-up bottle’s time is up, or stored milk is near its use-by']];
-  const pushDefaults = () => ({ on: false, types: { feed: true, nappy: true, sleep: true, med: true, pump: true, shop: true, other: false }, rem: { due: true, timer: true, med: true, milk: true }, quiet: { on: true, from: '23:00', to: '06:00' }, details: true, turn: 0 });
+  const PUSH_CATS = [['feed', 'Feeds'], ['nappy', 'Nappies'], ['sleep', 'Sleep'], ['med', 'Medicine'], ['pump', 'Pumping'], ['shop', 'Shopping list'], ['appt', 'Appointments'], ['other', 'Everything else']];
+  const PUSH_REMS = [['due', 'Feed due', 'At the time the next feed is due'], ['timer', 'A timer left running', 'A feed or pumping timer still going after an hour'], ['med', 'Medicine OK to give again', 'When the gap you set has passed'], ['milk', 'Milk running out of time', 'A made-up bottle’s time is up, or stored milk is near its use-by'], ['appt', 'Appointments', 'The reminders picked on each appointment, and a week before vaccinations are due']];
+  const pushDefaults = () => ({ on: false, types: { feed: true, nappy: true, sleep: true, med: true, pump: true, shop: true, appt: true, other: false }, rem: { due: true, timer: true, med: true, milk: true, appt: true }, quiet: { on: true, from: '23:00', to: '06:00' }, details: true, turn: 0 });
   function pushPrefs() {
     let p = null; try { p = JSON.parse(getPref('bubfeed-push', '') || 'null'); } catch (e) { /* none */ }
     const d = pushDefaults();
@@ -3529,6 +3647,7 @@ details[open] > summary .ic { transform: rotate(90deg); }
     if (e.type === 'med') return 'med';
     if (e.type === 'pump' || e.type === 'milk') return 'pump';
     if (e.type === 'shop') return 'shop';
+    if (e.type === 'appt' || e.type === 'vax') return 'appt';
     return 'other';
   }
   // ---- someone logged something: tell the others (gathered for a few seconds, so a nappy then a feed is one notification)
@@ -3592,7 +3711,7 @@ details[open] > summary .ic { transform: rotate(90deg); }
     const nightOk = at => d => !inQuiet(d.prefs, at) || !turnOn.length || turnOn.some(x => x.id === d.id);
     if (T0.made) {
       const m = T0.made, at = m.start + madeLimit(m) * MIN;
-      if (at > now + MIN) { const to = pick('milk', at, nightOk(at)); if (to.length) out.made = { at, to, tag: 'milk-made', msg: { t: 'Made-up bottle', b: `The ${m.ml} ml bottle made at ${timeFmt(m.start)} has been out ${milkSpan(madeLimit(m))}. Use it now or throw it out.`, g: 'A milk reminder' } }; }
+      if (at > now + MIN) { const to = pick('milk', at, nightOk(at)); if (to.length) out.made = { at, to, tag: 'milk-made', msg: m.feed ? { t: `${Pron()} bottle`, b: `The ${m.ml} ml poured from ${m.from || 'stored milk'} at ${timeFmt(m.start)} has been out ${milkSpan(madeLimit(m))}. Throw out what’s left.`, g: 'A milk reminder' } : { t: 'Made-up bottle', b: `The ${m.ml} ml bottle made at ${timeFmt(m.start)} has been out ${milkSpan(madeLimit(m))}. Use it now or throw it out.`, g: 'A milk reminder' } }; }
     }
     const milkKeys = new Set();
     stash().filter(b => useBy(b) > now).slice(0, 8).forEach(b => {
@@ -3617,6 +3736,21 @@ details[open] > summary .ic { transform: rotate(90deg); }
       const key = ('med-' + k.replace(/[^a-z0-9]+/g, '-')).slice(0, 40).replace(/-+$/, '');
       if (to.length) out[key] = { at, to, tag: 'med', msg: { t: `${e.name} OK to give again`, b: `Last given at ${timeFmt(e.start)} by ${e.who}.`, g: 'A medicine reminder' } };
     });
+    // appointments: the evening before (7pm), the morning of (8am) or an hour before, as picked on each;
+    // and a week before vaccinations are due, if none are booked. Not to a babysitter's phone.
+    const apTo = at => targets.filter(d => d.kind !== 'sitter' && d.prefs.rem && d.prefs.rem.appt !== false && !inQuiet(d.prefs, at)).map(d => d.id);
+    const atHour = (t, back, h) => { const d = new Date(t); d.setDate(d.getDate() - back); d.setHours(h, 0, 0, 0); return d.getTime(); };
+    apptsAll().filter(e => !e.done && e.start > now).slice(0, 4).forEach(e => (e.remind || []).forEach(k => {
+      const at = k === 'night' ? atHour(e.start, 1, 19) : k === 'morning' ? atHour(e.start, 0, 8) : e.start - HOUR;
+      if (at <= now + MIN || at - now > 45 * DAY || (k === 'morning' && at >= e.start - 30 * MIN)) return;
+      const to = apTo(at);
+      if (to.length) out[`appt-${e.id}-${k}`.slice(0, 40)] = { at, to, tag: 'appt', msg: { t: `${k === 'night' ? 'Tomorrow' : k === 'morning' ? 'Today' : 'In an hour'}: ${apptTitle(e)}`, b: `${timeFmt(e.start)}${e.where ? ` at ${e.where}` : ''}.${e.notes ? ' ' + e.notes.slice(0, 140) : ''}`, g: 'An appointment reminder' } };
+    }));
+    const nv = nextVaxGroup(), bm = birthMs();
+    if (nv && bm && !vaxBooked(nv.id)) {
+      const at = atHour(nv.from(bm), 7, 9);
+      if (at > now + MIN && at - now < 45 * DAY) { const to = apTo(at); if (to.length) out['vax-due'] = { at, to, tag: 'appt', msg: { t: `${vaxTitle(nv)} due soon`, b: `From ${dayLong(nv.from(bm))}. Not booked yet: book with your MCH centre, council session or GP.`, g: 'An appointment reminder' } }; }
+    }
     return out;
   }
   async function syncReminders() {
@@ -3947,7 +4081,7 @@ details[open] > summary .ic { transform: rotate(90deg); }
     if (memoStore.size > 200) memoStore.delete(memoStore.keys().next().value);
     return val;
   }
-  const sortedAll = () => memo('sorted', () => state.entries.slice().sort((a, b) => a.start - b.start));
+  const sortedAll = () => memo('sorted', () => state.entries.filter(e => e.type !== 'appt' && e.type !== 'vax').sort((a, b) => a.start - b.start));
   const feedsSorted = () => memo('feeds', () => sortedAll().filter(isFeed));
   function lowerBound(arr, t) { let lo = 0, hi = arr.length; while (lo < hi) { const mid = (lo + hi) >> 1; if (arr[mid].start < t) lo = mid + 1; else hi = mid; } return lo; }
   const rangeOf = (arr, a, b) => arr.slice(lowerBound(arr, a), lowerBound(arr, b));
@@ -3994,6 +4128,8 @@ details[open] > summary .ic { transform: rotate(90deg); }
       case 'vomit': return e.tbsp != null ? `Vomit ${tbspText(e.tbsp)}` : 'Vomit';
       case 'temp': return `Temperature ${tempText(e.c)}`;
       case 'growth': return `${e.birth ? 'Birth' : 'Weigh-in'}: ${growthText(e) || 'no measurements'}`;
+      case 'appt': return `${e.done ? 'Done' : 'Booked'}: ${apptTitle(e)}, ${dayLong(e.start)} ${timeFmt(e.start)}`;
+      case 'vax': { const g = VAX_GROUPS.find(x => x.id === e.group); return `${g ? vaxTitle(g) : 'Vaccinations'} given`; }
       case 'shop': return e.act === 'bought' ? `Bought ${e.item}${e.size ? ` (${e.item === 'Formula' ? e.size + ' g' : e.size})` : ''}` : e.act === 'remove' ? `Took ${e.item} off the list` : e.act === 'auto' ? `${e.item} running low: added to the list` : `Added ${e.item} to the list`;
       default: return 'Entry';
     }
@@ -4284,6 +4420,8 @@ details[open] > summary .ic { transform: rotate(90deg); }
     const m = T().made;
     if (!m) return;
     T().made = null;
+    // her bottle, poured from stored milk: the feed is logged already
+    if (m.feed) { buzz(); closeSheet(); save(); render(); toast(how === 'fed' ? `${Pron()} bottle is finished` : `${Pron()} bottle thrown out`, [{ label: 'Undo', fn: () => { T().made = m; save(); render(); } }]); return; }
     let feed = null;
     if (how === 'fed') { feed = makeEntry({ type: 'bottle', ml: m.ml, milk: m.kind === 'expressed' ? 'expressed' : 'formula' }); state.entries.push(feed); }
     buzz(); closeSheet(); save(); render();
@@ -4348,7 +4486,7 @@ details[open] > summary .ic { transform: rotate(90deg); }
     const over = soon && Date.now() > useBy(soon);
     return `<button type="button" class="milk-card" data-act="tab" data-tab="milk" aria-label="Milk: open the Milk page">
       <span class="mc-head"><span class="mc-ic${tone('milk')}">${icon('milk')}</span><b>Milk</b>${icon('chev')}</span>
-      ${m ? `<span class="mc-made"><span>Made-up bottle · ${m.ml} ml</span>${madeLeftHTML()}</span>${madeBarHTML()}` : ''}
+      ${m ? `<span class="mc-made"><span>${m.feed ? `${Pron()} bottle · ${m.ml} ml` : `Made-up bottle · ${m.ml} ml`}</span>${madeLeftHTML()}</span>${madeBarHTML()}` : ''}
       ${list.length ? `<span class="mc-stats">${count('out') ? `<span><b>${count('out')}</b> left out</span>` : ''}<span><b>${count('fridge')}</b> in the fridge</span><span><b>${count('freezer')}</b> in the freezer</span></span>
       <span class="mc-next${over ? ' over' : ''}">Use next: ${esc(normLabel(soon.label))} (${MILK_PLACES[soon.place].toLowerCase()}), ${useByText(soon)}</span>` : ''}
     </button>`;
@@ -4374,11 +4512,11 @@ details[open] > summary .ic { transform: rotate(90deg); }
         <div class="card">${shown.length ? shown.map(milkRowHTML).join('') : '<p class="empty">Nothing here.</p>'}${more}</div></section>`;
     };
     const madeHTML = m ? `<section class="card pad madeup" aria-label="Made-up bottle">
-        <div class="madeup-row"><span class="mc-ic${tone('bottle')}">${icon('bottle')}</span><span class="row-text"><b>Made-up bottle · ${m.ml} ml</b><br><span class="row-help">${m.kind === 'expressed' ? 'Expressed' : 'Formula'} · made ${timeFmt(m.start)}${m.by && m.by !== state.me ? ` by ${esc(m.by)}` : ''}</span></span>${madeLeftHTML()}</div>
+        <div class="madeup-row"><span class="mc-ic${tone('bottle')}">${icon('bottle')}</span><span class="row-text"><b>${m.feed ? `${Pron()} bottle · ${m.ml} ml` : `Made-up bottle · ${m.ml} ml`}</b><br><span class="row-help">${m.feed ? `Poured from ${esc(m.from || 'stored milk')} at ${timeFmt(m.start)}. The feed is logged.` : `${m.kind === 'expressed' ? 'Expressed' : 'Formula'} · made ${timeFmt(m.start)}`}${m.by && m.by !== state.me ? ` by ${esc(m.by)}` : ''}</span></span>${madeLeftHTML()}</div>
         ${madeBarHTML()}
-        ${canLog() ? '<div class="actions"><button type="button" class="btn primary" data-act="made-fed">Fed it</button><button type="button" class="btn" data-act="made-toss">Threw it out</button></div>' : ''}</section>`
+        ${canLog() ? (m.feed ? '<div class="actions"><button type="button" class="btn primary" data-act="made-done">Finished</button><button type="button" class="btn" data-act="open" data-sheet="drinkleft">Some left</button></div>' : '<div class="actions"><button type="button" class="btn primary" data-act="made-fed">Fed it</button><button type="button" class="btn" data-act="made-toss">Threw it out</button></div>') : ''}</section>`
       : canLog() ? `<button type="button" class="btn block" data-act="open" data-sheet="made">${icon('plus')}Start a made-up bottle timer</button>` : '';
-    return `<button type="button" class="back-link" data-act="tab" data-tab="home">${icon('back')}Home</button>
+    return `${subBack()}
       <div class="milk-top"><div class="page-title"><h1>Milk</h1><p class="group-foot" style="margin: 4px 0 0">Made-up bottles and stored milk. Use the top one first.</p></div>${member ? `<button type="button" class="btn small primary" data-act="open" data-sheet="milkstore">${icon('plus')}Store</button>` : ''}</div>
       ${dupes.length ? `<section class="card pad dupe-note" role="alert"><p class="sentence" style="margin: 0"><b>${dupes.map(esc).join(', ')}</b> ${dupes.length > 1 ? 'are each' : 'is'} on two bottles. Two phones added them while offline. ${member ? 'Tap one and give it a new label.' : ''}</p></section>` : ''}
       ${madeHTML}${sect('out')}${sect('fridge')}${sect('freezer')}
@@ -4414,6 +4552,620 @@ details[open] > summary .ic { transform: rotate(90deg); }
     state.entries.push(e);
     save(); render();
     toast(`Saved ${entryText(e).toLowerCase()}`, [{ label: 'Edit', fn: () => openSheet('edit', { id: e.id }) }, { label: 'Undo', fn: () => removeIds([e.id]) }]);
+  }
+
+
+  // ---------- 1.4: appointments and vaccinations ----------
+  // Appointments ("appt") and vaccinations given ("vax") are entries kept in the always-loaded document,
+  // like weigh-ins, so every phone has all of them. The schedule is worked out from the birthday.
+  // A removed appointment that went into Google Calendar stays as a hidden "gone" mark until the
+  // calendar has dropped it too.
+  const isRecord = e => e.type === 'appt' || e.type === 'vax';
+  const isAppt = e => e.type === 'appt' && !e.gone;
+  const APPT_KINDS = { mch: { n: 'MCH visit', ic: 'mch', tone: 'pink' }, gp: { n: 'GP', ic: 'gp', tone: 'blue' }, vax: { n: 'Vaccinations', ic: 'syringe', tone: 'violet' }, spec: { n: 'Specialist', ic: 'spec', tone: 'teal' }, other: { n: 'Other', ic: 'cal', tone: 'amber' } };
+  const REMIND_OPTS = [['night', 'Evening before'], ['morning', 'Morning of'], ['hour', '1 hour before']];
+  const PLACES = ['MCH centre', 'GP clinic', 'Council immunisation session'];
+  const addMonthsTo = (t, n) => { const d = new Date(t); d.setMonth(d.getMonth() + n); return d.getTime(); };
+  // the Victorian immunisation schedule (July 2026)
+  const VX6 = ['6-in-1 (Infanrix hexa or Vaxelis)', 'Diphtheria, tetanus, whooping cough, hepatitis B, polio, Hib'];
+  const VXP = ['Pneumococcal (Prevenar 20)', ''];
+  const VXR = ['Rotavirus (Rotarix)', 'By mouth'];
+  const VAX_GROUPS = [
+    { id: 'birth', name: 'Birth', age: 'Birth', from: b => b, items: [['Hepatitis B', 'Within 7 days of birth']], note: 'RSV protection (Beyfortus) may also be offered, April to September.' },
+    { id: 'm2', name: '2-month', age: '2 months', from: b => b + 42 * DAY, fromWord: 'from 6 weeks', items: [VX6, VXP, VXR] },
+    { id: 'm4', name: '4-month', age: '4 months', from: b => addMonthsTo(b, 4), items: [VX6, VXP, VXR] },
+    { id: 'm6', name: '6-month', age: '6 months', from: b => addMonthsTo(b, 6), items: [VX6, ['Flu', 'Every year from 6 months, before winter']] },
+    { id: 'm12', name: '12-month', age: '12 months', from: b => addMonthsTo(b, 12), items: [['Measles, mumps, rubella (Priorix or M-M-R II)', ''], ['Meningococcal ACWY (Nimenrix)', ''], VXP] },
+    { id: 'm18', name: '18-month', age: '18 months', from: b => addMonthsTo(b, 18), items: [['Measles, mumps, rubella, chickenpox (Priorix-tetra)', ''], ['Diphtheria, tetanus, whooping cough (Infanrix or Tripacel)', ''], ['Hib (Act-HIB)', '']] },
+    { id: 'y4', name: '4-year', age: '4 years', from: b => addMonthsTo(b, 48), items: [['Diphtheria, tetanus, whooping cough, polio (Infanrix IPV or Quadracel)', '']] }
+  ];
+  // Maternal and Child Health Key Ages and Stages visits
+  const MCH_VISITS = [['home', 'Home visit', 7], ['w2', '2-week visit', 14], ['w4', '4-week visit', 28], ['w8', '8-week visit', 56], ['m4', '4-month visit', -4], ['m8', '8-month visit', -8], ['m12', '12-month visit', -12], ['m18', '18-month visit', -18], ['y2', '2-year visit', -24], ['y35', '3½-year visit', -42]];
+  const mchDue = (v, b) => v[2] > 0 ? b + v[2] * DAY : addMonthsTo(b, -v[2]);
+  const vaxTitle = g => g.id === 'birth' ? 'Birth vaccination' : `${g.name} vaccinations`;
+  const apptTitle = e => e.kind === 'mch' && !/^mch\b/i.test(e.title || '') ? `MCH ${e.title}` : e.kind === 'gp' && !/^gp\b/i.test(e.title || '') ? `GP · ${e.title}` : (e.title || 'Appointment');
+  const apptsAll = () => memo('appts', () => state.entries.filter(isAppt).sort((a, b) => a.start - b.start));
+  const apptOverdue = e => !e.done && e.start <= Date.now() - 4 * HOUR;
+  const apptsOverdue = () => apptsAll().filter(apptOverdue);
+  const apptsUpcoming = () => apptsAll().filter(e => !e.done && !apptOverdue(e));
+  const apptsDone = () => apptsAll().filter(e => e.done).reverse();
+  const vaxGiven = () => memo('vaxgiven', () => { const m = {}; state.entries.forEach(e => { if (e.type === 'vax' && !e.gone && e.group && (!m[e.group] || m[e.group].start < e.start)) m[e.group] = e; }); return m; });
+  const vaxBooked = gid => apptsAll().find(e => e.vax === gid && !e.done);
+  const schedSkip = () => (state.sched && state.sched.skip) || {};
+  // the birth dose is given in hospital, so it's never "to book"; it can still be marked as given
+  const nextVaxGroup = () => { if (!birthMs()) return null; const g = vaxGiven(), sk = schedSkip(); return VAX_GROUPS.find(x => x.id !== 'birth' && !g[x.id] && !sk['v-' + x.id]) || null; };
+  const visitTaken = v => apptsAll().some(e => e.sched === 'm-' + v[0] || (e.kind === 'mch' && String(e.title || '').toLowerCase() === v[1].toLowerCase()));
+  // what to book next: the next vaccinations, and the next MCH visit, when not booked yet
+  function toBook() {
+    const b = birthMs();
+    if (!b || isSitter) return [];
+    const out = [], v = nextVaxGroup(), sk = schedSkip(), now = Date.now();
+    if (v && !vaxBooked(v.id)) out.push({ type: 'vax', key: 'v-' + v.id, g: v, title: vaxTitle(v), at: v.from(b), sub: `Due from ${dayLong(v.from(b))}${v.fromWord ? ` (${v.fromWord})` : ''}` });
+    const nv = MCH_VISITS.find(x => mchDue(x, b) > now - 14 * DAY && !sk['m-' + x[0]] && !visitTaken(x));
+    if (nv) out.push({ type: 'mch', key: 'm-' + nv[0], visit: nv, title: `MCH ${nv[1]}`, at: mchDue(nv, b), sub: `Around ${dayLong(mchDue(nv, b))}` });
+    return out;
+  }
+  function relDay(t) {
+    const d = Math.round((startOfDay(t) - startOfDay(Date.now())) / DAY);
+    if (d === 0) return 'Today';
+    if (d === 1) return 'Tomorrow';
+    if (d === -1) return 'Yesterday';
+    if (d > 1 && d < 7) return new Date(t).toLocaleDateString([], { weekday: 'long' });
+    if (d >= 7 && d < 63) return `In ${Math.round(d / 7) <= 1 ? d + ' days' : Math.round(d / 7) + ' weeks'}`;
+    return dayLong(t) + (new Date(t).getFullYear() !== new Date().getFullYear() ? ' ' + new Date(t).getFullYear() : '');
+  }
+  const dayFull = t => new Date(t).toLocaleDateString([], { weekday: 'short', day: 'numeric', month: 'short', year: new Date(t).getFullYear() !== new Date().getFullYear() ? 'numeric' : undefined });
+  const dateBlock = (t, open) => { const d = new Date(t); return `<span class="ap-date${open ? ' open' : ''}" aria-hidden="true"><small>${open ? 'Due' : d.toLocaleDateString([], { weekday: 'short' })}</small><b>${d.getDate()}</b><small class="m">${d.toLocaleDateString([], { month: 'short' })}</small></span>`; };
+  const kindIc = (k, size) => { const K = APPT_KINDS[k] || APPT_KINDS.other; return `<span class="mc-ic${tone(K.tone === 'pink' ? 'unsettled' : K.tone === 'violet' ? 'pump' : K.tone === 'blue' ? 'breast' : K.tone === 'teal' ? 'nappy' : 'bottle')}${size ? ' ' + size : ''}">${icon(K.ic)}</span>`; };
+  const goingText = e => (e.going || []).filter(n => n).join(' and ');
+  const remindText = e => (e.remind || []).map(k => (REMIND_OPTS.find(x => x[0] === k) || [k, k])[1]).join(', ');
+  const othersText = () => { const o = PEOPLE.filter(n => n !== state.me); return o.length ? o.join(' and ') : 'your family'; };
+  const canPlan = () => !isSitter && canLog();
+  // a problem with what was typed: said inside the sheet, under the button, not in a toast over it
+  function sheetErr(id, msg, focusId) { const el = $(id); if (el) el.textContent = msg; else toast(msg); const f = focusId && $(focusId); if (f) f.focus(); }
+  // her, his or their bottle: from Boy or girl in Settings › Baby
+  const pron = () => { const x = state.baby && state.baby.sex; return x === 'boy' ? 'his' : x === 'girl' ? 'her' : 'their'; };
+  const Pron = () => { const p2 = pron(); return p2.charAt(0).toUpperCase() + p2.slice(1); };
+  // where you went before, then the usual places
+  function recentPlaces() { const seen = []; apptsAll().slice().reverse().forEach(e => { if (e.where && !seen.some(x => x.toLowerCase() === e.where.toLowerCase())) seen.push(e.where); }); PLACES.forEach(p2 => { if (!seen.some(x => x.toLowerCase() === p2.toLowerCase())) seen.push(p2); }); return seen.slice(0, 4); }
+
+  // ---------- Esmé's tab, and the pages under it ----------
+  // Insights became Patterns, at the bottom of the baby's own tab. Milk, appointments and weight
+  // and length open from here (or from their Home cards); their Back goes to wherever they came from.
+  const SUBS = ['milk', 'appts', 'growth'];
+  let subFrom = 'baby', apptTab = 'up', apptPast = false, vaxAll = false, patternsAtNight = false;
+  const subBack = () => `<button type="button" class="back-link" data-act="sub-back">${icon('back')}${subFrom === 'home' ? 'Home' : esc(babyName())}</button>`;
+  function goSub(view) { if (!SUBS.includes(tab)) subFrom = tab === 'home' ? 'home' : 'baby'; if (tab === 'home') markHandoverSeen(); if (view === 'milk') milkAllFreezer = false; tab = view; setPref(TAB_KEY, subFrom); window.scrollTo(0, 0); render(); }
+  const hubLine = (a, b2, cls) => `<span class="hubline${cls ? ' ' + cls : ''}"><span>${a}</span><span>${b2}</span></span>`;
+  function renderBaby() {
+    const name = babyName(), p = prof(), b = birthMs(), member = !isSitter;
+    const night = document.documentElement.hasAttribute('data-night');
+    const sec = (t, sub, id, extra) => `<div class="bb-head"${id ? ` id="${id}"` : ''}><h2 class="group-head">${t}</h2>${sub ? `<span class="row-help">${sub}</span>` : ''}${extra || ''}</div>`;
+    const born = b ? `born ${dayFull(b)}` : '';
+    let h = `<section class="baby-card baby-top"><span class="avatar big">${initial(name)}</span><span class="row-text"><b>${esc(name)}</b><br><span class="row-help">${esc([babyAge(), born].filter(Boolean).join(' · ') || 'Add a birthday to see the schedule')}</span></span>${member ? `<button type="button" class="icon-btn" data-act="baby-details" aria-label="Change ${esc(name)}’s name or birthday">${icon('pencil')}</button>` : ''}</section>`;
+    // coming up
+    const od = member ? apptsOverdue() : [], up = apptsUpcoming(), tb = toBook(), nv = nextVaxGroup();
+    const apLines = od.slice(0, 1).map(e => hubLine(esc(apptTitle(e)), 'Not marked as done', 'warn'))
+      .concat(up.slice(0, 2).map(e => hubLine(esc(apptTitle(e)), `${relDay(e.start)} ${timeFmt(e.start)}`)))
+      .concat(tb.length ? [hubLine(`${plural(tb.length, 'thing', 'things')} to book`, esc(tb[0].title), 'accent')] : []);
+    h += sec('Coming up', up.length ? `${up.length} booked` : '');
+    h += `<div class="hub"><button type="button" class="hubrow" data-act="go-appts" data-v="up"><span class="mc-head">${kindIc('mch')}<b>Appointments</b>${icon('chev')}</span>${apLines.join('') || `<span class="row-help">${member ? 'Nothing booked. Tap to add one.' : 'Nothing booked.'}</span>`}</button>`;
+    if (member) {
+      const vb = nv ? vaxBooked(nv.id) : null;
+      h += `<button type="button" class="hubrow" data-act="${b ? 'go-appts" data-v="vax' : 'baby-details'}"><span class="mc-head">${kindIc('vax')}<b>Vaccinations</b>${icon('chev')}</span>${b ? hubLine(nv ? vaxTitle(nv) : 'All given, to 4 years', nv ? (vb ? `Booked ${dayLong(vb.start)}` : `Due from ${dayLong(nv.from(b))}`) : '') : `<span class="row-help">Add ${esc(name)}’s birthday to see what’s due and when</span>`}</button>`;
+    }
+    h += '</div>';
+    // milk
+    const st = stash(), m = T().made;
+    const count = pl => st.filter(x => x.place === pl).length;
+    h += sec('Milk');
+    h += `<button type="button" class="hubrow" data-act="go-milk"><span class="mc-head"><span class="mc-ic${tone('milk')}">${icon('milk')}</span><b>Milk</b>${icon('chev')}</span>
+      ${m ? hubLine(m.feed ? `${Pron()} bottle · ${m.ml} ml${m.from ? ' from ' + esc(m.from) : ''}` : `Made-up bottle · ${m.ml} ml`, madeLeftHTML()) : ''}
+      ${st.length ? hubLine(`${count('out') ? count('out') + ' left out · ' : ''}${count('fridge')} in the fridge · ${count('freezer')} in the freezer`, `Use ${esc(normLabel(st[0].label))} next`) : (m ? '' : '<span class="row-help">Nothing stored. Store milk, or start a made-up bottle timer.</span>')}</button>`;
+    if (!member) return h + '<p class="group-foot" style="text-align: center">Ask a parent before using stored milk.</p>';
+    // growing
+    const lw = lastOf(e => e.type === 'growth' && e.weight), ll = lastOf(e => e.type === 'growth' && e.length);
+    const pc = lw ? percentileOf('w', lw) : null;
+    h += sec('Growing');
+    h += `<button type="button" class="hubrow" data-act="go-growth"><span class="mc-head"><span class="mc-ic${tone('growth')}">${icon('growth')}</span><b>Weight and length</b>${icon('chev')}</span>
+      ${lw || ll ? hubLine([lw ? kgText(lw.weight) : '', ll ? `${ll.length} cm` : ''].filter(Boolean).join(' · '), dayLong((lw || ll).start)) : '<span class="row-help">Nothing yet. Add it after the next MCH visit, or from your own scales.</span>'}
+      ${pc ? hubLine(`<span class="muted">Weight ${pctText(pc)}</span>`, 'WHO') : ''}</button>`;
+    // patterns
+    if (p.calm) return h + '<p class="group-foot" style="text-align: center">Patterns are hidden in calm mode. Turn it off in Settings › Look and feel.</p>';
+    h += sec('Patterns', '', 'patterns', '<button type="button" class="btn small surface" data-act="open" data-sheet="editinsights">Edit</button>');
+    if (night && !patternsAtNight) return h + '<section class="card pad"><p class="sentence" style="margin: 0">Charts wait until morning while night mode is on.</p><div class="actions" style="margin-top: 10px"><button type="button" class="btn small" data-act="patterns-now">Show them now</button></div></section>';
+    return h + patternsHTML();
+  }
+  function patternsHTML() {
+    const p = prof();
+    const on = id => p.insights.includes(id) && insightHasData(id) && id !== 'growth';
+    const groups = INSIGHT_GROUPS.map(([title, ids]) => {
+      const cards = ids.filter(on).map(insightCard).join('');
+      return cards ? `<section class="ins-sec">${title && title !== 'Growth' ? `<h3 class="sub-head">${title}</h3>` : ''}${cards}</section>` : '';
+    }).join('');
+    return `<section class="ins-sec"><h3 class="sub-head">Today so far</h3>${todayTilesHTML()}</section>${groups}
+      <p class="group-foot" style="text-align: center">Averages compare ${esc(babyName())} only with ${esc(babyName())}’s own usual. Days with only a few logs are left out.</p>`;
+  }
+  function renderGrowth() {
+    const list = sortedAll().filter(e => e.type === 'growth').reverse();
+    return subBack() + `<div class="title-row"><div class="page-title"><h1>Weight and length</h1><p class="group-foot" style="margin: 4px 0 0">From the MCH nurse or your own scales.</p></div><button type="button" class="btn small primary" data-act="open" data-sheet="growth">${icon('plus')}Add</button></div>
+      ${list.length ? cardGrowth(true) : ''}
+      <section><h2 class="group-head">Every weigh-in</h2><div class="card">${list.length ? list.map(e => `<button type="button" class="entry" data-act="open" data-sheet="edit" data-id="${e.id}" aria-label="Change weigh-in from ${esc(e.birth ? 'birth' : dayLong(e.start))}"><span class="e-main"><span class="e-title">${e.birth ? 'Birth' : dayFull(e.start)}</span></span><span class="e-time">${esc(growthText(e))}</span></button>`).join('') : '<p class="empty">None yet. Mark an MCH visit as done to add the weight and length from it.</p>'}</div><p class="group-foot">Tap one to fix it.</p></section>`;
+  }
+
+  // ---------- the Appointments page ----------
+  function apptRowHTML(e) {
+    const bits = [timeFmt(e.start), e.where ? esc(e.where) : ''].filter(Boolean).join(' · ');
+    const flags = [apptOverdue(e) ? '<b class="ap-flag">Not marked as done</b>' : '', e.done ? `<span>${icon('check')}Done</span>` : '', !e.done && (e.remind || []).length ? `<span>${icon('bell')}Reminder</span>` : '', calOn() && e.calSent ? `<span>${icon('cal')}In Google Calendar</span>` : !calOn() && e.gcal ? `<span>${icon('cal')}Added to Google Calendar</span>` : ''].filter(Boolean).join('');
+    return `<button type="button" class="ap-row" data-act="open" data-sheet="appt" data-id="${esc(e.id)}">${dateBlock(e.start)}<span class="row-text"><b>${esc(apptTitle(e))}</b><br><span class="row-help">${bits}</span>${flags ? `<span class="ap-flags">${flags}</span>` : ''}</span><span class="ap-meta"><span class="row-help">${e.done ? '' : relDay(e.start)}</span>${(e.going || []).length ? `<span class="ap-who">${(e.going || []).map(n => `<i>${initial(n)}</i>`).join('')}</span>` : ''}</span></button>`;
+  }
+  function renderAppts() {
+    const member = canPlan();
+    if (isSitter) apptTab = 'up';
+    const top = subBack() + `<div class="title-row"><div class="page-title"><h1>Appointments</h1><p class="group-foot" style="margin: 4px 0 0">${isSitter ? 'Ask a parent to change these.' : `Shared with ${esc(othersText())}.`}</p></div>${member ? `<button type="button" class="btn small primary" data-act="appt-add">${icon('plus')}Add</button>` : ''}</div>
+      ${isSitter ? '' : `<div class="segmented" role="group" aria-label="Show">${[['up', 'Coming up'], ['vax', 'Vaccinations']].map(([k, l]) => `<button type="button" data-act="appt-tab" data-v="${k}" aria-pressed="${apptTab === k}">${l}</button>`).join('')}</div>`}`;
+    if (apptTab === 'vax') return top + vaxListHTML();
+    const sect = (name, list) => list.length ? `<section><h2 class="group-head">${name}</h2><div class="card">${list.map(apptRowHTML).join('')}</div></section>` : '';
+    const up = apptsUpcoming(), week = up.filter(e => e.start < startOfDay(Date.now()) + 7 * DAY), later = up.filter(e => e.start >= startOfDay(Date.now()) + 7 * DAY);
+    const tb = toBook(), done = isSitter ? [] : apptsDone(), b = birthMs();
+    const banner = member && b && !(state.sched && state.sched.setupDone) ? `<button type="button" class="baby-card setup-ban" data-act="open" data-sheet="apptsetup">${kindIc('other')}<span class="row-text"><b>Already have dates?</b><br><span class="row-help">Add what’s booked and what’s already happened, all on one list.</span></span>${icon('chev')}</button>` : '';
+    const book = tb.length ? `<section><h2 class="group-head">To book <span class="tag">From ${esc(babyName())}’s age</span></h2><div class="card">${tb.map((x, i) => `<div class="ap-row todo">${dateBlock(x.at, true)}<span class="row-text"><b>${esc(x.title)}</b><br><span class="row-help">${esc(x.sub)}</span></span>${member ? `<button type="button" class="btn small primary" data-act="appt-book" data-i="${i}">Book</button>` : ''}</div>`).join('')}</div></section>` : '';
+    const nob = !b && member ? `<section class="card pad"><p class="sentence" style="margin: 0">Add ${esc(babyName())}’s birthday to see the vaccinations and MCH visits here, worked out from ${esc(babyName())}’s age.</p><div class="actions" style="margin-top: 10px"><button type="button" class="btn small" data-act="baby-details">Add birthday</button></div></section>` : '';
+    const many = member && b && state.sched && state.sched.setupDone ? `<button type="button" class="link" data-act="open" data-sheet="apptsetup">Add several dates at once</button>` : '';
+    const past = done.length ? `<button type="button" class="link past-btn" data-act="appt-past" aria-expanded="${apptPast}">${icon(apptPast ? 'chevu' : 'chevd')}Past appointments (${done.length})</button>${apptPast ? `<div class="card">${done.map(apptRowHTML).join('')}</div>` : ''}` : '';
+    const empty = !up.length && !tb.length && !apptsOverdue().length ? `<section class="card pad"><p class="sentence" style="margin: 0">Nothing booked.${member ? ' Tap Add to put one in.' : ''}</p></section>` : '';
+    return top + banner + (member ? sect('To mark as done', apptsOverdue()) : '') + empty + sect('This week', week) + sect('Later', later) + book + nob + many + past + (member ? calFootHTML() : '');
+  }
+  function calFootHTML() {
+    if (!CLOUD) return '';
+    if (calOn()) return `<p class="group-foot">${icon('cal')} Appointments go into the “${esc((state.sched.cal && state.sched.cal.name) || babyName())}” calendar in Google Calendar, and change there when you change them here. <button type="button" class="link" data-act="set-cal">Calendar settings</button></p>`;
+    return `<p class="group-foot">Add each one to Google Calendar with a tap, or <button type="button" class="link" data-act="set-cal">connect Google Calendar</button> so changes go there by themselves.</p>`;
+  }
+  function vaxListHTML() {
+    const b = birthMs();
+    if (!b) return `<section class="card pad"><p class="sentence" style="margin: 0">Add ${esc(babyName())}’s birthday to see the vaccination schedule.</p><div class="actions" style="margin-top: 10px"><button type="button" class="btn small" data-act="baby-details">Add birthday</button></div></section>`;
+    const given = vaxGiven(), sk = schedSkip(), nv = nextVaxGroup();
+    const rows = VAX_GROUPS.map(g => {
+      const gv = given[g.id], bk = vaxBooked(g.id), skipped = !gv && sk['v-' + g.id];
+      const s = gv ? 'given' : skipped ? 'skipped' : g === nv ? 'due' : g.id === 'birth' ? 'birth' : 'later';
+      const pill = s === 'birth' ? '<span class="pill later">In hospital · tap to record</span>' : s === 'given' ? `<span class="pill given">${icon('check')}Given ${dayLong(gv.start)}</span>` : s === 'skipped' ? '<span class="pill later">Not having these</span>' : s === 'due' ? `<span class="pill due">${bk ? `Booked ${dayLong(bk.start)}` : `Due from ${dayLong(g.from(b))}`}</span>` : `<span class="pill later">From ${dayLong(g.from(b))}${new Date(g.from(b)).getFullYear() !== new Date().getFullYear() ? ' ' + new Date(g.from(b)).getFullYear() : ''}</span>`;
+      return { s, html: `<button type="button" class="vgroup${s === 'due' ? ' next' : ''}${s === 'given' || s === 'skipped' ? ' done' : ''}" data-act="open" data-sheet="vaxgroup" data-id="${g.id}"><span class="vhead"><b>${g.age}</b>${pill}</span>
+        <span class="vitems">${g.items.map(([n, d]) => `<span class="vitem"><i aria-hidden="true"></i><span>${esc(n)}${d ? `<small>${esc(d)}</small>` : ''}</span></span>`).join('')}</span>${g.note && s !== 'given' ? `<span class="row-help">${esc(g.note)}</span>` : ''}</button>` };
+    });
+    const firstLater = rows.findIndex(x => x.s === 'later');
+    const shown = vaxAll || firstLater < 0 ? rows : rows.slice(0, firstLater + 1);
+    const more = shown.length < rows.length ? `<button type="button" class="link past-btn" data-act="vax-all">${icon('chevd')}Show ${rows.length - shown.length} more, up to 4 years</button>` : '';
+    return shown.map(x => x.html).join('') + more + `<p class="group-foot">From the Victorian immunisation schedule (July 2026), worked out from ${esc(babyName())}’s birthday. Your MCH nurse or GP can tell you if extra doses apply. This only records what was given and when.</p>`;
+  }
+
+  // ---------- the Home card: what's coming up, and a check after each appointment ----------
+  const checkinHTML = e => `<div class="checkin"><span class="ck-head">${icon('check')}How did it go?</span><span class="cu-row">${dateBlock(e.start)}<span class="row-text"><b>${esc(apptTitle(e))}</b><br><span class="row-help">${relDay(e.start)} · ${timeFmt(e.start)}${e.where ? ' · ' + esc(e.where) : ''}</span></span></span><div class="actions"><button type="button" class="btn small primary" data-act="appt-done" data-id="${esc(e.id)}">Mark as done</button><button type="button" class="btn small" data-act="appt-missed" data-id="${esc(e.id)}">Didn’t happen</button></div></div>`;
+  function apptsBlockHTML() {
+    const member = canPlan(), od = member ? apptsOverdue() : [], up = apptsUpcoming().slice(0, 2), tb = member ? toBook().slice(0, 1) : [];
+    if (!od.length && !up.length && !tb.length) return '';
+    const rows = up.map(e => `<span class="cu-row">${dateBlock(e.start)}<span class="row-text"><b>${esc(apptTitle(e))}</b><br><span class="row-help">${relDay(e.start)} · ${timeFmt(e.start)}${e.where ? ' · ' + esc(e.where) : ''}</span></span></span>`)
+      .concat(tb.map(x => `<span class="cu-row">${dateBlock(x.at, true)}<span class="row-text"><b>${esc(x.title)}</b><br><span class="row-help">${esc(x.sub)} · not booked yet</span></span></span>`)).join('');
+    return `<section class="cu-card" aria-label="Coming up">${od.map(checkinHTML).join('')}<button type="button" class="cu-open" data-act="go-appts" data-v="up" aria-label="Coming up: open Appointments"><span class="mc-head">${kindIc('mch')}<b>Coming up</b>${icon('chev')}</span>${rows}</button></section>`;
+  }
+
+  // ---------- adding, changing and finishing appointments ----------
+  function apptDraftFrom(e, extra) {
+    return { id: e ? e.id : '', kind: e ? e.kind : 'mch', going: e ? (e.going || []).slice() : [state.me], remind: e ? (e.remind || []).slice() : ['night'], gcal: !e && !calOn(), vax: e ? e.vax || '' : '', sched: e ? e.sched || '' : '', ...(extra || {}) };
+  }
+  const apptSuggest = k => k === 'mch' ? MCH_VISITS.filter(v => !visitTaken(v) && (!birthMs() || mchDue(v, birthMs()) > Date.now() - 14 * DAY)).slice(0, 3).map(v => v[1]) : k === 'vax' ? VAX_GROUPS.filter(g => g.id !== 'birth' && !vaxGiven()[g.id]).slice(0, 2).map(vaxTitle) : k === 'gp' ? ['6 to 8 week check', 'Check-up', 'Unwell'] : k === 'spec' ? ['Hearing', 'Hips'] : ['Photos', 'Swimming'];
+  function apptEditHTML(data) {
+    const d = draft, e = d.id ? state.entries.find(x => x.id === d.id) : null, pre = data || {};
+    const val = (k, v2) => esc(e ? (v2 || '') : (pre[k] != null ? pre[k] : ''));
+    const date = e && !pre.clearDate ? dayKey(e.start) : pre.date || '';
+    const time = e ? `${pad(new Date(e.start).getHours())}:${pad(new Date(e.start).getMinutes())}` : pre.time || '10:00';
+    return head(e ? (pre.clearDate ? 'Pick a new date' : 'Change appointment') : 'Add an appointment') + `<div class="sheet-body">
+      <div class="field"><span class="flabel">What kind</span><div class="fchips" role="group" aria-label="What kind">${Object.entries(APPT_KINDS).map(([k, K]) => `<button type="button" class="fchip" data-act="ap-kind" data-v="${k}" aria-pressed="${d.kind === k}">${K.n}</button>`).join('')}</div></div>
+      <div class="field"><label for="apTitle">What for</label><input class="input" id="apTitle" maxlength="60" autocomplete="off" value="${val('title', e && e.title)}" placeholder="e.g. ${esc(apptSuggest(d.kind)[0] || 'Check-up')}"${e ? '' : ' data-autofocus'}>
+        <div class="fchips" role="group" aria-label="Suggestions">${apptSuggest(d.kind).map(s => `<button type="button" class="fchip small" data-act="ap-fill" data-f="apTitle" data-v="${esc(s)}">${esc(s)}</button>`).join('')}</div></div>
+      <div class="two-col"><div class="field"><label for="apDate">Date</label><input class="input" id="apDate" type="date" value="${esc(date)}"${pre.clearDate ? ' data-autofocus' : ''}></div><div class="field"><label for="apTime">Time</label><input class="input" id="apTime" type="time" value="${esc(time)}"></div></div>
+      <div class="field"><label for="apWhere">Where</label><input class="input" id="apWhere" maxlength="60" autocomplete="off" value="${val('where', e && e.where)}" placeholder="e.g. MCH centre">
+        <div class="fchips" role="group" aria-label="Places you’ve used">${recentPlaces().map(s => `<button type="button" class="fchip small" data-act="ap-fill" data-f="apWhere" data-v="${esc(s)}">${esc(s)}</button>`).join('')}</div></div>
+      <div class="field"><span class="flabel">Who’s going</span><div class="fchips" role="group" aria-label="Who’s going">${PEOPLE.map(n => `<button type="button" class="fchip" data-act="ap-going" data-v="${esc(n)}" aria-pressed="${d.going.includes(n)}">${esc(n)}</button>`).join('')}</div></div>
+      <div class="field"><span class="flabel">Remind us</span><div class="fchips" role="group" aria-label="Remind us">${REMIND_OPTS.map(([k, l]) => `<button type="button" class="fchip" data-act="ap-remind" data-v="${k}" aria-pressed="${d.remind.includes(k)}">${l}</button>`).join('')}</div><span class="row-help">On phones with notifications on, and the appointment reminder chosen in Settings › Notifications.</span></div>
+      <div class="field"><label for="apNotes">Notes and questions to ask (optional)</label><textarea class="input" id="apNotes" maxlength="400" placeholder="e.g. ask about tummy time">${val('notes', e && e.notes)}</textarea></div>
+      ${!e && !calOn() ? `<div class="card"><div class="row"><span class="row-text">Add to Google Calendar after saving<br><span class="row-help">Opens Google Calendar with it filled in</span></span>${sw('ap-gcal', d.gcal, 'Add to Google Calendar after saving')}</div></div>` : ''}
+      <p class="label-err" id="apErr" role="status" aria-live="polite"></p>
+      <button type="button" class="btn primary block" data-act="ap-save">${e ? 'Save changes' : 'Save appointment'}</button>
+      ${calOn() ? `<p class="group-foot" style="margin: 0">${icon('cal')} Goes into Google Calendar by itself.</p>` : ''}</div>`;
+  }
+  function readApptForm() {
+    const v = id => { const el = $(id); return el ? el.value.trim() : ''; };
+    const title = v('apTitle'), date = v('apDate'), time = v('apTime') || '10:00', where = v('apWhere'), notes = v('apNotes');
+    if (!title) return { err: 'Say what it’s for, like “4-month visit”', focus: 'apTitle' };
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) return { err: 'Pick a date', focus: 'apDate' };
+    const t = new Date(`${date}T${/^\d{2}:\d{2}$/.test(time) ? time : '10:00'}`).getTime();
+    if (isNaN(t)) return { err: 'Pick a date', focus: 'apDate' };
+    return { v: { title: title.slice(0, 60), start: t, end: t, where: where.slice(0, 60), notes: notes.slice(0, 400) } };
+  }
+  function saveAppt() {
+    const r = readApptForm();
+    if (r.err) { sheetErr('apErr', r.err, r.focus); return; }
+    const d = draft, e0 = d.id ? state.entries.find(x => x.id === d.id) : null;
+    const v2 = { ...r.v, kind: d.kind, going: d.going.slice(), remind: d.remind.slice() };
+    // link it to the schedule, so it stops showing as "to book"
+    if (v2.kind === 'mch') { const mv = MCH_VISITS.find(x => x[1].toLowerCase() === v2.title.toLowerCase().replace(/^mch\s+/, '')); v2.sched = mv ? 'm-' + mv[0] : (d.sched || ''); if (mv) v2.title = mv[1]; }
+    if (v2.kind === 'vax') { const g = VAX_GROUPS.find(x => vaxTitle(x).toLowerCase() === v2.title.toLowerCase()); v2.vax = g ? g.id : (d.vax || ''); }
+    else v2.vax = '';
+    if (e0) {
+      const before = JSON.parse(JSON.stringify(e0));
+      Object.assign(e0, v2);
+      if (!v2.vax) delete e0.vax;
+      if (!v2.sched) delete e0.sched;
+      closeSheet(); save(); render();
+      toast(`Saved: ${apptTitle(e0)}, ${dayLong(e0.start)}${!calOn() && e0.gcal ? '. Change it in Google Calendar too.' : ''}`, [{ label: 'Undo', fn: () => putBack(before) }]);
+      return;
+    }
+    const e = makeEntry({ type: 'appt', ...v2 });
+    if (!e.vax) delete e.vax;
+    if (!e.sched) delete e.sched;
+    state.entries.push(e);
+    closeSheet(); save();
+    if (!SUBS.includes(tab)) subFrom = tab === 'home' ? 'home' : 'baby';
+    tab = 'appts'; apptTab = 'up'; render();
+    if (d.gcal && !calOn()) { openSheet('gcal', { id: e.id }); return; }
+    toast(`Saved: ${apptTitle(e)}, ${dayLong(e.start)}`, [{ label: 'Undo', fn: () => removeIds([e.id]) }]);
+  }
+  // removing: one that went into the synced calendar stays as a hidden mark until the calendar drops it
+  function removeAppt(e, msg) {
+    const before = JSON.parse(JSON.stringify(e));
+    if (calOn() && e.calSent) e.gone = Date.now(); else state.entries = state.entries.filter(x => x.id !== e.id);
+    closeSheet(); save(); render();
+    toast(`${msg || 'Removed'}: ${apptTitle(e)}.${e.vax ? ' The vaccinations are back in To book.' : ''}${!calOn() && e.gcal ? ' Delete it from Google Calendar too.' : ''}`, [{ label: 'Undo', fn: () => putBack(before) }]);
+  }
+  function apptSheetHTML(data) {
+    const e = state.entries.find(x => x.id === data.id && isAppt(x));
+    if (!e) return head('Appointment') + '<p class="empty">This appointment has been removed.</p>';
+    const member = canPlan(), od = apptOverdue(e);
+    const kv = [['When', `${dayFull(e.start)}, ${timeFmt(e.start)}`], ['Where', e.where || 'Not set'], ['Who’s going', goingText(e) || 'Not set'], ['Reminder', remindText(e) || 'None']];
+    const cal = !CLOUD || isSitter ? '' : calOn() ? `<div class="card"><div class="row"><span class="row-text">${icon('cal')} ${e.calSent ? 'In Google Calendar' : 'Going into Google Calendar…'}<br><span class="row-help">Changes here update it there.</span></span></div></div>` : e.gcal ? `<div class="card"><div class="row"><span class="row-text">${icon('cal')} Added to Google Calendar<br><span class="row-help">Changed something? Change it in Google Calendar too.</span></span><button type="button" class="btn small" data-act="open" data-sheet="gcal" data-id="${esc(e.id)}">Again</button></div></div>` : `<button type="button" class="btn block" data-act="open" data-sheet="gcal" data-id="${esc(e.id)}">${icon('cal')}Add to Google Calendar</button>`;
+    const outcome = e.done ? `<div class="card pad"><span class="label">Done${e.doneBy ? ` · marked by ${esc(e.doneBy)}` : ''}</span>${e.said ? `<p class="sentence" style="margin-top: 6px">${esc(e.said)}</p>` : '<p class="row-help" style="margin: 6px 0 0">Nothing noted.</p>'}</div>` : '';
+    return `<div class="grab" aria-hidden="true"></div><div class="sheet-head"><span style="display: flex; align-items: center; gap: 12px; min-width: 0">${kindIc(e.kind, 'big')}<span><span class="sheet-title" id="sheetTitle">${esc(apptTitle(e))}</span><br><span class="row-help">${e.done ? 'Done' : od ? 'Not marked as done' : relDay(e.start)}</span></span></span><button type="button" class="icon-btn" data-act="close-sheet" aria-label="Close">${icon('close')}</button></div>
+      <div class="sheet-body">
+        <div class="card pad"><div class="kv">${kv.map(([k, v2]) => `<div><span>${k}</span><b>${esc(v2)}</b></div>`).join('')}</div></div>
+        ${e.kind === 'mch' && !e.done && !isSitter && mchRows().length ? `<div class="card pad"><span class="label">For the MCH nurse</span><div class="kv" style="margin-top: 6px">${mchRows().map(([k, v2]) => `<div><span>${esc(k)}</span><b>${esc(v2)}</b></div>`).join('')}</div><p class="row-help" style="margin: 8px 0 0">Daily averages this week, ready to show.</p></div>` : ''}
+        ${e.notes ? `<div class="field"><span class="flabel">Notes and questions</span><div class="card pad"><p class="sentence" style="margin: 0; font-size: 16px">${esc(e.notes)}</p></div></div>` : ''}
+        ${outcome}${cal}
+        ${member ? (e.done ? `<button type="button" class="btn block" data-act="appt-undone" data-id="${esc(e.id)}">Not done after all</button>`
+          : `<div class="actions"><button type="button" class="btn primary" data-act="appt-done" data-id="${esc(e.id)}">Mark as done</button>${od ? `<button type="button" class="btn" data-act="appt-missed" data-id="${esc(e.id)}">Didn’t happen</button>` : `<button type="button" class="btn" data-act="appt-edit" data-id="${esc(e.id)}">Change</button>`}</div>
+            ${od ? '' : `<button type="button" class="link danger-link" data-act="appt-cancel" data-id="${esc(e.id)}">Cancel this appointment</button>`}`) : ''}
+      </div>`;
+  }
+  function apptDoneHTML(data) {
+    const e = state.entries.find(x => x.id === data.id && isAppt(x));
+    if (!e) return head('Done') + '<p class="empty">This appointment has been removed.</p>';
+    const g = e.vax ? VAX_GROUPS.find(x => x.id === e.vax) : null;
+    const weigh = label => `<div class="card pad" style="display: grid; gap: 12px"><span class="label">${label}</span>
+      <div class="two-col"><div class="field"><label for="adW">Weight (kg)</label><input class="input" id="adW" inputmode="decimal" placeholder="e.g. 5.2"${g ? '' : ' data-autofocus'}></div><div class="field"><label for="adL">Length (cm)</label><input class="input" id="adL" inputmode="decimal" placeholder="e.g. 57"></div></div>
+      <span class="row-help">These go into Weight and length, with the WHO percentile lines.</span></div>`;
+    return head(`${apptTitle(e)} done`) + `<div class="sheet-body"><p class="group-foot" style="margin: 0">Anything to keep from it? All optional.</p>
+      ${g ? `<div class="card pad" style="display: grid; gap: 8px"><span class="label">Saving these as given · ${esc(dayFull(e.start))}</span>${g.items.map(([n]) => `<span class="vitem given">${icon('check')}<span>${esc(n)}</span></span>`).join('')}<span class="row-help">If it was a different day, change it afterwards in Vaccinations.</span></div>
+        <div class="field"><label for="adHow">How was ${esc(babyName())} afterwards?</label><input class="input" id="adHow" maxlength="140" placeholder="e.g. unsettled that evening, slept well" data-autofocus></div>` : ''}
+      ${g ? weigh('Weighed at the visit?') : e.kind === 'mch' || e.kind === 'gp' ? weigh('Weight and length from today') : ''}
+      <div class="field"><label for="adSaid">What the nurse or doctor said</label><textarea class="input" id="adSaid" maxlength="400" placeholder="e.g. all on track, next visit at 4 months"></textarea></div>
+      <p class="label-err" id="adErr" role="status" aria-live="polite"></p>
+      <button type="button" class="btn primary block" data-act="appt-done-save" data-id="${esc(e.id)}">Save</button></div>`;
+  }
+  function saveApptDone(id) {
+    const e = state.entries.find(x => x.id === id && isAppt(x));
+    if (!e) return;
+    let g = null;
+    if ($('adW') || $('adL')) { g = readGrowth('adW', 'adL', 'adNoHead'); if (g.err === 'Enter a weight, length or head size') g = null; else if (g.err) { sheetErr('adErr', g.err, 'adW'); return; } }
+    const before = JSON.parse(JSON.stringify(e)), made = [];
+    const val = id2 => { const el = $(id2); return el ? el.value.trim() : ''; };
+    e.done = true; e.doneAt = Date.now(); e.doneBy = state.me;
+    const said = val('adSaid'); if (said) e.said = said.slice(0, 400); else delete e.said;
+    if (e.vax) { const v = makeEntry({ type: 'vax', group: e.vax, start: e.start, where: e.where || '', appt: e.id }); const how = val('adHow'); if (how) v.note = how.slice(0, 140); state.entries.push(v); made.push(v.id); }
+    if (g && g.v) { const w = makeEntry({ type: 'growth', start: Math.min(e.start, Date.now()), ...g.v, appt: e.id }); state.entries.push(w); made.push(w.id); }
+    closeSheet(); save(); render();
+    toast(e.vax ? `${apptTitle(e)} saved as given${g && g.v ? ', with the weigh-in' : ''}` : `Done${g && g.v ? '. Weigh-in added to Weight and length' : ''}`, [{ label: 'Undo', fn: () => { state.entries = state.entries.filter(x => !made.includes(x.id)); putBack(before); } }]);
+  }
+  function apptUndone(id) {
+    const e = state.entries.find(x => x.id === id && isAppt(x));
+    if (!e) return;
+    const before = JSON.parse(JSON.stringify(e)), gone = state.entries.filter(x => x.appt === e.id && (x.type === 'vax' || x.type === 'growth'));
+    e.done = false; delete e.doneAt; delete e.doneBy;
+    state.entries = state.entries.filter(x => !gone.includes(x));
+    closeSheet(); save(); render();
+    toast(`${apptTitle(e)} isn’t marked as done${gone.length ? '. What was saved from it is removed' : ''}`, [{ label: 'Undo', fn: () => { gone.forEach(x => { if (!state.entries.some(y => y.id === x.id)) state.entries.push(x); }); putBack(before); } }]);
+  }
+  function apptMissedHTML(data) {
+    const e = state.entries.find(x => x.id === data.id && isAppt(x));
+    if (!e) return head('Didn’t happen') + '<p class="empty">This appointment has been removed.</p>';
+    return head('Didn’t happen?') + `<div class="sheet-body"><p class="sentence" style="margin: 0">${esc(apptTitle(e))}, ${esc(dayFull(e.start))} at ${timeFmt(e.start)}.</p>
+      <p class="group-foot" style="margin: 0">${e.vax ? 'Pick a new date if it moved. If you remove it, the vaccinations go back to To book.' : 'Pick a new date if it moved, or remove it.'}</p>
+      <button type="button" class="btn primary block" data-act="appt-rebook" data-id="${esc(e.id)}" data-autofocus>Pick a new date</button>
+      <button type="button" class="btn block danger" data-act="appt-remove" data-id="${esc(e.id)}">Remove it</button></div>`;
+  }
+  function vaxGroupHTML(data) {
+    const g = VAX_GROUPS.find(x => x.id === data.id), b = birthMs();
+    if (!g || !b) return head('Vaccinations') + '<p class="empty">Add a birthday first.</p>';
+    const gv = vaxGiven()[g.id], bk = vaxBooked(g.id), sk = schedSkip()['v-' + g.id], member = canPlan();
+    return `<div class="grab" aria-hidden="true"></div><div class="sheet-head"><span style="display: flex; align-items: center; gap: 12px; min-width: 0">${kindIc('vax', 'big')}<span><span class="sheet-title" id="sheetTitle">${esc(vaxTitle(g))}</span><br><span class="row-help">${gv ? `Given ${esc(dayFull(gv.start))}${gv.where ? ' · ' + esc(gv.where) : ''}` : g.id === 'birth' ? 'Usually given in hospital' : `Due from ${esc(dayFull(g.from(b)))}${g.fromWord ? ` (${g.fromWord})` : ''}`}</span></span></span><button type="button" class="icon-btn" data-act="close-sheet" aria-label="Close">${icon('close')}</button></div>
+      <div class="sheet-body"><div class="card pad" style="display: grid; gap: 8px">${g.items.map(([n, d]) => `<span class="vitem"><i aria-hidden="true"></i><span>${esc(n)}${d ? `<small>${esc(d)}</small>` : ''}</span></span>`).join('')}</div>
+      ${gv ? `${gv.note ? `<div class="card pad"><span class="label">Afterwards</span><p class="sentence" style="margin-top: 6px">${esc(gv.note)}</p></div>` : ''}${member ? `<button type="button" class="btn block" data-act="vax-ungive" data-id="${g.id}">Not given after all</button>` : ''}`
+        : member ? `${bk ? `<button type="button" class="baby-card" data-act="open" data-sheet="appt" data-id="${esc(bk.id)}">${kindIc('vax')}<span class="row-text"><b>Booked</b><br><span class="row-help">${esc(dayFull(bk.start))}, ${timeFmt(bk.start)}${bk.where ? ' · ' + esc(bk.where) : ''}</span></span>${icon('chev')}</button>` : g.id === 'birth' ? '' : `<button type="button" class="btn primary block" data-act="vax-book" data-id="${g.id}">Book an appointment</button>`}
+        <div class="card pad" style="display: grid; gap: 12px"><span class="label">Already had them?</span>
+          <div class="two-col"><div class="field"><label for="vgDate">Date given</label><input class="input" id="vgDate" type="date" value="${g.id === 'birth' ? dayKey(b) : dayKey()}" max="${dayKey()}"></div><div class="field"><label for="vgWhere">Where</label><input class="input" id="vgWhere" maxlength="60" value="${esc(bk ? bk.where || '' : g.id === 'birth' ? 'Hospital' : 'MCH centre')}"></div></div>
+          <div class="field"><label for="vgNote">How ${esc(babyName())} was afterwards (optional)</label><input class="input" id="vgNote" maxlength="140" placeholder="e.g. unsettled that evening"></div>
+          <p class="label-err" id="vgErr" role="status" aria-live="polite"></p><button type="button" class="btn" data-act="vax-give" data-id="${g.id}">Mark as given</button></div>
+        <button type="button" class="link" data-act="vax-skip" data-id="${g.id}">${sk ? 'We are having these after all' : 'We’re not having these'}</button>` : ''}
+      <p class="group-foot" style="margin: 0">This only records what was given and when. For questions about vaccines, ask your MCH nurse or GP.</p></div>`;
+  }
+  function vaxGive(gid) {
+    const g = VAX_GROUPS.find(x => x.id === gid); if (!g) return;
+    const dv = ($('vgDate') && $('vgDate').value) || dayKey();
+    const t = new Date(dv + 'T12:00').getTime();
+    if (isNaN(t) || t > Date.now() + DAY) { sheetErr('vgErr', 'Pick the day they were given', 'vgDate'); return; }
+    const v = makeEntry({ type: 'vax', group: gid, start: Math.min(t, Date.now()), where: (($('vgWhere') && $('vgWhere').value) || '').trim().slice(0, 60) });
+    const note = (($('vgNote') && $('vgNote').value) || '').trim(); if (note) v.note = note.slice(0, 140);
+    const bk = vaxBooked(gid), before = bk ? JSON.parse(JSON.stringify(bk)) : null;
+    if (bk) { bk.done = true; bk.doneAt = Date.now(); bk.doneBy = state.me; v.appt = bk.id; }
+    state.entries.push(v);
+    closeSheet(); save(); render();
+    toast(`${vaxTitle(g)} marked as given`, [{ label: 'Undo', fn: () => { state.entries = state.entries.filter(x => x.id !== v.id); if (before) putBack(before); else { save(); render(); } } }]);
+  }
+  function vaxUngive(gid) {
+    const gv = vaxGiven()[gid]; if (!gv) return;
+    const keep = JSON.parse(JSON.stringify(gv));
+    state.entries = state.entries.filter(x => x.id !== gv.id);
+    closeSheet(); save(); render();
+    toast('No longer marked as given', [{ label: 'Undo', fn: () => { state.entries.push(keep); save(); render(); } }]);
+  }
+  function setSkip(key, on) {
+    if (!state.sched || typeof state.sched !== 'object') state.sched = { skip: {} };
+    if (!state.sched.skip) state.sched.skip = {};
+    if (on) state.sched.skip[key] = Date.now(); else delete state.sched.skip[key];
+  }
+
+  // ---------- the dates you already have, all on one list ----------
+  function setupItems() {
+    const b = birthMs(); if (!b) return [];
+    const out = [], given = vaxGiven(), sk = schedSkip();
+    VAX_GROUPS.filter(g => g.from(b) <= addMonthsTo(b, 12)).forEach(g => {
+      const gv = given[g.id], bk = vaxBooked(g.id);
+      out.push({ key: 'v-' + g.id, type: 'vax', g, title: vaxTitle(g), due: g.from(b), hint: g.id === 'birth' ? 'At birth' : `Due from ${dayLong(g.from(b))}`, have: gv ? `Given ${dayLong(gv.start)}` : bk ? `Booked ${dayLong(bk.start)}` : sk['v-' + g.id] ? 'Not having these' : '' });
+    });
+    MCH_VISITS.filter(v => v[2] > 0 || -v[2] <= 12).forEach(v => {
+      const e = apptsAll().find(x => x.sched === 'm-' + v[0] || (x.kind === 'mch' && String(x.title || '').toLowerCase() === v[1].toLowerCase())), due = mchDue(v, b);
+      out.push({ key: 'm-' + v[0], type: 'mch', v, title: `MCH ${v[1]}`, due, hint: `Around ${dayLong(due)}`, have: e ? (e.done ? `Done ${dayLong(e.start)}` : `Booked ${dayLong(e.start)}`) : sk['m-' + v[0]] ? 'Skipped' : '' });
+    });
+    return out.sort((x, y) => x.due - y.due);
+  }
+  function setupRead() {
+    const S = $('sheet'); if (!S || !draft.rows) return;
+    S.querySelectorAll('[data-sk]').forEach(el => { const r = draft.rows[el.dataset.sk]; if (r) r[el.dataset.f] = el.value; });
+    S.querySelectorAll('[data-sx]').forEach(el => { const x = draft.extra[+el.dataset.sx]; if (x) x[el.dataset.f] = el.value; });
+  }
+  function apptSetupHTML() {
+    const d = draft, items = setupItems(), open = items.filter(x => !x.have), have = items.filter(x => x.have);
+    const row = x => {
+      const r = d.rows[x.key] || (d.rows[x.key] = { date: '', time: '', skip: false }), id = x.key.replace(/[^a-z0-9]/gi, '');
+      return `<div class="srow${r.skip ? ' skipped' : ''}"><div class="srow-top"><span class="row-text"><b>${esc(x.title)}</b><br><span class="row-help">${esc(x.hint)}${x.due < Date.now() ? ' · already past' : ''}</span></span><button type="button" class="fchip small" data-act="su-skip" data-k="${esc(x.key)}" aria-pressed="${r.skip}">${r.skip ? 'Skipped' : 'Skip'}</button></div>
+        <div class="two-col"><input class="input" type="date" id="sd-${id}" data-sk="${esc(x.key)}" data-f="date" value="${esc(r.date)}" aria-label="${esc(x.title)}: date"${r.skip ? ' disabled' : ''}><input class="input" type="time" id="st-${id}" data-sk="${esc(x.key)}" data-f="time" value="${esc(r.time)}" aria-label="${esc(x.title)}: time, optional"${r.skip ? ' disabled' : ''}></div></div>`;
+    };
+    const ex = (x, i) => `<div class="srow"><div class="srow-top"><input class="input" id="sx-t-${i}" data-sx="${i}" data-f="title" maxlength="60" value="${esc(x.title)}" placeholder="What for, e.g. Hearing check" aria-label="What for"><button type="button" class="icon-btn" data-act="su-del" data-i="${i}" aria-label="Remove this one">${icon('close')}</button></div>
+        <div class="fchips" role="group" aria-label="What kind">${[['gp', 'GP'], ['spec', 'Specialist'], ['other', 'Other']].map(([k, l]) => `<button type="button" class="fchip small" data-act="su-kind" data-i="${i}" data-v="${k}" aria-pressed="${x.kind === k}">${l}</button>`).join('')}</div>
+        <div class="two-col"><input class="input" type="date" id="sx-d-${i}" data-sx="${i}" data-f="date" value="${esc(x.date)}" aria-label="Date"><input class="input" type="time" id="sx-h-${i}" data-sx="${i}" data-f="time" value="${esc(x.time)}" aria-label="Time, optional"></div></div>`;
+    return head('Add the dates you have') + `<div class="sheet-body"><p class="sentence" style="margin: 0; font-size: 16px">Fill in the ones you have and leave the rest. Past dates are saved as done, future dates as booked. The time is optional.</p>
+      <div class="slist">${open.map(row).join('')}${d.extra.map(ex).join('')}</div>
+      <button type="button" class="btn block" data-act="su-add">${icon('plus')}Add another appointment</button>
+      ${have.length ? `<details class="card shave"><summary class="row" style="cursor: pointer; flex-wrap: nowrap"><span>Already in the app (${have.length})</span>${icon('chev')}</summary>${have.map(x => `<div class="row"><span class="row-text">${esc(x.title)}<br><span class="row-help">${esc(x.have)}</span></span></div>`).join('')}</details>` : ''}
+      ${CLOUD && calOn() ? '' : `<div class="card"><div class="row"><span class="row-text">Add booked ones to Google Calendar<br><span class="row-help">Leave off if they’re already in your calendar.</span></span>${sw('su-gcal', d.gcal, 'Add booked ones to Google Calendar')}</div></div>`}
+      <p class="label-err" id="suErr" role="status" aria-live="polite"></p>
+      <button type="button" class="btn primary block" data-act="su-save">Save</button>
+      ${calOn() ? '<p class="group-foot" style="margin: 0">Booked ones go into Google Calendar by themselves. If they’re there already, you’ll have two of each: delete the old ones.</p>' : ''}</div>`;
+  }
+  function saveSetup() {
+    setupRead();
+    const d = draft, now = Date.now();
+    const when = (date, time) => new Date(`${date}T${/^\d{2}:\d{2}$/.test(time || '') ? time : '10:00'}`).getTime();
+    const added = [], skips = [];
+    let nBooked = 0, nPast = 0;
+    const add = e => { state.entries.push(e); added.push(e.id); if (e.done || e.type === 'vax') nPast++; else nBooked++; };
+    for (const x of setupItems().filter(y => !y.have)) {
+      const r = d.rows[x.key]; if (!r) continue;
+      if (r.skip) { setSkip(x.key, true); skips.push(x.key); continue; }
+      if (!r.date) continue;
+      const at = when(r.date, r.time);
+      if (isNaN(at)) continue;
+      const past = at < now;
+      if (x.type === 'vax' && past) add(makeEntry({ type: 'vax', group: x.g.id, start: at, where: '' }));
+      else if (x.type === 'vax') add(makeEntry({ type: 'appt', kind: 'vax', title: x.title, vax: x.g.id, start: at, where: '', going: [state.me], remind: ['night'], notes: '', ...(d.gcal ? { gcal: 1 } : {}) }));
+      else add(makeEntry({ type: 'appt', kind: 'mch', title: x.v[1], sched: 'm-' + x.v[0], start: at, where: x.v[0] === 'home' ? 'Home visit' : 'MCH centre', going: [state.me], remind: past ? [] : ['night'], notes: '', ...(past ? { done: true, doneAt: now, doneBy: state.me } : d.gcal ? { gcal: 1 } : {}) }));
+    }
+    for (const x of d.extra) {
+      if (!x.title.trim() || !x.date) continue;
+      const at = when(x.date, x.time); if (isNaN(at)) continue;
+      const past = at < now;
+      add(makeEntry({ type: 'appt', kind: x.kind, title: x.title.trim().slice(0, 60), start: at, where: x.kind === 'gp' ? 'GP clinic' : '', going: [state.me], remind: past ? [] : ['night'], notes: '', ...(past ? { done: true, doneAt: now, doneBy: state.me } : d.gcal ? { gcal: 1 } : {}) }));
+    }
+    if (!added.length && !skips.length) { sheetErr('suErr', 'Nothing to save yet. Add a date to any you have.'); return; }
+    if (!state.sched || typeof state.sched !== 'object') state.sched = { skip: {} };
+    state.sched.setupDone = true;
+    closeSheet(); save();
+    if (!SUBS.includes(tab)) subFrom = tab === 'home' ? 'home' : 'baby';
+    tab = 'appts'; apptTab = 'up'; render();
+    const parts = [nBooked && `${nBooked} booked`, nPast && `${nPast} already happened`, skips.length && `${skips.length} skipped`].filter(Boolean).join(', ');
+    toast(`Saved: ${parts}.${d.gcal && nBooked && !calOn() ? ' Open each one to add it to Google Calendar.' : ''}`, [{ label: 'Undo', fn: () => { state.entries = state.entries.filter(x => !added.includes(x.id)); skips.forEach(k => setSkip(k, false)); save(); render(); } }]);
+  }
+
+  // ---------- Google Calendar: one tap, with nothing set up ----------
+  const gcalStamp = t => { const d = new Date(t); return `${d.getFullYear()}${pad(d.getMonth() + 1)}${pad(d.getDate())}T${pad(d.getHours())}${pad(d.getMinutes())}00`; };
+  function gcalUrl(e) {
+    const q = new URLSearchParams({ action: 'TEMPLATE', text: `${babyName()}: ${apptTitle(e)}`, dates: `${gcalStamp(e.start)}/${gcalStamp(e.start + HOUR)}`, details: [e.notes || '', 'From Bub Feed Log'].filter(Boolean).join('\n\n'), location: e.where || '' });
+    const tz = localTz(); if (tz) q.set('ctz', tz);
+    return 'https://calendar.google.com/calendar/render?' + q.toString();
+  }
+  function gcalSheetHTML(data) {
+    const e = state.entries.find(x => x.id === data.id && isAppt(x));
+    if (!e) return head('Google Calendar') + '<p class="empty">This appointment has been removed.</p>';
+    return head('Add to Google Calendar') + `<div class="sheet-body"><p class="group-foot" style="margin: 0">One tap, nothing to set up.</p>
+      <div class="card pad cal-prev"><span class="cal-sw" aria-hidden="true"></span><span class="row-text"><b>${esc(babyName())}: ${esc(apptTitle(e))}</b><br><span class="row-help">${esc(dayFull(e.start))} · ${timeFmt(e.start)} to ${timeFmt(e.start + HOUR)}${e.where ? `<br>${esc(e.where)}` : ''}${e.notes ? `<br>${esc(e.notes)}` : ''}</span></span></div>
+      <ol class="steps"><li>Google Calendar opens with this filled in.</li><li>Choose the calendar you share${PEOPLE.length > 1 ? ` with ${esc(othersText())}` : ''}.</li><li>Tap Save.</li></ol>
+      <a class="btn primary block" href="${esc(gcalUrl(e))}" target="_blank" rel="noopener noreferrer" data-act="gcal-opened" data-id="${esc(e.id)}">Open Google Calendar</a>
+      ${CLOUD && !isSitter ? '<p class="group-foot" style="margin: 0">To have changes go there by themselves, connect Google Calendar in Settings › Appointments.</p>' : ''}</div>`;
+  }
+
+  // ---------- Google Calendar, kept up to date through the notification server ----------
+  // One parent connects once. The server makes a calendar in their Google account (it can't see
+  // any other calendar), and any member's phone asks it to add, move or delete events. Each request
+  // carries the person's Firebase sign-in, and the server checks they're in this family.
+  const calOn = () => !!(CLOUD && SENDER && !isSitter && state.sched && state.sched.cal && state.sched.cal.on);
+  const calEvent = e => ({ title: `${babyName()}: ${apptTitle(e)}`, start: e.start, end: e.start + HOUR, where: e.where || '', notes: [e.notes || '', 'From Bub Feed Log'].filter(Boolean).join('\n\n'), tz: localTz() || 'Australia/Melbourne' });
+  const calSig = e => JSON.stringify(calEvent(e));
+  let calTimer = null, calBusy = false, calErr = '', calTry = 0;
+  function scheduleCal(ms) { if (!calOn()) return; clearTimeout(calTimer); calTimer = setTimeout(calSync, ms == null ? 1500 : ms); }
+  async function calCall(path, body) {
+    if (!SENDER || !authRef || !authRef.currentUser) throw Object.assign(new Error('Not signed in'), { code: 'signin' });
+    const tok = await authRef.currentUser.getIdToken();
+    const res = await fetch(`${SENDER}/cal/${path}`, { method: 'POST', headers: { authorization: 'Bearer ' + tok, 'content-type': 'application/json' }, body: JSON.stringify({ fid: FID, ...(body || {}) }), credentials: 'omit' });
+    const j = await res.json().catch(() => ({}));
+    if (!res.ok) throw Object.assign(new Error(j.error || 'HTTP ' + res.status), { code: j.error || 'http', status: res.status });
+    return j;
+  }
+  async function calSync() {
+    if (!calOn() || calBusy || !navigator.onLine || !store) return;
+    const drop = state.entries.filter(e => e.type === 'appt' && e.gone && !e.calSent).map(e => e.id);
+    if (drop.length) { state.entries = state.entries.filter(e => !drop.includes(e.id)); save(); }
+    const todo = state.entries.filter(e => e.type === 'appt' && (e.gone ? !!e.calSent : calSig(e) !== e.calSent)).slice(0, 10);
+    if (!todo.length) return;
+    calBusy = true;
+    const sent = {};
+    try {
+      const ops = todo.map(e => { if (e.gone) return { op: 'del', id: e.id }; sent[e.id] = calSig(e); return { op: 'put', id: e.id, ev: calEvent(e) }; });
+      const j = await calCall('sync', { ops });
+      let changed = false;
+      (j.done || []).forEach(r => {
+        const e = state.entries.find(x => x.id === r.id); if (!e) return;
+        if (r.op === 'del') { state.entries = state.entries.filter(x => x !== e); changed = true; }
+        else if (sent[e.id] && e.calSent !== sent[e.id]) { e.calSent = sent[e.id]; changed = true; }
+      });
+      if (changed) { save(); if (tab === 'appts' || sheetState) render(); }
+      calErr = ''; calTry = 0;
+      if (todo.length === 10 || (j.done || []).length < todo.length) scheduleCal(j.done && j.done.length ? 1500 : 60000);
+    } catch (err) {
+      if (err.code === 'not-connected') { state.sched.cal = null; state.entries.forEach(e => { if (e.type === 'appt') delete e.calSent; }); save(); render(); toast('Google Calendar isn’t connected any more. Connect it again in Settings › Appointments.'); }
+      else { calErr = err.code || 'error'; calTry++; console.warn('Calendar not updated', err.code || err.message); if (calTry < 6) scheduleCal(Math.min(30 * MIN, 30000 * calTry * calTry)); }
+    } finally { calBusy = false; }
+  }
+  const CAL_PENDING = 'bubfeed-cal-pending';
+  async function calConnect() {
+    if (!SENDER) { toast('This needs the notification sender set up first. See step 15 of the setup guide.'); return; }
+    calErr = ''; render();
+    try {
+      const j = await calCall('start', { name: babyName(), tz: localTz() || 'Australia/Melbourne', back: location.origin + location.pathname });
+      if (!j.url || !/^https:\/\/accounts\.google\.com\//.test(j.url)) throw new Error('No sign-in address');
+      setPref(CAL_PENDING, String(Date.now()));
+      location.assign(j.url);
+    } catch (err) {
+      calErr = err.code || 'error';
+      toast(err.code === 'not-set-up' ? 'Google Calendar isn’t set up on the notification sender yet. See step 17 of the setup guide.' : err.code === 'not-member' ? 'Only people in this log can connect a calendar.' : 'Couldn’t start. Check your connection and try again.');
+      render();
+    }
+  }
+  // back from Google: the address says how it went; the server is asked as well, in case the
+  // phone came back another way (another tab, or the app closed and opened again)
+  async function calCheck(fromHash) {
+    const pend = +getPref(CAL_PENDING, '0');
+    if (!fromHash && (!pend || Date.now() - pend > 30 * MIN)) return;
+    if (!CLOUD || !store || !authRef || !authRef.currentUser) return;
+    try {
+      const j = await calCall('status');
+      if (j.connected) {
+        setPref(CAL_PENDING, '');
+        const was = calOn();
+        if (!state.sched || typeof state.sched !== 'object') state.sched = { skip: {} };
+        state.sched.cal = { on: true, by: state.me, at: Date.now(), name: babyName() };
+        if (!was) state.entries.forEach(e => { if (e.type === 'appt') delete e.calSent; });
+        save(); render();
+        if (!was) toast(`Google Calendar connected. Appointments will go into the “${babyName()}” calendar.`);
+        scheduleCal(500);
+      } else if (fromHash) { setPref(CAL_PENDING, ''); toast('Google Calendar wasn’t connected. Try again from Settings › Appointments.'); }
+    } catch (err) { if (fromHash) toast('Couldn’t check the calendar connection. It’ll check again next time.'); }
+  }
+  async function calDisconnect() {
+    try { await calCall('off'); } catch (err) { if (err.code !== 'not-connected') { toast('Couldn’t disconnect. Check your connection and try again.'); return; } }
+    state.sched.cal = null;
+    state.entries = state.entries.filter(e => !(e.type === 'appt' && e.gone));
+    state.entries.forEach(e => { if (e.type === 'appt') delete e.calSent; });
+    save(); render();
+    toast('Disconnected. The calendar stays in Google Calendar, without new changes. Delete it there if you like.');
+  }
+  function calPageHTML() {
+    const s = state.sched || {}, c = s.cal, member = !isSitter;
+    const calName = esc((c && c.name) || babyName());
+    let card;
+    if (!CLOUD) card = '<p class="sentence">Google Calendar needs the app set up with Firebase.</p>';
+    else if (!SENDER) card = '<p class="sentence">Connecting Google Calendar needs the notification sender (step 15 of the setup guide). Until then, each appointment has an Add to Google Calendar button.</p>';
+    else if (calOn()) card = `<p class="sentence">Connected${c.by ? ` by ${esc(c.by)}` : ''}. Appointments go into the <b>“${calName}”</b> calendar in ${c.by && c.by !== state.me ? esc(c.by) + '’s' : 'your'} Google account, and change there when you change them here, from any of your phones.</p>
+      <p class="row-help" style="margin: 10px 0 0">To see it on ${esc(othersText())}’s phone too, share it in Google Calendar: open Settings, pick “${calName}”, then Share with specific people.</p>
+      ${calErr ? `<p class="row-help" style="margin: 10px 0 0; color: var(--due)">The last update didn’t go through. It’ll try again.</p>` : ''}
+      <div class="actions" style="margin-top: 12px"><button type="button" class="btn small" data-act="cal-resend">Send everything again</button><button type="button" class="btn small danger" data-act="cal-off">Disconnect</button></div>`;
+    else card = `<p class="sentence">Connect once, and appointments go into a new “${esc(babyName())}” calendar in your Google account. Change or cancel one here and it changes there too, whoever does it.</p>
+      <ul class="plain-list" style="margin-top: 10px"><li>The app can only see and change the calendar it makes, nothing else in your Google account.</li><li>Google shows a warning that it hasn’t checked this app. Tap Advanced, then Go to Bub Feed Log.</li><li>Appointment details are readable in Google Calendar. The rest of your log stays encrypted.</li></ul>
+      ${member ? '<button type="button" class="btn primary block" data-act="cal-on" style="margin-top: 12px">Connect Google Calendar</button>' : ''}`;
+    return pageTop('Appointments', 'Shared with your family.') + `
+      <section><h2 class="group-head">Google Calendar</h2><div class="card pad">${card}</div><p class="group-foot">Changes go one way: from the app to the calendar. Changing an event in Google Calendar doesn’t change it here.</p></section>
+      <section><h2 class="group-head">Reminders</h2><div class="card pad"><p class="sentence" style="margin: 0; font-size: 16px">Each appointment has its own: the evening before, the morning of, or an hour before. Phones get them when notifications are on and Appointments is ticked in Settings › Notifications.</p></div></section>
+      <section><h2 class="group-head">The schedule</h2><div class="card pad"><p class="sentence" style="margin: 0; font-size: 16px">Vaccinations follow the Victorian immunisation schedule, and MCH visits the Key Ages and Stages, both worked out from ${esc(babyName())}’s birthday.</p>${Object.keys(schedSkip()).length && member ? `<div class="actions" style="margin-top: 10px"><button type="button" class="btn small" data-act="sched-unskip">Show the ones you skipped again</button></div>` : ''}</div></section>`;
+  }
+
+  // ---------- milk: pouring some from a stored bottle into the baby's bottle ----------
+  // The feed is logged straight away and the stored bottle keeps the rest, with the same use-by.
+  // The baby's bottle can get the made-up bottle's countdown, and the feed is changed if some is left.
+  function milkPourHTML(data) {
+    const b = state.entries.find(x => x.id === data.id);
+    if (!b || b.done) return head('Pour') + '<p class="empty">This bottle has been used or thrown out.</p>';
+    const L = normLabel(b.label), chips = [30, 60, 90, 120].filter(v => v < b.ml).slice(0, 3).concat(b.ml);
+    const busy = !!T().made;
+    return `<div class="grab" aria-hidden="true"></div><div class="sheet-head"><span style="display: flex; align-items: center; gap: 12px; min-width: 0">${milkTag(b, 'big')}<span><span class="sheet-title" id="sheetTitle">Pour from ${esc(L)}</span><br><span class="row-help">${b.ml} ml in it now</span></span></span><button type="button" class="icon-btn" data-act="close-sheet" aria-label="Close">${icon('close')}</button></div>
+      <div class="sheet-body"><div class="field"><label for="pourMl">How much did you pour? (ml)</label><input class="input" id="pourMl" type="number" inputmode="numeric" min="5" max="${b.ml}" placeholder="e.g. 60" data-autofocus>
+        <div class="fchips" role="group" aria-label="Amounts">${chips.map(v => `<button type="button" class="fchip" data-act="pour-chip" data-v="${v}">${v === b.ml ? `All ${v} ml` : `${v} ml`}</button>`).join('')}</div></div>
+      <div class="card pad" style="display: grid; gap: 10px"><span class="vitem">${icon('history')}<span>Logged in History as a bottle feed of expressed milk, from ${esc(L)}.</span></span><span class="vitem">${icon(b.place)}<span>${esc(L)} keeps the rest ${placeIn(b.place)}, still ${useByText(b)}.</span></span></div>
+      ${busy ? '<p class="group-foot" style="margin: 0">A bottle timer is already running, so this one won’t start another.</p>' : `<div class="card"><div class="row"><span class="row-text">Timer for ${pron()} bottle<br><span class="row-help">Reminds you to throw out what’s left, after ${milkSpan(milkTimes().made)}. Set in Settings › Milk.</span></span>${sw('pour-timer', draft.pourTimer !== false, `Timer for ${pron()} bottle`)}</div></div>`}
+      <p class="label-err" id="pourErr" role="status" aria-live="polite"></p>
+      <button type="button" class="btn primary block" data-act="pour-save" data-id="${esc(b.id)}">Save</button></div>`;
+  }
+  function pourMilk(id) {
+    const b = state.entries.find(x => x.id === id);
+    if (!b || b.done) return;
+    const el = $('pourMl'), ml = Math.round(parseFloat(String(el ? el.value : '').replace(',', '.')));
+    if (!(ml >= 5)) { sheetErr('pourErr', 'Enter how much you poured', 'pourMl'); return; }
+    if (ml > b.ml) { sheetErr('pourErr', `Bottle ${normLabel(b.label)} only has ${b.ml} ml`, 'pourMl'); return; }
+    const before = JSON.parse(JSON.stringify(b)), L = normLabel(b.label), now = Date.now();
+    const feed = makeEntry({ type: 'bottle', ml, milk: 'expressed', bottle: L });
+    state.entries.push(feed);
+    if (ml >= b.ml) { b.done = 'fed'; b.doneAt = now; b.doneBy = state.me; } else { b.ml -= ml; b.poured = (b.poured || 0) + ml; }
+    const timer = !T().made && draft.pourTimer !== false;
+    if (timer) T().made = { start: now, ml, kind: 'expressed', limit: milkTimes().made, by: state.me, feed: feed.id, from: L };
+    buzz(); closeSheet(); save(); render();
+    toast(`${ml} ml from ${L} logged as a feed. ${b.done ? `${L} is used up.` : `${L} has ${b.ml} ml left.`}`, [{ label: 'Undo', fn: () => { state.entries = state.entries.filter(x => x.id !== feed.id); if (timer && T().made && T().made.feed === feed.id) T().made = null; putBack(before); } }]);
+  }
+  function drinkLeftHTML() {
+    const m = T().made;
+    if (!m || !m.feed) return head(`${Pron()} bottle`) + '<p class="empty">This bottle is finished.</p>';
+    return head('How much was left?') + `<div class="sheet-body"><p class="group-foot" style="margin: 0">${Pron()} bottle had ${m.ml} ml. The feed changes to what was drunk.</p>
+      <div class="field"><label for="leftMl">Left in ${pron()} bottle (ml)</label><input class="input" id="leftMl" type="number" inputmode="numeric" min="0" max="${m.ml}" placeholder="e.g. 20" data-autofocus></div>
+      <p class="label-err" id="leftErr" role="status" aria-live="polite"></p>
+      <button type="button" class="btn primary block" data-act="drink-left-save">Save</button></div>`;
+  }
+  function drinkLeftSave() {
+    const m = T().made;
+    if (!m || !m.feed) { closeSheet(); return; }
+    const el = $('leftMl'), left = Math.round(parseFloat(String(el ? el.value : '').replace(',', '.')));
+    if (!(left >= 0)) { sheetErr('leftErr', `Enter how much is left in ${pron()} bottle`, 'leftMl'); return; }
+    if (left >= m.ml) { sheetErr('leftErr', `${Pron()} bottle only had ${m.ml} ml. To remove the feed, delete it in History.`, 'leftMl'); return; }
+    const f = state.entries.find(x => x.id === m.feed);
+    const before = f ? JSON.parse(JSON.stringify(f)) : null;
+    if (f) f.ml = m.ml - left;
+    T().made = null;
+    closeSheet(); save(); render();
+    toast(f ? `Feed changed to ${f.ml} ml, what was drunk` : 'Bottle finished', [{ label: 'Undo', fn: () => { T().made = m; if (before) putBack(before); else { save(); render(); } } }]);
   }
 
   // ---------- keep the screen on during a feed ----------
@@ -4548,7 +5300,7 @@ details[open] > summary .ic { transform: rotate(90deg); }
   function handoverSince() { return Math.max(prof().lastSeen || 0, Date.now() - 12 * HOUR); }
   function handoverInfo() {
     const since = handoverSince();
-    return state.entries.filter(e => e.who !== state.me && (e.sample ? e.start : (e.at || e.start)) > since);
+    return state.entries.filter(e => e.who !== state.me && e.type !== 'appt' && e.type !== 'vax' && (e.sample ? e.start : (e.at || e.start)) > since);
   }
 
   // ---------- toast ----------
@@ -5263,7 +6015,7 @@ const WHO = {wb:[0,0.3487,3.3464,0.14602,7,0.2776,3.4879,0.14483,14,0.2581,3.752
     return `<svg class="gchart" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(aria)}"><g class="gl">${g}</g><g class="gt">${yl}<text x="${X0}" y="${H - 3}">${esc(xl[0])}</text><text x="${X1}" y="${H - 3}" text-anchor="end">${esc(xl[1])}</text><text x="${X0}" y="8" class="unit">${unit}</text></g>${pl}<g class="gt">${plab}</g>${line}${xs.map((x, i) => `<circle cx="${x.toFixed(1)}" cy="${ys[i].toFixed(1)}" r="4.5"/>`).join('')}</svg>`;
   }
   const sexPickHTML = () => `<div class="sex-pick"><span class="row-help">Boy or girl? Only used for the WHO percentile lines.</span><div class="segmented compact" role="group" aria-label="Boy or girl">${[['boy', 'Boy'], ['girl', 'Girl']].map(([k, l]) => `<button type="button" data-act="baby-sex" data-v="${k}" aria-pressed="${state.baby.sex === k}">${l}</button>`).join('')}</div></div>`;
-  function cardGrowth() {
+  function cardGrowth(page) {
     const p = prof();
     const list = sortedAll().filter(e => e.type === 'growth');
     const add = '<div class="actions" style="margin-top: 8px"><button type="button" class="btn small" data-act="open" data-sheet="growth">Add weight or length</button></div>';
@@ -5287,9 +6039,9 @@ const WHO = {wb:[0,0.3487,3.3464,0.14602,7,0.2776,3.4879,0.14483,14,0.2581,3.752
     const metric = GROWTH_METRICS[p.growthMetric] ? p.growthMetric : 'w';
     const pcs = Object.keys(GROWTH_METRICS).map(m => { const l = lastOf(e => e.type === 'growth' && GROWTH_METRICS[m][2](e) != null); const pc = l && percentileOf(m, l); return pc ? `${GROWTH_METRICS[m][0]} ${pctText(pc)}` : ''; }).filter(Boolean);
     if (pcs.length) body += `<p class="sub">${esc(pcs.join('. '))} (WHO).</p>`;
-    const graph = p.growthGraph ? `<div class="segmented compact" role="group" aria-label="Graph" style="margin-top: 10px">${Object.entries(GROWTH_METRICS).map(([k, [nm]]) => `<button type="button" data-act="growth-metric" data-v="${k}" aria-pressed="${metric === k}">${nm}</button>`).join('')}</div>${growthChart(metric)}${!birthMs() ? '<p class="group-foot" style="margin: 4px 0 0">Add a birthday in Settings › Baby to see the WHO lines.</p>' : !state.baby.sex ? sexPickHTML() : ''}` : '';
+    const graph = page || p.growthGraph ? `<div class="segmented compact" role="group" aria-label="Graph" style="margin-top: 10px">${Object.entries(GROWTH_METRICS).map(([k, [nm]]) => `<button type="button" data-act="growth-metric" data-v="${k}" aria-pressed="${metric === k}">${nm}</button>`).join('')}</div>${growthChart(metric)}${!birthMs() ? '<p class="group-foot" style="margin: 4px 0 0">Add a birthday in Settings › Baby to see the WHO lines.</p>' : !state.baby.sex ? sexPickHTML() : ''}` : '';
     const toggle = `<div class="row growth-toggle"><span class="row-text">Show graph</span>${sw('growth-graph', !!p.growthGraph, 'Show the growth graph')}</div>`;
-    return insCard(lw ? `Latest weight · ${lw.birth ? 'birth' : dayLong(lw.start)}` : 'Weight and length', body + toggle + graph + add);
+    return insCard(lw ? `Latest weight · ${lw.birth ? 'birth' : dayLong(lw.start)}` : 'Weight and length', body + (page ? '' : toggle) + graph + (page ? '' : add));
   }
   function growthBlockHTML() {
     const lw = lastOf(e => e.type === 'growth' && e.weight), ll = lastOf(e => e.type === 'growth' && e.length);
@@ -5302,7 +6054,7 @@ const WHO = {wb:[0,0.3487,3.3464,0.14602,7,0.2776,3.4879,0.14483,14,0.2581,3.752
 
   function cardShare() {
     return insCard('Share with family', `<p class="sentence">A one-page picture of the week, or a keepsake page for the month.</p>
-      <div class="actions" style="margin-top: 12px"><button type="button" class="btn small" data-act="open" data-sheet="weekcard">Week card</button><button type="button" class="btn small" data-act="open" data-sheet="keepsake">This month</button></div>`);
+      <div class="actions" style="margin-top: 12px"><button type="button" class="btn small" data-act="open" data-sheet="weekcard">Week card</button><button type="button" class="btn small" data-act="open" data-sheet="keepsake">Month card</button></div>`);
   }
   const INSIGHT_RENDER = { stretch: cardStretch, week: cardWeek, balance: cardBalance, mch: cardMch, sleep: cardSleep, pump: cardPump, unsettled: cardUnsettled, share: cardShare, growth: cardGrowth };
   // the groups on the Insights page, in order; a group shows when any of its cards is on and has something to say
@@ -5338,6 +6090,7 @@ const WHO = {wb:[0,0.3487,3.3464,0.14602,7,0.2776,3.4879,0.14483,14,0.2581,3.752
       case 'sleepb': return sleepBlockHTML();
       case 'growthb': return growthBlockHTML();
       case 'milkb': return milkBlockHTML();
+      case 'appts': return apptsBlockHTML();
       case 'low': return lowHTML();
       case 'stretch': case 'week': case 'balance': case 'mch': return insightCard(id);
       default: return '';
@@ -5751,6 +6504,7 @@ const WHO = {wb:[0,0.3487,3.3464,0.14602,7,0.2776,3.4879,0.14483,14,0.2581,3.752
   // but never while a timer is running.
   let wn = { page: 0, pick: {} };
   function wnArt(i) {
+    if (V14) return wnArt14(i);
     if (i === 0) {
       const tl = `<div class="a-tl"><div class="a-ax"><span>6am</span><span>9am</span><span>12pm</span><span>3pm</span></div>
         <div class="a-lane">${[[6, 'var(--right)'], [30, 'var(--left)'], [52, 'var(--bottle)'], [78, 'var(--right)']].map(([tp, c], k) => `<i class="a-chip grow" style="top: ${tp}%; background: color-mix(in srgb, ${c} 30%, var(--surface)); animation-delay: ${0.25 + k * 0.35}s"></i>`).join('')}</div>
@@ -5763,7 +6517,17 @@ const WHO = {wb:[0,0.3487,3.3464,0.14602,7,0.2776,3.4879,0.14483,14,0.2581,3.752
       <div class="a-shelf"><span class="a-spot">${icon('pump')}Pumped</span><span class="a-spot">${icon('fridge')}Fridge</span><span class="a-spot">${icon('freezer')}Freezer</span><span class="a-bottle move">C</span></div></div>`;
     return `<div class="a-chips"><span class="blink" style="animation-delay: 0.3s">Feeds</span><span>Nappies</span><span>Sleep</span><span style="flex: 0.8">More</span></div><div class="a-rows">${[0, 1, 2, 3].map(k => `<div class="rise" style="animation-delay: ${0.9 + k * 0.25}s; width: ${92 - k * 9}%"></div>`).join('')}</div>`;
   }
+  const V14 = true;
+  function wnArt14(i) {
+    const nm = esc(babyName());
+    if (i === 0) return `<div class="a14"><div class="a14-sec">${[['mch', 'Coming up', 'pink'], ['milk', 'Milk', 'sky'], ['growth', 'Growing', 'green'], ['chart', 'Patterns', 'violet']].map(([ic, l, tn], k) => `<span class="a14-row rise tone-${tn}" style="animation-delay: ${0.25 + k * 0.25}s"><span class="a14-ic">${icon(ic)}</span><b>${l}</b><i></i></span>`).join('')}</div>
+      <div class="a14-bar">${[['home', 'Home'], ['history', 'History'], ['plus', ''], ['baby', nm], ['settings', 'Settings']].map(([ic, l], k) => k === 2 ? '<span class="a14-add"></span>' : `<span class="${k === 3 ? 'on blink' : ''}" style="animation-delay: 1.4s">${icon(ic)}<small>${l}</small></span>`).join('')}</div></div>`;
+    if (i === 1) return `<div class="a14 a14-cal"><div class="a14-card rise" style="animation-delay: 0.2s"><span class="a14-ck">${icon('check')}How did it go?</span><span class="a14-line"><span class="ap-date"><small>Tue</small><b>3</b><small class="m">Nov</small></span><span><b>2-month vaccinations</b><i></i></span></span></div>
+      <div class="a14-card rise" style="animation-delay: 0.7s"><span class="a14-line"><span class="ap-date open"><small>Due</small><b>6</b><small class="m">Jan</small></span><span><b>4-month vaccinations</b><i></i></span></span></div><span class="a14-gcal rise" style="animation-delay: 1.2s">${icon('cal')}Google Calendar</span></div>`;
+    return `<div class="a14"><div class="a14-pour"><span class="mtag big rise" style="--lc: #2fa79c; animation-delay: 0.2s">B</span><span class="a14-arrow rise" style="animation-delay: 0.6s">${icon('chev')}</span><span class="a14-cup rise" style="animation-delay: 0.9s">${icon('bottle')}<small>60 ml</small></span></div></div>`;
+  }
   function whatsNewHTML() {
+    if (V14) return whatsNew14HTML();
     const i = Math.max(0, Math.min(2, wn.page)), last = i === 2;
     const hv = wn.pick.hview || histView(), mc = wn.pick.milk || 'on';
     const pages = [
@@ -5782,7 +6546,26 @@ const WHO = {wb:[0,0.3487,3.3464,0.14602,7,0.2776,3.4879,0.14483,14,0.2581,3.752
       <div class="wn-foot"><span class="wn-dots" aria-label="Page ${i + 1} of 3">${[0, 1, 2].map(k => `<i class="${k === i ? 'on' : ''}"></i>`).join('')}</span>
         <span class="actions" style="flex: none">${i ? '<button type="button" class="btn" data-act="wn-back">Back</button>' : ''}<button type="button" class="btn primary" data-act="${last ? 'wn-done' : 'wn-next'}" data-autofocus>${last ? 'Done' : 'Next'}</button></span></div></div>`;
   }
+  function whatsNew14HTML() {
+    const i = Math.max(0, Math.min(2, wn.page)), last = i === 2, nm = esc(babyName());
+    const cu = wn.pick.appts || 'on';
+    const pages = [
+      [`${nm}’s own tab`, `Insights makes way for a tab named after ${nm}, with everything about ${nm} in one place: what’s coming up, milk, growing, and patterns. History is just what happened.`, ''],
+      ['Appointments and vaccinations', `${nm}’s vaccinations and MCH visits, worked out from the birthday, with reminders. Add the dates you already have in one go. After each one, the app asks how it went, and keeps the weight and what the nurse said. Each one can go into Google Calendar, or connect it once in Settings › Appointments.`,
+        `<div class="wn-pick" role="group" aria-label="Coming up card on Home">${[['on', 'Coming up on Home'], ['off', 'Not now']].map(([k, l]) => `<button type="button" class="wn-opt" data-act="wn-pick" data-k="appts" data-v="${k}" aria-pressed="${cu === k}">${l}</button>`).join('')}</div>`],
+      ['Also in this update', '', `<ul class="wn-list">${['Pour some from a stored bottle: it logs the feed, and the bottle keeps the rest', `A timer for ${pron()} bottle, and the feed changes if some is left`, `The month card can show last month, or any month since ${nm} was born`, 'New app icons now reach phones that already have the app'].map(t => `<li><span>${icon('check')}</span>${t}</li>`).join('')}</ul>`]
+    ];
+    const [title, text, pick] = pages[i];
+    return `<div class="grab" aria-hidden="true"></div><div class="wn">
+      <div class="wn-top"><span class="wn-eyebrow">What’s new · version ${WN_VER}</span><button type="button" class="link" data-act="wn-skip">${last ? 'Close' : 'Skip'}</button></div>
+      <div class="wn-art" aria-hidden="true">${wnArt(i)}</div>
+      <h2 class="wn-title" id="sheetTitle">${title}</h2>${text ? `<p class="wn-text">${text}</p>` : ''}
+      ${pick}
+      <div class="wn-foot"><span class="wn-dots" aria-label="Page ${i + 1} of 3">${[0, 1, 2].map(k => `<i class="${k === i ? 'on' : ''}"></i>`).join('')}</span>
+        <span class="actions" style="flex: none">${i ? '<button type="button" class="btn" data-act="wn-back">Back</button>' : ''}<button type="button" class="btn primary" data-act="${last ? 'wn-done' : 'wn-next'}" data-autofocus>${last ? 'Done' : 'Next'}</button></span></div></div>`;
+  }
   function wnSave() {
+    if (V14) { if (!isSitter) { const p = prof(); if ((wn.pick.appts || 'on') === 'on') { if (!p.home.includes('appts')) { const i = Math.max(p.home.indexOf('milkb'), p.home.indexOf('last'), p.home.indexOf('handover')); p.home.splice(i >= 0 ? i + 1 : 0, 0, 'appts'); } } else p.home = p.home.filter(x => x !== 'appts'); save(); } return; }
     if (wn.pick.hview) { setPref(HVIEW_KEY, wn.pick.hview); histToNow = true; }
     if (!isSitter) { const p = prof(); if ((wn.pick.milk || 'on') === 'on') addMilkCard(p); else p.home = p.home.filter(x => x !== 'milkb'); save(); }
   }
@@ -5814,7 +6597,7 @@ const WHO = {wb:[0,0.3487,3.3464,0.14602,7,0.2776,3.4879,0.14483,14,0.2581,3.752
     if (CLOUD) checkHost();
     return `<div class="title-row"><h1>Settings</h1></div>
       <button type="button" class="baby-card" data-act="set-page" data-v="baby"><span class="avatar big">${initial(state.baby.name || 'Bub')}</span><span class="row-text"><b>${esc(state.baby.name || 'Bub')}</b><br><span class="row-help">${babyAge() ? esc(babyAge()) + ' · ' : ''}name, birthday, weigh-ins</span></span>${icon('chev')}</button>
-      <section><h2 class="group-head">Shared with your family</h2><div class="card">${menuRow('people', 'people', CLOUD ? 'People and sharing' : 'People and demo mode', peopleSub, pend ? `<span class="count-pill">${pend} waiting</span>` : '')}${menuRow('feeding', 'bottle', 'Feeding', feedSub)}${menuRow('milk', 'milk', 'Milk', (() => { const t = milkTimes(); return `Fridge ${milkSpan(t.fridge)} · freezer ${milkSpan(t.freezer)}`; })())}${menuRow('shopping', 'low', 'Shopping list', state.low.length ? `${plural(state.low.length, 'thing', 'things')} to buy` : 'Items, running-low warnings, store links')}</div><p class="group-foot">Changes here show on everyone’s phone.</p></section>
+      <section><h2 class="group-head">Shared with your family</h2><div class="card">${menuRow('people', 'people', CLOUD ? 'People and sharing' : 'People and demo mode', peopleSub, pend ? `<span class="count-pill">${pend} waiting</span>` : '')}${menuRow('feeding', 'bottle', 'Feeding', feedSub)}${menuRow('milk', 'milk', 'Milk', (() => { const t = milkTimes(); return `Fridge ${milkSpan(t.fridge)} · freezer ${milkSpan(t.freezer)}`; })())}${CLOUD ? menuRow('appts', 'cal', 'Appointments', calOn() ? 'Google Calendar connected' : 'Reminders and Google Calendar') : ''}${menuRow('shopping', 'low', 'Shopping list', state.low.length ? `${plural(state.low.length, 'thing', 'things')} to buy` : 'Items, running-low warnings, store links')}</div><p class="group-foot">Changes here show on everyone’s phone.</p></section>
       <section><h2 class="group-head">Just this phone</h2><div class="card">${menuRow('look', 'palette', 'Look and feel', lookSub)}${menuRow('edithome', 'grid', 'Home screen', homeSub)}${menuRow('history', 'history', 'History', `Shown as ${hviewWords(histView())}`)}${CLOUD ? menuRow('notify', 'bell', 'Notifications', pushPrefs().on && 'Notification' in window && Notification.permission === 'granted' ? 'On' : 'Off') : ''}</div></section>
       <section><h2 class="group-head">Your data</h2><div class="card">${menuRow('data', 'cloud', 'Backups and export', dataSub)}</div></section>
       <section><h2 class="group-head">Account and help</h2><div class="card">${menuRow('account', 'person', 'Account', CLOUD ? `${esc(state.me)} · signed in with Google` : 'Demo mode, saved on this phone')}${menuRow('help', 'help', 'Help and about', updateReady ? '<b>A new version is ready</b>' : 'Install, sync, privacy, feedback')}${amHost() ? menuRow('inbox', 'note', 'Feedback from friends', inbox ? plural(inbox.length, 'message', 'messages') : 'Only you see this') : ''}</div></section>
@@ -5842,7 +6625,7 @@ const WHO = {wb:[0,0.3487,3.3464,0.14602,7,0.2776,3.4879,0.14483,14,0.2581,3.752
         <div class="field"><span class="flabel">How ${esc(state.baby.name || 'Bub')} is fed</span><div class="segmented" role="group" aria-label="How the baby is fed">${[['breast', 'Breast'], ['bottle', 'Bottle'], ['both', 'Both']].map(([k, l]) => `<button type="button" data-act="feeding-set" data-v="${k}" aria-pressed="${state.feeding === k}">${l}</button>`).join('')}</div><span class="row-help">Picks the starting buttons for anyone who joins. Change your own in Home screen.</span></div>
       </section>
       <section><h2 class="group-head">Weight and length</h2><div class="card">${list.length ? list.map(e => `<button type="button" class="entry" data-act="open" data-sheet="edit" data-id="${e.id}" aria-label="Change weigh-in from ${esc(e.birth ? 'birth' : dayLong(e.start))}"><span class="e-main"><span class="e-title">${e.birth ? 'Birth' : dayLong(e.start)}</span></span><span class="e-time">${esc(growthText(e))}</span></button>`).join('') : '<p class="empty">None yet.</p>'}</div>
-        <div class="actions" style="margin-top: 10px"><button type="button" class="btn block" data-act="open" data-sheet="growth">Add weight or length</button></div><p class="group-foot">From the MCH nurse or your own scales. Tap one to fix it. The graph is in Insights.</p></section>
+        <div class="actions" style="margin-top: 10px"><button type="button" class="btn block" data-act="open" data-sheet="growth">Add weight or length</button></div><p class="group-foot">From the MCH nurse or your own scales. Tap one to fix it. The graph is in ${esc(babyName())}’s tab, under Growing.</p></section>
       ${isSitter ? '' : `<div class="card">${menuRow('', 'pencil', 'Go through the setup questions again', 'Name, birthday, feeding and more').replace('data-act="set-page" data-v=""', 'data-act="edit-details"')}</div>`}`;
   }
   function phonesHTML() {
@@ -5913,7 +6696,7 @@ const WHO = {wb:[0,0.3487,3.3464,0.14602,7,0.2776,3.4879,0.14483,14,0.2581,3.752
     return pageTop('Feeding', 'Shared with everyone in your family.') + `
       <section><h2 class="group-head">Next feed due after</h2><div class="card"><div class="row"><span class="big-num" style="font-size: 26px">${hm(s.dueMin)}</span><span class="stepper"><button type="button" data-act="due" data-d="-30" aria-label="30 minutes less">−</button><button type="button" data-act="due" data-d="30" aria-label="30 minutes more">+</button></span></div></div><p class="group-foot">Counted from when the last feed started. The home screen shows when it’s due and turns orange once it’s passed.</p></section>
       <section><h2 class="group-head">Usual bottle milk</h2><div class="segmented" role="group" aria-label="Usual bottle milk">${['formula', 'expressed'].map(k => `<button type="button" data-act="milk-default" data-v="${k}" aria-pressed="${s.milk === k}">${k === 'formula' ? 'Formula' : 'Expressed'}</button>`).join('')}</div><p class="group-foot">New bottles start with this. You can still change each one.</p></section>
-      <section><div class="card"><div class="row"><span class="row-text"><b>Pumping</b><br><span class="row-help">Shows Pump in the + menu and Insights</span></span>${sw('pump-toggle', pumpOn(), 'Pumping')}</div></div></section>
+      <section><div class="card"><div class="row"><span class="row-text"><b>Pumping</b><br><span class="row-help">Shows Pump in the + menu and Patterns</span></span>${sw('pump-toggle', pumpOn(), 'Pumping')}</div></div></section>
       <section><h2 class="group-head">Medicines</h2><div class="card">${state.medNames.map((n, i) => `<div class="edit-row med-edit"><span class="er-name">${esc(n)}<small>${gapText(medGap(n))}</small></span><span class="stepper"><button type="button" data-act="med-gap" data-name="${esc(n)}" data-d="-1" aria-label="Shorter gap for ${esc(n)}">−</button><button type="button" data-act="med-gap" data-name="${esc(n)}" data-d="1" aria-label="Longer gap for ${esc(n)}">+</button></span><button type="button" class="icon-btn" data-act="med-remove" data-i="${i}" aria-label="Remove ${esc(n)}">${icon('trash')}</button></div>`).join('') || '<p class="empty">None yet.</p>'}
         <div class="pad" style="padding-top: 6px"><div style="display: flex; gap: 8px"><input class="input" id="medAdd" maxlength="40" placeholder="Add a medicine" aria-label="Add a medicine"><button type="button" class="btn primary" data-act="med-add">Add</button></div></div></div>
         <p class="group-foot">These show as one-tap choices when you log a medicine. Set the gap between doses from the label or your doctor or pharmacist, and the app shows when the next one is OK. It only records what was given and when, and never suggests doses.</p></section>`;
@@ -5934,7 +6717,7 @@ const WHO = {wb:[0,0.3487,3.3464,0.14602,7,0.2776,3.4879,0.14483,14,0.2581,3.752
         <input class="ts-range" id="textScale" type="range" min="90" max="135" step="1" value="${textScale()}" aria-label="Text size" aria-valuetext="${textScale()} percent">
         ${textScale() !== 100 ? '<button type="button" class="btn small" data-act="text-reset" style="justify-self: start">Back to standard</button>' : ''}
       </div><p class="group-foot">Makes everything bigger or smaller, buttons included. The sample shows the size as you slide; it changes when you let go.</p></section>
-      <section><div class="card"><div class="row"><span class="row-text"><b>Calm mode</b><br><span class="row-help">Just logging. Hides Insights, comparisons and the feed-due warning.</span></span>${sw('calm', p.calm, 'Calm mode')}</div></div></section>`;
+      <section><div class="card"><div class="row"><span class="row-text"><b>Calm mode</b><br><span class="row-help">Just logging. Hides Patterns, comparisons and the feed-due warning.</span></span>${sw('calm', p.calm, 'Calm mode')}</div></div></section>`;
   }
   function dataPageHTML() {
     const p = prof(), bk = state.backup || {};
@@ -5970,7 +6753,7 @@ const WHO = {wb:[0,0.3487,3.3464,0.14602,7,0.2776,3.4879,0.14483,14,0.2581,3.752
     const ok = syncStatus === 'synced' || syncStatus === 'local';
     const host = HOST_NAME ? esc(HOST_NAME) : 'The person who runs the app';
     return pageTop('Help and about') + `
-      <section><button type="button" class="sync-card" data-act="open" data-sheet="whatsnew"><span class="menu-ic">${icon('star')}</span><span class="row-text"><b>What’s new in version ${WN_VER}</b><br><span class="row-help">A clearer History, Milk, pumping both sides, icons and text size</span></span>${icon('chev')}</button></section>
+      <section><button type="button" class="sync-card" data-act="open" data-sheet="whatsnew"><span class="menu-ic">${icon('star')}</span><span class="row-text"><b>What’s new in version ${WN_VER}</b><br><span class="row-help">${esc(babyName())}’s own tab, appointments and vaccinations, pouring from stored milk</span></span>${icon('chev')}</button></section>
       <section><button type="button" class="sync-card" data-act="open" data-sheet="sync"><span class="menu-ic${ok ? ' good' : ''}">${icon(ok ? 'check' : 'cloud')}</span><span class="row-text"><b>${esc(SYNC_TEXT[syncStatus] || '')}</b><br><span class="row-help">${CLOUD ? 'Tap to see what each sync message means' : 'Demo mode: nothing leaves this phone'}</span></span>${icon('chev')}</button></section>
       ${updateReady ? `<section class="card pad notice"><span class="row-text"><b>A new version is ready</b><br><span class="row-help">Everything you’ve logged stays.</span></span><button type="button" class="btn small primary" data-act="update-app">Update</button></section>` : ''}
       <section><h2 class="group-head">Put the app on a phone</h2><div class="card">
@@ -6007,6 +6790,7 @@ const WHO = {wb:[0,0.3487,3.3464,0.14602,7,0.2776,3.4879,0.14483,14,0.2581,3.752
       case 'notify': return notifyPageHTML();
       case 'look': return lookPageHTML();
       case 'milk': return milkSettingsHTML();
+      case 'appts': return calPageHTML();
       case 'history': return historyPageHTML();
       case 'data': return dataPageHTML();
       case 'account': return accountPageHTML();
@@ -6121,6 +6905,7 @@ const WHO = {wb:[0,0.3487,3.3464,0.14602,7,0.2776,3.4879,0.14483,14,0.2581,3.752
     }
     if (tab === 'history' && hfSearch && !hf.q) { hfSearch = false; render(); return true; }
     if (tab === 'settings' && setPage) { setPage = ''; render(); window.scrollTo(0, 0); return true; }
+    if (SUBS.includes(tab)) { tab = subFrom; setPref(TAB_KEY, tab); window.scrollTo(0, 0); render(); return true; }
     if (tab !== 'home') { tab = 'home'; historyLimit = 120; setPref(TAB_KEY, tab); window.scrollTo(0, 0); render(); return true; }
     return false;
   }
@@ -6139,15 +6924,16 @@ const WHO = {wb:[0,0.3487,3.3464,0.14602,7,0.2776,3.4879,0.14483,14,0.2581,3.752
   document.addEventListener('keydown', armBack, true);
 
   // ---------- tab bar ----------
-  const TABS = [['home', 'Home', 'home'], ['history', 'History', 'history'], ['add', '', 'plus'], ['insights', 'Insights', 'chart'], ['settings', 'Settings', 'settings']];
+  const TABS = [['home', 'Home', 'home'], ['history', 'History', 'history'], ['add', '', 'plus'], ['baby', '', 'baby'], ['settings', 'Settings', 'settings']];
   let tab = getPref(TAB_KEY, 'home');
-  if (!['home', 'history', 'insights', 'settings'].includes(tab)) tab = 'home';
+  if (tab === 'insights') tab = 'baby';
+  if (!['home', 'history', 'baby', 'settings'].includes(tab)) tab = 'home';
   function renderTabs() {
-    const calm = prof().calm;
-    if ((calm || isSitter) && tab === 'insights') tab = 'home';
-    $('tabbar').innerHTML = TABS.filter(t => !((calm || isSitter) && t[0] === 'insights') && !(t[0] === 'add' && !canLog())).map(([k, l, ic]) => k === 'add'
+    // the baby's own tab: Milk, Appointments and Weight and length open under whichever tab they came from
+    const on = k => tab === k || (SUBS.includes(tab) && subFrom === k);
+    $('tabbar').innerHTML = TABS.filter(t => !(t[0] === 'add' && !canLog())).map(([k, l, ic]) => k === 'add'
       ? `<div><button type="button" class="tab-add" data-act="open" data-sheet="add" aria-label="Log anything">${icon(ic)}</button></div>`
-      : `<button type="button" class="tab" role="tab" data-act="tab" data-tab="${k}" aria-selected="${tab === k || (k === 'home' && tab === 'milk')}">${icon(ic)}<span>${l}</span></button>`).join('');
+      : `<button type="button" class="tab" role="tab" data-act="tab" data-tab="${k}" aria-selected="${on(k)}"${k === 'baby' ? ` aria-label="${esc(babyName())}: appointments, milk, growing and patterns"` : ''}>${icon(ic)}<span>${esc(k === 'baby' ? babyName() : l)}</span></button>`).join('');
   }
 
   function runRow(kind, label, stop) {
@@ -6201,7 +6987,7 @@ const WHO = {wb:[0,0.3487,3.3464,0.14602,7,0.2776,3.4879,0.14483,14,0.2581,3.752
     renderRunBar();
     const rb = $('runBar'); document.documentElement.style.setProperty('--runbar-h', `${rb && !rb.hidden ? rb.offsetHeight : 0}px`);
     const v = $('view');
-    v.innerHTML = tab === 'history' ? renderHistory() : tab === 'insights' ? renderInsights() : tab === 'settings' ? renderSettings() : tab === 'milk' ? renderMilk() : renderHome();
+    v.innerHTML = tab === 'history' ? renderHistory() : tab === 'baby' ? renderBaby() : tab === 'appts' ? renderAppts() : tab === 'growth' ? renderGrowth() : tab === 'settings' ? renderSettings() : tab === 'milk' ? renderMilk() : renderHome();
     if (tab === 'home' && $('quick-home') && quickText.home) renderQuick('home');
     if (sheetState) renderSheet();
     if (armed) showArmed();
@@ -6227,6 +7013,9 @@ const WHO = {wb:[0,0.3487,3.3464,0.14602,7,0.2776,3.4879,0.14483,14,0.2581,3.752
     if (name === 'whatsnew' && lastSheetName !== 'whatsnew') wn = { page: 0, pick: {} };
     if (name === 'milkstore') { draft = { ml: 100, place: 'fridge' }; milkDraftStart('fridge'); }
     if (name === 'milkbottle') { const b = state.entries.find(x => x.id === (data || {}).id); draft = b ? { label: normLabel(b.label), col: b.col, relabel: false } : {}; }
+    if (name === 'apptedit') { const e = data && data.id ? state.entries.find(x => x.id === data.id) : null; draft = apptDraftFrom(e, data && !e ? { kind: data.kind || 'mch', vax: data.vax || '', sched: data.sched || '' } : {}); }
+    if (name === 'apptsetup') draft = { rows: {}, extra: [], gcal: false };
+    if (name === 'keepsake' && lastSheetName !== 'keepsake') cardMonth = 0;
     if ((name === 'weekcard' || name === 'keepsake') && lastSheetName !== name) cardExtra = { line: '', photo: null, loading: false };
     if (name === 'edithome' && lastSheetName !== 'edithome') eh = { tab: (data && data.tab) || 'buttons', view: 'main', moving: null, swap: null };
     renderSheet();
@@ -6287,6 +7076,7 @@ const WHO = {wb:[0,0.3487,3.3464,0.14602,7,0.2776,3.4879,0.14483,14,0.2581,3.752
         <section class="add-sec"><h2 class="group-head">Nappy</h2><div class="add-grid" style="--cols: 3">${[['wet', 'Wet'], ['dirty', 'Dirty'], ['both', 'Both']].map(([k, l]) => `<button type="button" class="add-btn" data-act="add-nappy" data-kind="${k}" aria-label="${nappyName(k)}: saves, then add details"><span class="ab-ic${tone(k)}">${icon(k)}</span><span class="ab-name">${l}</span></button>`).join('')}</div>
           <p class="group-foot" style="margin: 0">Tap one to save it, then add size, texture or colour if you like.</p></section>
         <button type="button" class="low-row" data-act="add-type" data-type="growth"><span class="mc-ic">${icon('growth')}</span><span class="row-text"><b>Weight and length</b><br><span class="row-help">${(() => { const l = lastOf(e => e.type === 'growth'); return l ? `Last: ${esc(growthText(l))}, ${l.birth ? 'at birth' : dayLong(l.start)}` : 'From the MCH nurse or your own scales'; })()}</span></span>${icon('chev')}</button>
+        ${canPlan() ? `<button type="button" class="low-row" data-act="appt-add"><span class="mc-ic${tone('unsettled')}">${icon('mch')}</span><span class="row-text"><b>Appointment</b><br><span class="row-help">${(() => { const u = apptsUpcoming()[0]; return u ? `Next: ${esc(apptTitle(u))}, ${relDay(u.start).toLowerCase()}` : 'MCH, GP, vaccinations or anything else'; })()}</span></span>${icon('chev')}</button>` : ''}
         <section class="add-sec"><h2 class="group-head">Everything else</h2><div class="add-grid four">${others.map(([k, l, tag]) => `<button type="button" class="add-btn" data-act="add-type" data-type="${k}"${k === 'temp' ? ' aria-label="Temperature"' : ''}><span class="ab-ic${tone(k)}">${icon(k)}</span><span class="ab-name">${l}</span>${tag ? `<span class="ab-tag">${tag}</span>` : ''}</button>`).join('')}</div></section>
         <button type="button" class="low-row" data-act="open" data-sheet="low"><span class="mc-ic">${icon('low')}</span><span class="row-text"><b>Running low</b><br><span class="row-help">${n ? `${n} to buy: ${esc(state.low.slice(0, 3).join(', '))}${n > 3 ? '…' : ''}` : 'Nothing on the list'}</span></span>${icon('chev')}</button>
         <p class="group-foot" style="margin: 0; text-align: center">Logging something from earlier? Each one has a “When” box.</p></div>`;
@@ -6391,7 +7181,8 @@ const WHO = {wb:[0,0.3487,3.3464,0.14602,7,0.2776,3.4879,0.14483,14,0.2581,3.752
         <div class="sheet-body">
           <div class="card pad"><div class="kv"><div><span>${b.from ? 'Pumped' : 'Stored'}</span><b>${milkWhen(b.start)}</b></div>${b.thawed ? `<div><span>Thawed</span><b>${milkWhen(b.thawed)}</b></div>` : ''}${b.since && b.since !== b.start && b.since !== b.thawed ? `<div><span>Moved here</span><b>${milkWhen(b.since)}</b></div>` : ''}<div><span>Use by</span><b${over ? ' style="color: var(--due)"' : ''}>${over ? 'Past its time' : milkWhen(useBy(b))}</b></div>${b.who ? `<div><span>Stored by</span><b>${esc(b.who)}</b></div>` : ''}</div></div>
           ${member ? `<div class="field"><span class="flabel">Move it</span><div class="dest-grid" style="grid-template-columns: repeat(3, minmax(0, 1fr))" role="group" aria-label="Move it">${Object.entries(MILK_PLACES).map(([k, l]) => `<button type="button" class="dest" data-act="milk-move" data-id="${esc(b.id)}" data-v="${k}" aria-pressed="${b.place === k}"${b.place === k || (k === 'freezer' && b.thawed) ? ' disabled' : ''}>${icon(k)}<span>${l}</span></button>`).join('')}</div><span class="row-help">${b.thawed ? 'Thawed milk can’t go back in the freezer. ' : ''}Moving it starts its clock again${b.place === 'freezer' ? ', and milk out of the freezer counts as thawed' : ''}.</span></div>` : ''}
-          ${canLog() ? `<div class="actions"><button type="button" class="btn primary" data-act="milk-use" data-id="${esc(b.id)}" data-v="fed">Fed it</button><button type="button" class="btn" data-act="milk-use" data-id="${esc(b.id)}" data-v="tossed">Threw it out</button></div>` : ''}
+          ${canLog() && (b.place !== 'freezer' || b.thawed) ? `<button type="button" class="btn primary block" data-act="open" data-sheet="milkpour" data-id="${esc(b.id)}">${icon('bottle')}Pour some into ${pron()} bottle</button>` : canLog() ? '<p class="group-foot" style="margin: 0">Frozen. Move it to the fridge to thaw before you pour from it.</p>' : ''}
+          ${canLog() ? `<div class="actions"><button type="button" class="btn" data-act="milk-use" data-id="${esc(b.id)}" data-v="fed">Fed it all</button><button type="button" class="btn" data-act="milk-use" data-id="${esc(b.id)}" data-v="tossed">Threw it out</button></div>` : ''}
           ${member ? (draft.relabel ? `<div class="card pad" style="display: grid; gap: 12px">${labelRowHTML(b.id)}<div class="actions"><button type="button" class="btn" data-act="draft" data-f="relabel" data-v="">Cancel</button><button type="button" class="btn primary" data-act="milk-relabel" data-id="${esc(b.id)}">Save label</button></div></div>` : '<button type="button" class="btn small" data-act="draft" data-f="relabel" data-v="1" style="justify-self: start">Change label</button>') : ''}
           ${over ? '<p class="group-foot" style="margin: 0">It’s been stored longer than your storage times allow. If you’re unsure, throw it out.</p>' : ''}
         </div>`;
@@ -6531,7 +7322,16 @@ const WHO = {wb:[0,0.3487,3.3464,0.14602,7,0.2776,3.4879,0.14483,14,0.2581,3.752
     } else if (name === 'weekcard') {
       h = head('Week card') + cardSheetHTML('week');
     } else if (name === 'keepsake') {
-      h = head('This month') + cardSheetHTML('month');
+      h = head('Month card') + cardSheetHTML('month');
+    } else if (name === 'appt') { h = apptSheetHTML(data);
+    } else if (name === 'apptedit') { h = apptEditHTML(data);
+    } else if (name === 'apptdone') { h = apptDoneHTML(data);
+    } else if (name === 'apptmissed') { h = apptMissedHTML(data);
+    } else if (name === 'vaxgroup') { h = vaxGroupHTML(data);
+    } else if (name === 'apptsetup') { h = apptSetupHTML();
+    } else if (name === 'gcal') { h = gcalSheetHTML(data);
+    } else if (name === 'milkpour') { h = milkPourHTML(data);
+    } else if (name === 'drinkleft') { h = drinkLeftHTML();
     }
     const keep = {};
     const same = lastSheetName === name;
@@ -6718,8 +7518,8 @@ const WHO = {wb:[0,0.3487,3.3464,0.14602,7,0.2776,3.4879,0.14483,14,0.2581,3.752
   function editInsightsHTML() {
     const p = prof();
     const row = id => `<div class="edit-row"><span class="er-name">${esc(INSIGHTS[id])}${insightHasData(id) ? '' : '<small>Shows once there’s something to show</small>'}</span>${sw('ins-toggle" data-id="' + id, p.insights.includes(id), 'Show ' + INSIGHTS[id])}</div>`;
-    return head('Edit Insights') + `<div class="sheet-body"><p class="group-foot" style="margin: 0">Today so far always shows at the top.</p>
-      ${INSIGHT_GROUPS.map(([title, ids]) => `<section><h2 class="group-head">${title || 'Summaries'}</h2><div class="card">${ids.map(row).join('')}</div></section>`).join('')}
+    return head('Edit Patterns') + `<div class="sheet-body"><p class="group-foot" style="margin: 0">Today so far always shows at the top. Weight and length has its own place, under Growing.</p>
+      ${INSIGHT_GROUPS.filter(([t]) => t !== 'Growth').map(([title, ids]) => `<section><h2 class="group-head">${title || 'Summaries'}</h2><div class="card">${ids.map(row).join('')}</div></section>`).join('')}
       <p class="group-foot" style="margin: 0">Your choices only change your phone.</p></div>`;
   }
   function weekStats() {
@@ -6727,14 +7527,17 @@ const WHO = {wb:[0,0.3487,3.3464,0.14602,7,0.2776,3.4879,0.14483,14,0.2581,3.752
     let longest = null; days.forEach(d => { if (d.longest && (!longest || d.longest.g > longest.g)) longest = d.longest; });
     return { days, feeds: days.reduce((a, d) => a + d.count, 0), naps: days.reduce((a, d) => a + d.naps, 0), ml: days.reduce((a, d) => a + d.ml, 0), baths: days.reduce((a, d) => a + d.baths, 0), longest };
   }
-  function monthStats() {
-    const d = new Date(); const ms = new Date(d.getFullYear(), d.getMonth(), 1).getTime();
-    const items = state.entries.filter(e => e.start >= ms);
+  let cardMonth = 0; // 0 is this month, 1 last month, and so on
+  const monthStart = off => { const d = new Date(); return new Date(d.getFullYear(), d.getMonth() - off, 1).getTime(); };
+  function monthStats(off) {
+    off = off || 0;
+    const ms = monthStart(off), end = monthStart(off - 1);
+    const items = state.entries.filter(e => e.start >= ms && e.start < end && e.type !== 'appt' && e.type !== 'vax');
     const feeds = items.filter(isFeed).sort((a, b) => a.start - b.start);
     let longest = 0; for (let i = 1; i < feeds.length; i++) longest = Math.max(longest, feeds[i].start - feeds[i - 1].start);
     const byDay = {}; feeds.forEach(f => { const k = startOfDay(f.start); byDay[k] = (byDay[k] || 0) + 1; });
     const busiest = Object.entries(byDay).sort((a, b) => b[1] - a[1])[0];
-    return { ms, feeds: feeds.length, naps: items.filter(isNappy).length, baths: items.filter(e => e.type === 'bath').length, ml: items.filter(e => e.type === 'bottle').reduce((a, e) => a + e.ml, 0), longest, busiest };
+    return { ms, end, feeds: feeds.length, naps: items.filter(isNappy).length, baths: items.filter(e => e.type === 'bath').length, ml: items.filter(e => e.type === 'bottle').reduce((a, e) => a + e.ml, 0), longest, busiest };
   }
   // ---------- the week and month cards: Quick, or Full with more for family; shared as a picture ----------
   // Medicines and temperatures never go on a card. The photo is picked when sharing, drawn straight
@@ -6748,7 +7551,7 @@ const WHO = {wb:[0,0.3487,3.3464,0.14602,7,0.2776,3.4879,0.14483,14,0.2581,3.752
     return c;
   }
   // the month card and "than last week" need older days than the live window: fetch them once
-  function cardNeedsFrom(kind) { if (kind === 'month') { const d = new Date(); return new Date(d.getFullYear(), d.getMonth(), 1).getTime(); } return dayStartBack(13); }
+  function cardNeedsFrom(kind) { if (kind === 'month') return monthStart(cardMonth); return dayStartBack(13); }
   let cardLoaded = 0;
   function ensureCardData(kind) {
     const from = cardNeedsFrom(kind);
@@ -6774,30 +7577,30 @@ const WHO = {wb:[0,0.3487,3.3464,0.14602,7,0.2776,3.4879,0.14483,14,0.2581,3.752
       const max = Math.max(1, ...days.map(d => d.count));
       m.bars = days.map(d => [dayShort(d.start), d.count, d.count / max]);
     } else {
-      const ms = monthStats();
-      from = ms.ms;
-      days = lastDays(Math.max(1, Math.round((startOfDay(Date.now()) - from) / DAY) + 1)).filter(d => d.start >= from);
+      const ms = monthStats(cardMonth);
+      from = ms.ms; to = Math.min(Date.now(), ms.end);
+      const bm = birthMs(), bornIn = bm && bm >= from && bm < ms.end;
       m.title = `${new Date(ms.ms).toLocaleDateString([], { month: 'long', year: 'numeric' })} with ${name}`;
-      m.dates = 'So far this month';
+      m.dates = cardMonth ? (bornIn ? `From the day ${name} was born, ${dayLong(bm)}` : `The whole of ${new Date(ms.ms).toLocaleDateString([], { month: 'long' })}`) : 'So far this month';
       m.stats = [[String(ms.feeds), 'feeds'], [String(ms.naps), 'nappy changes'], [`${(ms.ml / 1000).toFixed(1)} L`, 'from bottles'], [String(ms.baths), 'baths'], [ms.longest ? hm(ms.longest / MIN) : '–', 'longest stretch'], [ms.busiest ? String(ms.busiest[1]) : '–', `feeds on the busiest day${ms.busiest ? ` (${dayLong(+ms.busiest[0])})` : ''}`]];
     }
     if (!full) { if (babyAge()) m.dates += ` · ${babyAge()}`; return m; }
     if (c.age && babyAge()) m.lines.push(['Age', babyAge()]);
     if (c.weight) {
-      const ws = sortedAll().filter(e => e.type === 'growth' && e.weight);
+      const ws = sortedAll().filter(e => e.type === 'growth' && e.weight && e.start < to);
       const lw = ws[ws.length - 1];
       if (lw) {
         const before = ws.filter(e => e.start <= from).pop() || ws[0];
         const diff = lw.weight - before.weight;
         const ch = lw !== before && diff ? `, ${diff > 0 ? 'up' : 'down'} ${Math.abs(diff) >= 1000 ? kgText(Math.abs(diff)) : Math.abs(diff) + ' g'} ${before.start >= from ? 'since ' + dayLong(before.start) : kind === 'week' ? 'this week' : 'this month'}` : '';
-        const ll = sortedAll().filter(e => e.type === 'growth' && e.length).pop();
+        const ll = sortedAll().filter(e => e.type === 'growth' && e.length && e.start < to).pop();
         m.lines.push(['Weight', `${kgText(lw.weight)}${ch}${ll ? ` · ${ll.length} cm long` : ''}`]);
       }
     }
     // a typical day: full days only (today isn't over)
     // days with only a few logs would drag averages down, so they're left out
     const realDay = d => d.count >= 3 || d.naps >= 3;
-    const fullDays = buildDaysRange(from, startOfDay(Date.now())).filter(realDay);
+    const fullDays = buildDaysRange(from, Math.min(startOfDay(Date.now()), to)).filter(realDay);
     if (c.avg && fullDays.length) {
       const f = sum(fullDays, d => d.count) / fullDays.length, sl = sum(fullDays, d => d.sleepMin) / fullDays.length, np = sum(fullDays, d => d.naps) / fullDays.length;
       m.lines.push(['A typical day', [f ? `${Math.round(f)} feeds` : '', np ? `${Math.round(np)} nappies` : '', sl >= 30 ? `${hm(sl)} of sleep logged` : ''].filter(Boolean).join(', ') || 'Not enough logged yet']);
@@ -6840,7 +7643,8 @@ const WHO = {wb:[0,0.3487,3.3464,0.14602,7,0.2776,3.4879,0.14483,14,0.2581,3.752
     ensureCardData(kind);
     const c = cardPrefs();
     const opt = (k, l) => `<button type="button" class="fchip" data-act="card-opt" data-k="${k}" aria-pressed="${!!c[k]}">${l}</button>`;
-    return `<div class="sheet-body">
+    const months = (() => { if (kind !== 'month') return ''; const bm = birthMs(); const out = []; for (let i = 0; i < 13; i++) { const s = monthStart(i); if (bm && s + 32 * DAY < bm) break; if (!bm && i > 11) break; out.push([i, i === 0 ? 'This month' : new Date(s).toLocaleDateString([], { month: 'long', year: new Date(s).getFullYear() !== new Date().getFullYear() ? 'numeric' : undefined })]); } return out.length > 1 ? `<div class="field"><span class="flabel">Which month</span><div class="fchips" role="group" aria-label="Which month">${out.map(([i, l]) => `<button type="button" class="fchip" data-act="card-month" data-v="${i}" aria-pressed="${cardMonth === i}">${esc(l)}</button>`).join('')}</div></div>` : ''; })();
+    return `<div class="sheet-body">${months}
       <div class="segmented" role="group" aria-label="Card style"><button type="button" data-act="card-full" data-v="0" aria-pressed="${!c.full}">Quick</button><button type="button" data-act="card-full" data-v="1" aria-pressed="${!!c.full}">Full</button></div>
       ${c.full ? `<div class="field"><span class="flabel">On the card</span><div class="fchips">${opt('age', 'Age')}${opt('weight', 'Weight')}${opt('avg', 'A typical day')}${opt('night', 'Night sleep')}${kind === 'week' ? opt('compare', 'Than last week') : ''}</div></div>
         <div class="field"><label for="cardLine">Your own line (optional)</label><input class="input" id="cardLine" maxlength="90" placeholder="e.g. Smiled at Nana for the first time!" value="${esc(cardExtra.line)}"></div>
@@ -6934,7 +7738,7 @@ const WHO = {wb:[0,0.3487,3.3464,0.14602,7,0.2776,3.4879,0.14483,14,0.2581,3.752
     return 'saved';
   }
   function weekText() { const w = weekStats(); return `${state.baby.name || 'Bub'}'s week: ${w.feeds} feeds, ${w.naps} nappies, ${w.baths} baths${w.longest ? `, longest stretch ${hm(w.longest.g / MIN)}` : ''}.`; }
-  function monthText() { const m = monthStats(); return `${new Date(m.ms).toLocaleDateString([], { month: 'long' })} with ${state.baby.name || 'Bub'} so far: ${m.feeds} feeds, ${m.naps} nappy changes, ${m.baths} baths${m.longest ? `, longest stretch ${hm(m.longest / MIN)}` : ''}.`; }
+  function monthText() { const m = monthStats(cardMonth); return `${new Date(m.ms).toLocaleDateString([], { month: 'long' })} with ${state.baby.name || 'Bub'}${cardMonth ? '' : ' so far'}: ${m.feeds} feeds, ${m.naps} nappy changes, ${m.baths} baths${m.longest ? `, longest stretch ${hm(m.longest / MIN)}` : ''}.`; }
   function csv(list) {
     const q = s => `"${String(s == null ? '' : s).replace(/"/g, '""')}"`;
     const rows = [['Type', 'Start', 'End', 'Details', 'Logged by', 'Note'].map(q).join(',')];
@@ -7034,7 +7838,7 @@ const WHO = {wb:[0,0.3487,3.3464,0.14602,7,0.2776,3.4879,0.14483,14,0.2581,3.752
     if (hd != null) v.head = Math.round(hd * 10) / 10;
     return { v };
   }
-  const LOGGING_ACTS = new Set(['milk-move', 'milk-use', 'milk-relabel', 'made-start', 'made-fed', 'made-toss', 'store-save', 'pump-side', 'pump-finish', 'pump-save', 'pump-discard', 'live-undo', 'nappy-undo', 'swipe-del', 'save-temp', 'add-nappy', 'bought', 'save-growth', 'tile', 'side', 'finish', 'discard', 'backdate', 'still-yes', 'still-stop', 'save-past-breast', 'bottle-ml', 'bottle-custom', 'repeat', 'save-nappy', 'save-simple', 'pump-ml', 'pump-custom', 'med-give', 'med-new', 'toggle-timer', 'span-save', 'save-note', 'ed-save', 'ed-delete', 'vomit-tbsp', 'vomit-custom', 'add-type', 'low', 'low-add', 'seen', 'wipe', 'restore-day', 'restore-file']);
+  const LOGGING_ACTS = new Set(['pour-save', 'made-done', 'drink-left-save', 'milk-move', 'milk-use', 'milk-relabel', 'made-start', 'made-fed', 'made-toss', 'store-save', 'pump-side', 'pump-finish', 'pump-save', 'pump-discard', 'live-undo', 'nappy-undo', 'swipe-del', 'save-temp', 'add-nappy', 'bought', 'save-growth', 'tile', 'side', 'finish', 'discard', 'backdate', 'still-yes', 'still-stop', 'save-past-breast', 'bottle-ml', 'bottle-custom', 'repeat', 'save-nappy', 'save-simple', 'pump-ml', 'pump-custom', 'med-give', 'med-new', 'toggle-timer', 'span-save', 'save-note', 'ed-save', 'ed-delete', 'vomit-tbsp', 'vomit-custom', 'add-type', 'low', 'low-add', 'seen', 'wipe', 'restore-day', 'restore-file']);
   document.addEventListener('click', e => {
     const tipEl = e.target.closest('[data-tip]');
     const a = e.target.closest('[data-act]');
@@ -7044,10 +7848,56 @@ const WHO = {wb:[0,0.3487,3.3464,0.14602,7,0.2776,3.4879,0.14483,14,0.2581,3.752
     const act = a.dataset.act, d = a.dataset, p = prof();
     if (!canLog() && LOGGING_ACTS.has(act)) { toast('This link is view only'); return; }
     switch (act) {
-      case 'tab': if (tab === 'home' && d.tab !== 'home') markHandoverSeen(); if (d.tab === 'settings' && tab === 'settings') setPage = ''; if (d.tab === 'milk') milkAllFreezer = false; if (d.tab === 'history' && tab !== 'history') { hist.day = 0; hist.range = 1; hist.force = ''; hist.cardDays = 3; histToNow = true; } tab = d.tab; historyLimit = 120; setPref(TAB_KEY, tab === 'milk' ? 'home' : tab); window.scrollTo(0, 0); render(); break;
+      case 'tab': if (SUBS.includes(d.tab)) { goSub(d.tab); break; } if (tab === 'home' && d.tab !== 'home') markHandoverSeen(); if (d.tab === 'settings' && tab === 'settings') setPage = ''; if (d.tab === 'history' && tab !== 'history') { hist.day = 0; hist.range = 1; hist.force = ''; hist.cardDays = 3; histToNow = true; } tab = d.tab; historyLimit = 120; setPref(TAB_KEY, tab); window.scrollTo(0, 0); render(); break;
       case 'more': historyLimit += 200; render(); break;
-      case 'open': if (d.sheet === 'edit' || d.sheet === 'milkbottle') openSheet(d.sheet, { id: d.id }); else openSheet(d.sheet); break;
+      case 'open': openSheet(d.sheet, d.id ? { id: d.id } : undefined); break;
       case 'close-sheet': closeSheet(); break;
+      case 'sub-back': tab = subFrom; setPref(TAB_KEY, tab); window.scrollTo(0, 0); render(); break;
+      case 'go-appts': closeSheet(); apptTab = d.v === 'vax' ? 'vax' : 'up'; goSub('appts'); break;
+      case 'go-growth': goSub('growth'); break;
+      case 'baby-details': closeSheet(); tab = 'settings'; setPage = 'baby'; window.scrollTo(0, 0); render(); break;
+      case 'set-cal': closeSheet(); tab = 'settings'; setPage = 'appts'; window.scrollTo(0, 0); render(); break;
+      case 'patterns-now': patternsAtNight = true; render(); break;
+      case 'appt-tab': apptTab = d.v === 'vax' ? 'vax' : 'up'; render(); break;
+      case 'appt-past': apptPast = !apptPast; render(); break;
+      case 'vax-all': vaxAll = true; render(); break;
+      case 'appt-add': if (canPlan()) openSheet('apptedit'); break;
+      case 'appt-book': { if (!canPlan()) break; const x = toBook()[+d.i]; if (!x) break; openSheet('apptedit', x.type === 'vax' ? { kind: 'vax', title: x.title, date: dayKey(x.at), vax: x.g.id, where: 'Council immunisation session' } : { kind: 'mch', title: x.visit[1], date: dayKey(x.at), sched: x.key, where: 'MCH centre' }); break; }
+      case 'appt-edit': if (canPlan()) openSheet('apptedit', { id: d.id }); break;
+      case 'appt-rebook': if (canPlan()) openSheet('apptedit', { id: d.id, clearDate: true }); break;
+      case 'ap-kind': draft.kind = d.v; renderSheet(); break;
+      case 'ap-fill': { const el = $(d.f); if (el) { el.value = d.v; el.focus(); } break; }
+      case 'ap-going': { const on = !draft.going.includes(d.v); draft.going = on ? draft.going.concat(d.v) : draft.going.filter(x => x !== d.v); a.setAttribute('aria-pressed', String(on)); break; }
+      case 'ap-remind': { const on = !draft.remind.includes(d.v); draft.remind = on ? draft.remind.concat(d.v) : draft.remind.filter(x => x !== d.v); a.setAttribute('aria-pressed', String(on)); break; }
+      case 'ap-gcal': draft.gcal = !draft.gcal; a.setAttribute('aria-checked', String(draft.gcal)); break;
+      case 'ap-save': if (canPlan()) saveAppt(); break;
+      case 'appt-done': if (canPlan()) openSheet('apptdone', { id: d.id }); break;
+      case 'appt-done-save': if (canPlan()) saveApptDone(d.id); break;
+      case 'appt-undone': if (canPlan()) apptUndone(d.id); break;
+      case 'appt-missed': if (canPlan()) openSheet('apptmissed', { id: d.id }); break;
+      case 'appt-remove': { if (!canPlan()) break; const e = state.entries.find(x => x.id === d.id); if (e) removeAppt(e, 'Removed'); break; }
+      case 'appt-cancel': { if (!canPlan()) break; const e = state.entries.find(x => x.id === d.id); if (e) arm(a, 'Tap again to cancel it', () => removeAppt(e, 'Cancelled')); break; }
+      case 'gcal-opened': { const e = state.entries.find(x => x.id === d.id); if (e && !e.gcal) { e.gcal = 1; save(); } setTimeout(() => { if (sheetState && sheetState.name === 'gcal') closeSheet(); render(); }, 300); break; }
+      case 'vax-book': { if (!canPlan()) break; const g = VAX_GROUPS.find(x => x.id === d.id), b = birthMs(); if (g && b) openSheet('apptedit', { kind: 'vax', title: vaxTitle(g), date: dayKey(Math.max(g.from(b), Date.now())), vax: g.id, where: 'Council immunisation session' }); break; }
+      case 'vax-give': if (canPlan()) vaxGive(d.id); break;
+      case 'vax-ungive': if (canPlan()) arm(a, 'Tap again: not given', () => vaxUngive(d.id)); break;
+      case 'vax-skip': { if (!canPlan()) break; const k = 'v-' + d.id, on = !schedSkip()[k]; setSkip(k, on); closeSheet(); save(); render(); toast(on ? 'Skipped. It won’t show as due or send a reminder.' : 'Back on the schedule'); break; }
+      case 'sched-unskip': if (state.sched) { state.sched.skip = {}; save(); render(); toast('Everything you skipped shows again'); } break;
+      case 'su-skip': { setupRead(); const r = draft.rows && draft.rows[d.k]; if (r) { r.skip = !r.skip; renderSheet(); } break; }
+      case 'su-add': { setupRead(); draft.extra.push({ title: '', kind: 'gp', date: '', time: '' }); lastSheetName = ''; renderSheet(); const el = $('sx-t-' + (draft.extra.length - 1)); if (el) el.focus(); break; }
+      case 'su-del': { setupRead(); draft.extra.splice(+d.i, 1); lastSheetName = ''; renderSheet(); break; }
+      case 'su-kind': { setupRead(); const x = draft.extra[+d.i]; if (x) { x.kind = d.v; a.parentElement.querySelectorAll('button').forEach(y => y.setAttribute('aria-pressed', String(y === a))); } break; }
+      case 'su-gcal': draft.gcal = !draft.gcal; a.setAttribute('aria-checked', String(draft.gcal)); break;
+      case 'su-save': if (canPlan()) saveSetup(); break;
+      case 'cal-on': if (!isSitter) calConnect(); break;
+      case 'cal-off': if (!isSitter) arm(a, 'Tap again to disconnect', () => calDisconnect()); break;
+      case 'cal-resend': state.entries.forEach(e => { if (e.type === 'appt' && !e.gone) delete e.calSent; }); save(); calTry = 0; scheduleCal(0); toast('Sending every appointment to Google Calendar again'); break;
+      case 'pour-chip': { const el = $('pourMl'); if (el) el.value = d.v; a.parentElement.querySelectorAll('button').forEach(y => y.setAttribute('aria-pressed', String(y === a))); break; }
+      case 'pour-timer': draft.pourTimer = draft.pourTimer === false; a.setAttribute('aria-checked', String(draft.pourTimer !== false)); break;
+      case 'pour-save': pourMilk(d.id); break;
+      case 'made-done': endMade('fed'); break;
+      case 'drink-left-save': drinkLeftSave(); break;
+      case 'card-month': cardMonth = Math.max(0, +d.v || 0); cardExtra.loading = false; renderSheet(); break;
       case 'toast': { const f = toastFns[+d.i]; hideToast(); if (f) f.fn(); break; }
       case 'toast-close': hideToast(); break;
       case 'tile': handleTile(d.id); break;
@@ -7138,9 +7988,9 @@ const WHO = {wb:[0,0.3487,3.3464,0.14602,7,0.2776,3.4879,0.14483,14,0.2581,3.752
       case 'wn-next': wn.page = Math.min(2, wn.page + 1); renderSheet(); { const f = $('sheet').querySelector('[data-autofocus]'); if (f) f.focus(); } break;
       case 'wn-back': wn.page = Math.max(0, wn.page - 1); renderSheet(); break;
       case 'wn-skip': closeSheet(); break;
-      case 'wn-done': { wnSave(); closeSheet(); render(); const mc = (wn.pick.milk || 'on') === 'on'; toast(`Saved: History as ${hviewWords(histView())}${isSitter ? '' : `, Milk card ${mc ? 'on Home' : 'off'}`}. Change these in Settings.`); break; }
+      case 'wn-done': { wnSave(); closeSheet(); render(); const cu = (wn.pick.appts || 'on') === 'on'; toast(`Saved: Coming up ${cu ? 'on Home' : 'off Home'}. Change it in Settings › Home screen.`); break; }
       case 'hview': { const v = HVIEWS.some(x => x[0] === d.v) ? d.v : 'timeline'; setPref(HVIEW_KEY, v); histToNow = true; historyLimit = 120; render(); toast(`History will show as ${hviewWords(v)}`); break; }
-      case 'go-milk': closeSheet(); if (tab === 'home') markHandoverSeen(); milkAllFreezer = false; tab = 'milk'; window.scrollTo(0, 0); render(); break;
+      case 'go-milk': closeSheet(); goSub('milk'); break;
       case 'milk-move': moveMilk(d.id, d.v); break;
       case 'milk-use': if (d.v === 'tossed') arm(a, 'Tap again to throw out', () => useMilk(d.id, 'tossed')); else useMilk(d.id, 'fed'); break;
       case 'milk-relabel': relabelMilk(d.id); break;
@@ -7709,7 +8559,8 @@ const WHO = {wb:[0,0.3487,3.3464,0.14602,7,0.2776,3.4879,0.14483,14,0.2581,3.752
     if (m.act === 'stop-breast' && T().breast) { tab = 'home'; render(); openSheet('breast'); return; }
     if (m.act === 'stop-pump' && T().pump) { tab = 'home'; render(); openSheet('pump'); return; }
     if (m.tag === 'log') { tab = 'history'; setPref(TAB_KEY, tab); render(); return; }
-    if (/^milk/.test(String(m.tag))) { tab = 'milk'; render(); return; }
+    if (/^milk/.test(String(m.tag))) { subFrom = 'home'; tab = 'milk'; render(); return; }
+    if (m.tag === 'appt') { subFrom = 'home'; tab = 'appts'; apptTab = 'up'; render(); return; }
     if (m.tag) { tab = 'home'; setPref(TAB_KEY, tab); render(); }
   }
   try { if (navigator.serviceWorker) navigator.serviceWorker.addEventListener('message', ev => { if (ev.data && ev.data.bub === 'open') handleNotifyOpen(ev.data); }); } catch (e) { /* no service worker here */ }
@@ -7720,6 +8571,11 @@ const WHO = {wb:[0,0.3487,3.3464,0.14602,7,0.2776,3.4879,0.14483,14,0.2581,3.752
     if (!CLOUD && !state.welcomed) startSetup('new');
     runShortcut();
     setTimeout(maybeWhatsNew, 2500);
+    const ch = location.hash.match(/cal=(ok|no)/);
+    if (ch) { try { history.replaceState(history.state, '', location.pathname + location.search); } catch (e) { /* ignore */ } setTimeout(() => calCheck(true), 1500); }
+    else if (CLOUD) setTimeout(() => calCheck(false), 4000);
+    document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') { calCheck(false); scheduleCal(3000); } });
+    if (CLOUD) { setTimeout(() => scheduleCal(0), 8000); setInterval(() => scheduleCal(0), 10 * MIN); }
     const nm = location.hash.match(/notify=([a-z-]+)(?:~([a-z-]+))?/);
     if (nm) { try { history.replaceState(history.state, '', location.pathname + location.search); } catch (e) { /* ignore */ } setTimeout(() => handleNotifyOpen({ tag: nm[1], act: nm[2] || '' }), 300); }
     setTimeout(autoBackup, 4000);
@@ -7739,7 +8595,7 @@ const WHO = {wb:[0,0.3487,3.3464,0.14602,7,0.2776,3.4879,0.14483,14,0.2581,3.752
   render();
   renderSync();
   if (CFG_MISSING) showGate('config'); else if (CLOUD) startCloud(); else { store = localStore; afterReady(); }
-  window.__bubDebug = { openBox: (box, aad) => KC.dec(box, aad), get pushDocs() { return pushDocs; }, get pushId() { return myPushId(); }, syncReminders: () => syncReminders(), flushLog: () => flushLogNotify(), whoCheck: () => String(Math.round(normCdf(whoZ(whoLMS('w', 'girl', 0), 3.2322)) * 100)), checkSitterEnd: () => checkSitterEnd(), get fid() { return FID; }, get people() { return PEOPLE.slice(); }, get setup() { return setup; }, state, save, render, get hf() { return hf; }, get histState() { return hist; }, get tab() { return tab; }, get store() { return store; }, get liveSince() { return liveSince; }, cloudBackup, fullEntries, dataVersion: () => dataVersion, sortedAll, buildDays, hfList, restoreFrom, backupPayload, phoneBackup, idb, get status() { return syncStatus; }, get setPage() { return setPage; }, removeDevice, removeMember, sitterLink, backupFileText, restoreFileText, act(name, data) { const btn = document.createElement('button'); btn.dataset.act = name; Object.assign(btn.dataset, data || {}); btn.hidden = true; document.body.appendChild(btn); btn.click(); btn.remove(); } };
+  window.__bubDebug = { calSync: () => calSync(), calCheck: h => calCheck(h), toBook: () => toBook(), get subFrom() { return subFrom; }, get cardMonth() { return cardMonth; }, openBox: (box, aad) => KC.dec(box, aad), get pushDocs() { return pushDocs; }, get pushId() { return myPushId(); }, syncReminders: () => syncReminders(), flushLog: () => flushLogNotify(), whoCheck: () => String(Math.round(normCdf(whoZ(whoLMS('w', 'girl', 0), 3.2322)) * 100)), checkSitterEnd: () => checkSitterEnd(), get fid() { return FID; }, get people() { return PEOPLE.slice(); }, get setup() { return setup; }, state, save, render, get hf() { return hf; }, get histState() { return hist; }, get tab() { return tab; }, get store() { return store; }, get liveSince() { return liveSince; }, cloudBackup, fullEntries, dataVersion: () => dataVersion, sortedAll, buildDays, hfList, restoreFrom, backupPayload, phoneBackup, idb, get status() { return syncStatus; }, get setPage() { return setPage; }, removeDevice, removeMember, sitterLink, backupFileText, restoreFileText, act(name, data) { const btn = document.createElement('button'); btn.dataset.act = name; Object.assign(btn.dataset, data || {}); btn.hidden = true; document.body.appendChild(btn); btn.click(); btn.remove(); } };
 })();
 </script>
 </body>
