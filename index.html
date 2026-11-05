@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-oKJx5Sxgict08obY6eXRVHwumvn4RWOemhkFvtOE/ms=' https://www.gstatic.com/firebasejs/10.14.1/ https://apis.google.com https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/ https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://accounts.google.com/gsi/style; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://fcmregistrations.googleapis.com https://firestore.googleapis.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firebaseinstallations.googleapis.com https://content-firebaseappcheck.googleapis.com https://www.googleapis.com https://www.google.com/recaptcha/ https://apis.google.com https://accounts.google.com/gsi/ https://*.workers.dev; frame-src https://*.firebaseapp.com https://*.web.app https://accounts.google.com https://www.google.com/recaptcha/ https://recaptcha.google.com/recaptcha/; worker-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-Ok29FKNRRiO1L95M1loebDW8phiMI6QJVwpwassqseg=' https://www.gstatic.com/firebasejs/10.14.1/ https://apis.google.com https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/ https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://accounts.google.com/gsi/style; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://fcmregistrations.googleapis.com https://firestore.googleapis.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firebaseinstallations.googleapis.com https://content-firebaseappcheck.googleapis.com https://www.googleapis.com https://www.google.com/recaptcha/ https://apis.google.com https://accounts.google.com/gsi/ https://*.workers.dev; frame-src https://*.firebaseapp.com https://*.web.app https://accounts.google.com https://www.google.com/recaptcha/ https://recaptcha.google.com/recaptcha/; worker-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title>Bub Feed Log</title>
 <meta name="theme-color" content="#f3ecf5">
@@ -1093,7 +1093,7 @@ a.btn.primary { color: var(--on-primary); }
   const CFG = window.BUB_CONFIG || {};
   // config.js didn't load or has a mistake (a missing comma, say): say so, rather than opening in demo mode
   const CFG_MISSING = !window.BUB_CONFIG;
-  const APP_VERSION = '2026.11.05-a69982';
+  const APP_VERSION = '2026.11.05-6ede63';
   // Who logs in this family. Filled from the family's member list (cloud) or this phone's setup (demo).
   const PEOPLE_CFG = [], PEOPLE = [];
   function setPeople(list) {
@@ -5055,7 +5055,7 @@ a.btn.primary { color: var(--on-primary); }
   }
   const CAL_PENDING = 'bubfeed-cal-pending';
   async function calConnect() {
-    if (!SENDER) { toast('This needs the notification sender set up first. See step 15 of the setup guide.'); return; }
+    if (!SENDER) { toast('This needs the notification sender, which isn’t set up for this copy of the app.'); return; }
     calErr = ''; render();
     try {
       const j = await calCall('start', { name: babyName(), tz: localTz() || 'Australia/Melbourne', back: location.origin + location.pathname });
@@ -5064,7 +5064,7 @@ a.btn.primary { color: var(--on-primary); }
       location.assign(j.url);
     } catch (err) {
       calErr = err.code || 'error';
-      toast(err.code === 'not-set-up' ? 'Google Calendar isn’t set up on the notification sender yet. See step 17 of the setup guide.' : err.code === 'not-member' ? 'Only people in this log can connect a calendar.' : 'Couldn’t start. Check your connection and try again.');
+      toast(err.code === 'not-set-up' ? 'Google Calendar isn’t set up on the notification sender yet. See “Google Calendar” in the setup guide.' : err.code === 'not-member' ? 'Only people in this log can connect a calendar.' : 'Couldn’t start. Check your connection and try again.');
       render();
     }
   }
@@ -5101,7 +5101,7 @@ a.btn.primary { color: var(--on-primary); }
     const calName = esc((c && c.name) || babyName());
     let card;
     if (!CLOUD) card = '<p class="sentence">Google Calendar needs the app set up with Firebase.</p>';
-    else if (!SENDER) card = '<p class="sentence">Connecting Google Calendar needs the notification sender (step 15 of the setup guide). Until then, each appointment has an Add to Google Calendar button.</p>';
+    else if (!SENDER) card = '<p class="sentence">Connecting Google Calendar needs the notification sender, which isn’t set up for this copy of the app. Until then, each appointment has an Add to Google Calendar button.</p>';
     else if (calOn()) card = `<p class="sentence">Connected${c.by ? ` by ${esc(c.by)}` : ''}. Appointments go into the <b>“${calName}”</b> calendar in ${c.by && c.by !== state.me ? esc(c.by) + '’s' : 'your'} Google account, and change there when you change them here, from any of your phones.</p>
       <p class="row-help" style="margin: 10px 0 0">To see it on ${esc(othersText())}’s phone too, share it in Google Calendar: open Settings, pick “${calName}”, then Share with specific people.</p>
       ${calErr ? `<p class="row-help" style="margin: 10px 0 0; color: var(--due)">The last update didn’t go through. It’ll try again.</p>` : ''}

@@ -8,7 +8,7 @@
 // send notifications (the setup guide makes it). Your logs stay encrypted, so the key can't read them.
 //
 // Optional (version 1.4): Google Calendar. With GOOGLE_OAUTH_ID and GOOGLE_OAUTH_SECRET (a Google
-// sign-in client, setup guide step 17), a parent can connect their Google account once; the sender then makes
+// sign-in client, "Google Calendar" in the setup guide), a parent can connect their Google account once; the sender then makes
 // one calendar in it and adds, moves or deletes appointments there when a family member's phone asks.
 // It can only see and change the calendar it made. Every request carries the person's Firebase
 // sign-in, checked here, and they must be in that family.
@@ -263,7 +263,7 @@ async function health(env) {
     body: JSON.stringify({ validate_only: true, message: { token: 'bub-health-check', data: { kind: 'check' } } })
   });
   if (res.status === 401 || res.status === 403) return 'Not ready: the database works, but sending notifications was refused. Check the sender account has the Firebase Cloud Messaging API Admin role (guide part 2).';
-  return 'Ready. The sender can use your database and send notifications for ' + k.project_id + '.' + (calReady(env) ? ' Google Calendar is set up.' : ' Google Calendar is not set up (optional, setup guide step 17).');
+  return 'Ready. The sender can use your database and send notifications for ' + k.project_id + '.' + (calReady(env) ? ' Google Calendar is set up.' : ' Google Calendar is not set up (optional, see "Google Calendar" in the setup guide).');
 }
 
 const HEADERS = { 'access-control-allow-origin': '*', 'cache-control': 'no-store', 'content-type': 'text/plain; charset=utf-8' };
