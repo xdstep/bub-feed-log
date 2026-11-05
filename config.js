@@ -17,7 +17,7 @@ window.BUB_CONFIG = {
   hostName: 'Jas',
 
   // App Check: the reCAPTCHA Enterprise site key (starts with 6L). Empty until setup step 18.
-  appCheckKey: 'https://recaptchaenterprise.googleapis.com/v1/projects/project-31679adc-38ee-44e0-8b3/assessments?key=API_KEY',
+  appCheckKey: '6LdjDxEuAAAAAL_Le7i4_0HPxTXgU9bgJ4wY9tw-',
 
   // Optional: Google Drive backups. A Web client ID ending in .apps.googleusercontent.com
   googleClientId: '',
